@@ -3,7 +3,8 @@
 #include<stdio.h>
 /**
 * main -Entry point
-* Program that prints a string using printf function
+* Program that assigns a random # to the variable n each time it's executed
+* Then the program verifies if the number is 0, greater than 0 or less than 0
 * Return: Always 0 (Success)
 */
 int main(void)
