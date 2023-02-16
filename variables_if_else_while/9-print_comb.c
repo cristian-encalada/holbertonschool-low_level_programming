@@ -1,32 +1,31 @@
 #include<stdio.h>
 /**
 * main -Entry point
-* Program that prints all possible combinations of single-digit numbers.
-* Numbers must be separated by ,, followed by a space
+* Program that prints all possible combinations of single-digit numbers,
+* followed by a new line (using putchar function)
+* Numbers must be separated by , followed by a space
 * Numbers should be printed in ascending order
-* only use the putchar function
-* use putchar four times maximum
+* only use putchar four times maximum
 * not allowed to use any variable of type char
 * Return: Always 0 (Success)
-*
-* NOTE: it's possible to convert an integer to a character
-* inside the putchar function
-* by adding '0' to the integer (ascii code)
 */
 int main(void)
 {
-	int x = 0;
+	int num;
 
-	while (x < 10)
+	for (num = '0'; num <= '9'; num++)
 	{
-		putchar(x + '0');
-		if (x < 9)
+		putchar(num);
+		if (num < '9')
 		{
-		putchar(',');
-		putchar(' ');
+			putchar(',');
+			putchar(' ');
 		}
-	x++;
 	}
-	putchar('\n');
+/** if condition checks the simbol :, because it's after 9 (ascii code)*/
+	if (num == ':')
+	{
+		putchar('\n');
+	}
 	return (0);
 }
