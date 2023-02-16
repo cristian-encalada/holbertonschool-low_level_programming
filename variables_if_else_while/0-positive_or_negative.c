@@ -9,9 +9,9 @@
 int main(void)
 {
 	int n;
-	char positive[] = " is positive\n";
-	char negative[] = " is negative\n";
-	char zero[] = " is zero\n";
+	char positive[] = "is positive\n";
+	char negative[] = "is negative\n";
+	char zero[] = "is zero\n";
 
 	srand(time(0));
 	n = rand() - RAND_MAX / 2;
