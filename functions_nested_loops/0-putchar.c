@@ -1,6 +1,4 @@
-#include <stdlib.h>
-#include <time.h>
-#include<stdio.h>
+#include<main.h>
 /**
 * main -Entry point
 * Program that prints _putchar, followed by a new line.
@@ -8,8 +6,15 @@
 */
 int main(void)
 {
-	char print[] = "_putchar\n";
+	int i = 0;
+	char print[] = "_putchar";
+	char c = print[i];
 
-	printf("%s", print);
+	for (i = 0; i <= 8; i++)
+	{
+		_putchar(c);
+		c = print[i+1];
+	}
+	_putchar('\n');
 	return (0);
 }
