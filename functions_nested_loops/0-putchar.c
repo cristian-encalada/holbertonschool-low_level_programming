@@ -1,4 +1,4 @@
-#include<main.h>
+#include "main.h"
 /**
 * main -Entry point
 * Program that prints _putchar, followed by a new line.
@@ -8,12 +8,12 @@ int main(void)
 {
 	int i = 0;
 	char print[] = "_putchar";
-	char c = print[i];
+	char x = print[i];
 
 	for (i = 0; i <= 8; i++)
 	{
-		_putchar(c);
-		c = print[i+1];
+		_putchar(x);
+		x = print[i + 1];
 	}
 	_putchar('\n');
 	return (0);
