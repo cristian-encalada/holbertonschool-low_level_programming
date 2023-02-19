@@ -14,8 +14,8 @@ void jack_bauer(void)
 		{
 		if ((hour_dig2 == 9) && (min_dig1 == 5) && (min_dig2 == 9))
 		{
-		hour_dig1++;
 		_putchar(hour_dig1 + '0');
+		hour_dig1++;
 		}
 		else
 		_putchar(hour_dig1 + '0');
