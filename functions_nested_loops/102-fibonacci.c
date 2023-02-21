@@ -19,13 +19,13 @@ int main(void)
 
 	while (count <= 47)
 	{
-		if (count == 47)
+		if (count < 47)
 		{
-			printf("%lu \n", nx);
+			printf("%lu, ", nx);
 		}
 		else
 		{
-		printf("%lu, ", nx);
+			printf("%lu\n", nx);
 		}
 		n1 = n2;
 		n2 = nx;
