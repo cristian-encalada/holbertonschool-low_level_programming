@@ -49,61 +49,29 @@ Holberton Dev Bootcamp - Montevideo 2023
 		- Your program should return ``0``
 		- You might have to install the package ``libc6-dev-i386`` on your Linux (Vagrant) to test the ``-m32 gcc`` option <br>
 ``
-julien@ubuntu:~/c/$ gcc 6-size.c -m32 -o size32 2> /tmp/32
-julien@ubuntu:~/c/$ gcc 6-size.c -m64 -o size64 2> /tmp/64
-julien@ubuntu:~/c/$ ./size32
-Size of a char: 1 byte(s)
-Size of an int: 4 byte(s)
-Size of a long int: 4 byte(s)
-Size of a long long int: 8 byte(s)
-Size of a float: 4 byte(s)
-julien@ubuntu:~/c/$ ./size64
-Size of a char: 1 byte(s)
-Size of an int: 4 byte(s)
-Size of a long int: 8 byte(s)
-Size of a long long int: 8 byte(s)
-Size of a float: 4 byte(s)
-julien@ubuntu:~/c/$ echo $?
+julien@ubuntu:~/c/$ gcc 6-size.c -m32 -o size32 2> /tmp/32 <br>
+julien@ubuntu:~/c/$ gcc 6-size.c -m64 -o size64 2> /tmp/64 <br>
+julien@ubuntu:~/c/$ ./size32 <br>
+Size of a char: 1 byte(s) <br>
+Size of an int: 4 byte(s) <br>
+Size of a long int: 4 byte(s) <br>
+Size of a long long int: 8 byte(s) <br>
+Size of a float: 4 byte(s) <br>
+julien@ubuntu:~/c/$ ./size64 <br>
+Size of a char: 1 byte(s) <br>
+Size of an int: 4 byte(s) <br>
+Size of a long int: 8 byte(s) <br>
+Size of a long long int: 8 byte(s) <br>
+Size of a float: 4 byte(s) <br>
+julien@ubuntu:~/c/$ echo $? <br>
 0
 ``
 - [x] [100-intel](https://github.com/cristian-encalada/holbertonschool-low_level_programming/blob/master/hello_world/100-intel)
 	- Script that generates the assembly code (Intel syntax) of a C code and save it in an output file.
 		- The C file name will be saved in the variable ``$CFILE``.
 		- The output file should be named the same as the C file, but with the extension ``.s`` instead of ``.c`` <br>
-``
-julien@ubuntu:~/c/$ ./100-intel 
-julien@ubuntu:~/c/$ cat main.s
-    .file   "main.c"
-    .intel_syntax noprefix
-    .text
-    .globl  main
-    .type   main, @function
-main:
-.LFB0:
-    .cfi_startproc
-    push    rbp
-    .cfi_def_cfa_offset 16
-    .cfi_offset 6, -16
-    mov rbp, rsp
-    .cfi_def_cfa_register 6
-    mov eax, 0
-    pop rbp
-    .cfi_def_cfa 7, 8
-``
 - [x] [101-quote.c](https://github.com/cristian-encalada/holbertonschool-low_level_programming/blob/master/hello_world/101-quote.c)
 		- C program that prints exactly and that piece of art is useful" - Dora Korpar, 2015-10-19, followed by a new line, to the standard error.
 		- Not allowed to use any functions listed in the NAME section of the man (3) printf or man (3) puts
 		- The program should return 1
 		- The program should compile without any warnings when using the -Wall gcc option <br>
-``
-julien@ubuntu:~/c/$ gcc -Wall -Werror -Wextra -pedantic -std=gnu89 -o quote 101-quote.c
-julien@ubuntu:~/c/$ ./quote
-and that piece of art is useful" - Dora Korpar, 2015-10-19
-julien@ubuntu:~/c/$ echo $?
-1
-julien@ubuntu:~/c/$ ./quote 2> q
-julien@ubuntu:~/c/$ cat q
-and that piece of art is useful" - Dora Korpar, 2015-10-19
-julien@ubuntu:~/c/$ grep printf < 101-quote.c
-julien@ubuntu:~/c/$ grep put < 101-quote.c
-``
