@@ -47,7 +47,7 @@ Holberton Dev Bootcamp - Montevideo 2023
 		- You should produce the exact same output as in the example
 		- Warnings are allowed
 		- Your program should return ``0``
-		- You might have to install the package ``libc6-dev-i386`` on your Linux (Vagrant) to test the ``-m32 gcc`` option
+		- You might have to install the package ``libc6-dev-i386`` on your Linux (Vagrant) to test the ``-m32 gcc`` option <br>
 ``
 julien@ubuntu:~/c/$ gcc 6-size.c -m32 -o size32 2> /tmp/32
 julien@ubuntu:~/c/$ gcc 6-size.c -m64 -o size64 2> /tmp/64
@@ -69,21 +69,8 @@ julien@ubuntu:~/c/$ echo $?
 - [x] [100-intel](https://github.com/cristian-encalada/holbertonschool-low_level_programming/blob/master/hello_world/100-intel)
 	- Script that generates the assembly code (Intel syntax) of a C code and save it in an output file.
 		- The C file name will be saved in the variable ``$CFILE``.
-		- The output file should be named the same as the C file, but with the extension ``.s`` instead of ``.c``
+		- The output file should be named the same as the C file, but with the extension ``.s`` instead of ``.c`` <br>
 ``
-julien@ubuntu:~/c/$ export CFILE=main.c
-julien@ubuntu:~/c/$ cat main.c
-#include <stdio.h>
-
-/**
- * main - Entry point
- *
- * Return: Always 0 (Success)
- */
-int main(void)
-{
-    return (0);
-}
 julien@ubuntu:~/c/$ ./100-intel 
 julien@ubuntu:~/c/$ cat main.s
     .file   "main.c"
@@ -102,18 +89,12 @@ main:
     mov eax, 0
     pop rbp
     .cfi_def_cfa 7, 8
-    ret
-    .cfi_endproc
-.LFE0:
-    .size   main, .-main
-    .ident  "GCC: (Ubuntu 5.4.0-6ubuntu1~16.04.2) 5.4.0 20160609"
-    .section    .note.GNU-stack,"",@progbits
 ``
 - [x] [101-quote.c](https://github.com/cristian-encalada/holbertonschool-low_level_programming/blob/master/hello_world/101-quote.c)
 		- C program that prints exactly and that piece of art is useful" - Dora Korpar, 2015-10-19, followed by a new line, to the standard error.
 		- Not allowed to use any functions listed in the NAME section of the man (3) printf or man (3) puts
 		- The program should return 1
-		- The program should compile without any warnings when using the -Wall gcc option
+		- The program should compile without any warnings when using the -Wall gcc option <br>
 ``
 julien@ubuntu:~/c/$ gcc -Wall -Werror -Wextra -pedantic -std=gnu89 -o quote 101-quote.c
 julien@ubuntu:~/c/$ ./quote
