@@ -6,7 +6,7 @@
 int main(void)
 {
 	int counter, total = 0;
-	
+
 	for (counter = 0; counter < 1024; counter++)
 	{
 		if ((counter % 5 == 0) || (counter % 3 == 0))
