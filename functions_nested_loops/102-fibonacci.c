@@ -9,27 +9,27 @@
 
 int main(void)
 {
-	int count = 0; 
+	int count = 0;
 
-	int n1 = 1, n2 = 2;
-	int nx = n1 + n2;
+	long int n1 = 1, n2 = 2;
+	long int nx = n1 + n2;
 
-     	printf("%u, ", n1);
-	printf("%u, ", n2);
+	printf("%lu, ", n1);
+	printf("%lu, ", n2);
 
 	while (count <= 47)
 	{
 		if (count == 47)
 		{
-			printf("%u \n", nx);
+			printf("%lu \n", nx);
 		}
 		else
-		{ 
-			printf("%u, ", nx); 
+		{
+		printf("%lu, ", nx);
 		}
 		n1 = n2;
 		n2 = nx;
-		nx = n1 + n2; 
+		nx = n1 + n2;
 		count++;
 	}
 	return (0);
