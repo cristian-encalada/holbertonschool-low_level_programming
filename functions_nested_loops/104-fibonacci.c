@@ -12,21 +12,21 @@ int main(void)
 {
 	int counter = 0;
 
-	long int n1 = 1, n2 = 2;
-	long int n = n1 + n2;
+	double n1 = 1, n2 = 2;
+	double n = n1 + n2;
 
-	printf("%lu, ", n1);
-	printf("%lu, ", n2);
+	printf("%.0f, ", n1);
+	printf("%.0f, ", n2);
 
 	while (counter <= 95)
 	{
 		if (counter < 95)
 		{
-			printf("%lu, ", n);
+			printf("%.0f, ", n);
 		}
 		else
 		{
-			printf("%lu\n", n);
+			printf("%.0f\n", n);
 		}
 		n1 = n2;
 		n2 = n;
