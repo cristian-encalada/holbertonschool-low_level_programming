@@ -2,6 +2,7 @@
 /**
 * print_times_table - function that prints the n times table, starting with 0
 * If n is greater than 15 or less than 0 the function should not print anything
+* @input: stores the input passed to the function from main.c
 * Return: 0 at the end if no errors
 */
 void print_times_table(int input)
