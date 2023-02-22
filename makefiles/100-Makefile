@@ -10,9 +10,9 @@ all: update
 update: main$(OBJ) school$(OBJ)
 	$(CC) main$(OBJ) ${NAME}$(OBJ) -o $(NAME)
 school$(OBJ):
-	$(CC) $(CFLAGS) -c -o ${NAME}$(OBJ) ${NAME}$(SRC)
+	gcc  -Wall -Werror -Wextra -pedantic -c -o ${NAME}$(OBJ) ${NAME}$(SRC)
 main$(OBJ): main$(SRC)
-	$(CC) $(CFLAGS) -c -o main$(OBJ) main$(SRC)
+	gcc -Wall -Werror -Wextra -pedantic -c -o main$(OBJ) main$(SRC)
 
 clean:
 	${RM} -f *~ ${NAME}
