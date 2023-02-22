@@ -1,5 +1,6 @@
 CC = gcc
-RUN := gcc
+CC1 = gcc -Wall -Werror -Wextra -pedantic
+CC2 = gcc -Wall -Werror -Wextra -pedantic
 SRC = .c
 OBJ = .o
 NAME = school
@@ -11,9 +12,9 @@ all: update
 update: main$(OBJ) school$(OBJ)
 	$(CC) main$(OBJ) ${NAME}$(OBJ) -o $(NAME)
 school$(OBJ):
-	$(RUN) -Wall -Werror -Wextra -pedantic -c -o ${NAME}$(OBJ) ${NAME}$(SRC)
+	$(CC1) -Wall -Werror -Wextra -pedantic -c -o ${NAME}$(OBJ) ${NAME}$(SRC)
 main$(OBJ): main$(SRC)
-	$(RUN) -Wall -Werror -Wextra -pedantic -c -o main$(OBJ) main$(SRC)
+	$(CC2) -Wall -Werror -Wextra -pedantic -c -o main$(OBJ) main$(SRC)
 
 clean:
 	${RM} -f *~ ${NAME}
