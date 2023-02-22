@@ -1,6 +1,6 @@
 CC = gcc
-CC1 = gcc -Wall -Werror -Wextra -pedantic
-CC2 = gcc -Wall -Werror -Wextra -pedantic
+CC1 := gcc -Wall -Werror -Wextra -pedantic
+CC2 := gcc -Wall -Werror -Wextra -pedantic
 SRC = .c
 OBJ = .o
 NAME = school
