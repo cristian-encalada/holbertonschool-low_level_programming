@@ -7,17 +7,17 @@ RM = rm
 all: update
 
 update: main$(OBJ) school$(OBJ)
-	$(CC) main$(OBJ) school$(OBJ) -o $(NAME)
+	$(CC) main$(OBJ) ${NAME}$(OBJ) -o $(NAME)
 school$(OBJ):
-	$(CC) -c -o school$(OBJ) school$(SRC)
+	$(CC) -c -o ${NAME}$(OBJ) ${NAME}$(SRC)
 main$(OBJ): main$(SRC)
 	$(CC) -c -o main$(OBJ) main$(SRC)
 
 clean:
-	${RM} -f *~ school
+	${RM} -f *~ ${NAME}
 
 oclean:
-	${RM} -f main$(OBJ) school$(OBJ)
+	${RM} -f main$(OBJ) ${NAME}$(OBJ)
 
 fclean: clean oclean
 
