@@ -1,8 +1,8 @@
 # include "main.h"
 /**
-* _islower - checks for lowercase character.
-* @c: Returns 1 if the input is lowercase
-* @c: Returns 0 otherwise.
+* _isupper - checks for uppercase character.
+* @c: Returns 1 if the input is uppercase.
+* @c: Returns 0 if the input is not uppercase..
 * Return: 0 at the end if no errors
 */
 int _isupper(int c)
