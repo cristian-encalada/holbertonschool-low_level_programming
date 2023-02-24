@@ -1,20 +1,12 @@
 CC = gcc
-CC1 := gcc -Wall -Werror -Wextra -pedantic
-CC2 := gcc -Wall -Werror -Wextra -pedantic
-SRC = .c
-OBJ = .o
+SRC = main.c school.c
+OBJ = $(SRC:.c=.o)
 NAME = school
 RM = rm
 CFLAGS = -Wall -Werror -Wextra -pedantic
 
-all: update
-
-update: main$(OBJ) school$(OBJ)
-	$(CC) main$(OBJ) ${NAME}$(OBJ) -o $(NAME)
-school$(OBJ):
-	$(CC1) -Wall -Werror -Wextra -pedantic -c -o ${NAME}$(OBJ) ${NAME}$(SRC)
-main$(OBJ): main$(SRC)
-	$(CC2) -Wall -Werror -Wextra -pedantic -c -o main$(OBJ) main$(SRC)
+all: $(OBJ)
+	$(CC) $(OBJ) -o $(NAME)
 
 clean:
 	${RM} -f *~ ${NAME}
