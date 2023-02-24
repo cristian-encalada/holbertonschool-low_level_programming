@@ -11,15 +11,17 @@ int main(void)
 	for (num = 1; num <= 100; num++)
 	{
 		if ((num % 3 == 0) && (num % 5 == 0))
-			printf("%s ", mul35);
+			printf("%s", mul35);
 		else
 			if (num % 3 == 0)
-			printf("%s ", mul3);
+			printf("%s", mul3);
 		else
 			if (num % 5 == 0)
-			printf("%s ", mul5);
+			printf("%s", mul5);
 		else
-			printf("%d ", num);
+			printf("%d", num);
+		if (num < 100)
+			putchar(' ');
 	}
 		putchar('\n');
 	return (0);
