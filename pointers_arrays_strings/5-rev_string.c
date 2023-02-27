@@ -13,8 +13,8 @@ void rev_string(char *s)
 		count++;
 		s++;
 		_putchar(*s);
-		_putchar('\n');
 	}
+	_putchar('\n');
 	for (reverse = count - 1; reverse >= 0; reverse--)
 	{
 		s--;
