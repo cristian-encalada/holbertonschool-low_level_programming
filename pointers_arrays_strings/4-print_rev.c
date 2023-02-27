@@ -14,11 +14,12 @@ void print_rev(char *s)
 		count++;
 		reverse = count;
 	}
+	s--;
 	while (reverse >= 0)
 	{
-		s--;
 		_putchar(*s);
 		reverse--;
+		s--;
 	}
 	_putchar('\n');
 }
