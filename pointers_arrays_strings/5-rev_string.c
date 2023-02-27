@@ -11,8 +11,8 @@ void rev_string(char *s)
 	while (*s != '\0')
 	{
 		count++;
-		s++;
 		_putchar(*s);
+		s++;
 	}
 	_putchar('\n');
 	for (reverse = count - 1; reverse >= 0; reverse--)
