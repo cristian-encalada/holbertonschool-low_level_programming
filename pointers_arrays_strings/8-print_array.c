@@ -9,7 +9,7 @@
 */
 void print_array(int *a, int n)
 {
-	for (; n >= 0; n--)
+	for (; n > 0; n--)
 	{
 		if (*a != '\0')
 		{
