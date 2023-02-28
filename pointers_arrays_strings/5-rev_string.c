@@ -7,7 +7,7 @@
 */
 void rev_string(char *s)
 {
-	int length, i;
+	int length = 0, i = 0;
 	char *begin_ptr, *end_ptr, swap;
 
 	/** Get the length of the string */
