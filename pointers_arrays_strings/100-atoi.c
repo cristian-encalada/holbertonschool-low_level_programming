@@ -7,16 +7,12 @@
 int _atoi(char *s)
 {
 	int num = 0;
-	char digit;
-
-	while ((digit = *s++) != '\0')
+	char *digit = s;
+	
+	while((*digit >= '0') && (*digit <= '9'))
 	{
-		if (digit < '0' || digit > '9')
-		{
-			return (num);  /* No valid conversion possible */
-		}
-	num *= 10;
-	num += digit - '0';
+		num = num * 10 + (*digit - '0');
+		digit++;
 	}
 	return (num);
-}
+} 
