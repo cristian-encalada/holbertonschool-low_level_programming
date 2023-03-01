@@ -9,8 +9,11 @@
 char *_strncpy(char *dest, char *src, int n)
 {
 	char *start = dest;
-	int len = _strlen(src);
-
+	int len = 0;
+	while (*src != '\0')
+	{
+		len++;
+	}
 	if (n > 0 && n < len)
 	{
 	while ((*src != '\0') && (n > 0))
