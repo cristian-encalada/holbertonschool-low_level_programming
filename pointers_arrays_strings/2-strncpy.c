@@ -9,8 +9,9 @@
 char *_strncpy(char *dest, char *src, int n)
 {
 	char *start = dest;
+	int len = _strlen(src);
 
-	if (n > 0)
+	if (n > 0 && n < len)
 	{
 	while ((*src != '\0') && (n > 0))
 	{
@@ -24,7 +25,13 @@ char *_strncpy(char *dest, char *src, int n)
 		{
 			dest++;
 		}
-	*dest = '\0'; /**add '\0' at the end */
 	}
+	if (n > len)
+	for (; (n - 1) > 0; n--)
+	{
+	*dest = '\0'; /**add '\0' at the end */
+	dest ++;
+	}
+	*dest = '\0'; /**add '\0' at the end */
 	return (start);
 }
