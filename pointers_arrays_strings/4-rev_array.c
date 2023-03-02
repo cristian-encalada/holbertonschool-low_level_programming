@@ -3,7 +3,7 @@
 * reverse_array - function that reverses the content of an array of integers
 * @a: array of integers
 * @n: number of elements to swap
-* Return: void
+* Return: void (nothing)
 */
 void reverse_array(int *a, int n)
 {
