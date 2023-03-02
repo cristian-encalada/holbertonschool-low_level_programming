@@ -6,20 +6,17 @@
 */
 int _atoi(char *s)
 {
-	int num = 0, neg = 1;
-	char *digit = s, size = 0;
-	
-	while (*digit == '-')
+	unsigned int num = 0;
+	int neg = 1;
+
+	for (; *s != '\0'; s++)
 	{
-		neg = neg * (-1);
-		digit++;
-		size++;
-	}
-	digit = digit - size;	
-	while((*digit >= '0') && (*digit <= '9'))
-	{
-		num = num * 10 + (*digit - '0');
-		digit++;
+		if (*s >= '0' && *s <= '9')
+			num = (*s - '0') + (num * 10);
+		else if (num > 0) /** Controls the spaces after the first # found*/
+			break;
+		else if (*s == '-')
+			neg = neg * (-1);
 	}
 	return (num * neg);
-} 
+}
