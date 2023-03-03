@@ -10,16 +10,16 @@ char *cap_string(char *str)
 
 	for (i = 0; str[i] != '\0'; i++)
 	{
-	if (str[i - 1] == ' ' || str[i - 1] == '\t' || str[i - 1] == '\n'
-			|| str[i - 1] == ',' || str[i - 1] == ';' || str[i - 1] == '.'
-			|| str[i - 1] == '!' || str[i - 1] == '?' || str[i - 1] == '"'
-			|| str[i - 1] == '(' || str[i - 1] == ')' || str[i - 1] == '{'
-			|| str[i - 1] == '}')
+	if (str[0] >= 'a' && str[0] <= 'z')
+		str[i + 1] = str[i + 1] - 32;
+	if (str[i] == ' ' || str[i] == '\t' || str[i] == '\n'
+			|| str[i] == ',' || str[i] == ';' || str[i] == '.'
+			|| str[i] == '!' || str[i] == '?' || str[i] == '"'
+			|| str[i] == '(' || str[i] == ')' || str[i] == '{'
+			|| str[i] == '}')
 	{
-		if (str[i] >= 'a' && str[i] <= 'z')
-		{
-			str[i] = str[i] - 32;
-		}
+		if (str[i + 1] >= 'a' && str[i + 1] <= 'z')
+			str[i + 1] = str[i + 1] - 32;
 	}
 	}
 	return (str);
