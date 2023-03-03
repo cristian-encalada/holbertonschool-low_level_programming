@@ -23,3 +23,4 @@ char *leet(char *);
 char *rot13(char *);
 /** Header files for Project C - Even more pointers, arrays and strings */
 char *_memset(char *s, char b, unsigned int n);
+char *_memcpy(char *dest, char *src, unsigned int n);
