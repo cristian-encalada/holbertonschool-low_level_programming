@@ -17,7 +17,7 @@ void rev_string(char *s)
 	/** Setting the end_ptr to the end of the string */
 	end_ptr = s + length - 1;
 	/** Swap the char from start and end */
-	for (i = 0; i < (length - 1) / 2; i++)
+	for (i = 0; i < (length + 1) / 2; i++)
 	{
 	/** Swap character */
 	swap = *end_ptr;
