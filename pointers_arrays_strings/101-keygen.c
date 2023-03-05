@@ -23,13 +23,14 @@ unsigned int checksum(char *str)
  */
 int main(void)
 {
+	int i;
 	char str[32]; /**Size is 32 because assembly code is cmp DWORD PTR*/
 	unsigned int add;
 
 	srand(time(0));
 	do {
-	for (int i = 0; i < 32; i++)
-		str[i] = rand() % 94 + 32;
+	for (i = 0; i < 32; i++)
+		str[i] = rand() % 94 + 32; /** Print just visible ASCII chars*/
 	str[32] = '\0';
 	add = checksum(str);
 	} while (add != 2772); /** 0AD4h in decimal is 2772 */
