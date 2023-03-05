@@ -1,12 +1,12 @@
 #include "main.h"
 /**
-  * _atoi - function that convert a string to an integer
+  * _atoi2 - function that convert a string to an integer
   * @s: input string to be converted
   * Return: num = the converted string
 */
-int _atoi(char *s)
+unsigned long int _atoi2(char *s)
 {
-	unsigned int num = 0;
+	unsigned long int num = 0;
 
 	for (; *s != '\0'; s++)
 		if (*s >= '0' && *s <= '9')
@@ -15,8 +15,8 @@ int _atoi(char *s)
 }
 /**
  * *infinite_add - function that adds two numbers.
- * @n1: input 1 (numbrt)
- * @n2: input 2 (numbrt)
+ * @n1: input 1 (number)
+ * @n2: input 2 (number)
  * @r: buffer that the function will use to store the result
  * @size_r: is the buffer size
  * Return: a pointer to the result
@@ -28,21 +28,22 @@ int _atoi(char *s)
  */
 char *infinite_add(char *n1, char *n2, char *r, int size_r)
 {
-	int num1 = _atoi(n1);
-	int num2 = _atoi(n2);
-	int res = num1 + num2;
+	unsigned long int num1 = _atoi2(n1);
+	unsigned long int num2 = _atoi2(n2);
+	unsigned long int res = num1 + num2;
 	int i = 0, j, k;
 	char c;
-
+	/** convert the res (sum) into a string*/
 	do {
 		r[i] = (res % 10) + '0';
 		res /= 10;
 		i++;
 	}
-	while (res > 0 && i < size_r);
+		while (res > 0 && i < size_r);
 
 	if (res > 0 || i >= size_r)
 		return (0);
+	/** Reverse the converted string */
 	r[i] = '\0';
 	for (j = 0, k = i - 1; j < k; j++, k--)
 	{
