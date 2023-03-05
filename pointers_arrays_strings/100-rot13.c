@@ -12,17 +12,12 @@ char *rot13(char *str)
 
 	for (i = 0; str[i] != '\0'; i++)
 	{
-		if (str[i] >= 'A' || str[i] <= 'Z' || str[i] >= 'a' || str[i] <= 'z')
-		{
-			for (j = 0; aux[j] != '\0'; j++)
-				if (str[i] == aux[j])
-				{
-					str[i] = aux2[j];
-					break;
-				}
-		}
-		else
-			i++;
+		for (j = 0; aux[j] != '\0'; j++)
+			if (str[i] == aux[j])
+			{
+				str[i] = aux2[j];
+				break;
+			}
 	}
 	return (str);
 }
