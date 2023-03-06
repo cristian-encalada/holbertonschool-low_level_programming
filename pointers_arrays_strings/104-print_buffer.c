@@ -20,6 +20,12 @@ void print_buffer(char *b, int size)
 				printf(" ");
 			}
 		}
+	for (; j < 10; j++)
+	{
+		printf("  ");
+	if (j % 2 == 1)
+		printf(" ");
+	}
 	/**content of the buffer. If the byte is a printable character*/
 	for (j = 0; j < 10 && i + j < size; j++)
 	{
