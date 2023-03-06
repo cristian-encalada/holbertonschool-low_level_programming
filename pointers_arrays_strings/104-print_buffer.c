@@ -9,8 +9,8 @@ void print_buffer(char *b, int size)
 {
 	int i, j;
 
-	if (size > 0)
-	{
+	if (size <= 0)
+		printf("\n");
 	for (i = 0; i < size; i += 10)
 	{/** Position of the first byte of the line in hexadecimal (8 chars) */
 		printf("%08x: ", i);
@@ -37,6 +37,5 @@ void print_buffer(char *b, int size)
 			printf(".");
 	}
 		printf("\n");
-	}
 	}
 }
