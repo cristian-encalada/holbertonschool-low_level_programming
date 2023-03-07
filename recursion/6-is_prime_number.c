@@ -1,15 +1,26 @@
 #include "main.h"
 /**
- * is_prime_number - function that verifies if a # is prime
+ * verify_prime - auxiliar function to verify using recursion
+ * @num: number to verify (input)
+ * @aux: aux parameter
+ * Return: 0 = not a prime, 1 = is a prime
+*/
+int verify_prime(int num, int aux)
+{
+	if (num < 2)
+		return (0);
+	if (num == aux)
+		return (1);
+	if (num % aux == 0)
+		return (0);
+	return (verify_prime(num, aux + 1));
+}
+/**
+ * is_prime_number - function to verify prime numbers.
  * @n: input number
- * Return: 1 = prime number; 0 = not prime number
+ * Return: 0 = not a prime, 1 = is a prime
  */
 int is_prime_number(int n)
 {
-	if (n <= 1)
-		return (0);
-	if (n % 2 == 0)
-		return (1);
-	else
-		return (is_prime_number(n - 1));
+	return (verify_prime(n, 2));
 }
