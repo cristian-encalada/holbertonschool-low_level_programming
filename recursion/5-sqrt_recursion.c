@@ -3,6 +3,7 @@
  * is_perferct_root - verify if a  number is a perferct root
  * @n: number to verify (input)
  * @aux: aux parameter to increment and do the comparison
+ * Return: -1 = not a perfect root, aux = if is a perfect root
 */
 int is_perferct_root(int n, int aux)
 {
