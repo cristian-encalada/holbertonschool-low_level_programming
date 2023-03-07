@@ -7,7 +7,7 @@
 int is_perferct_root(int n, int aux)
 {
 	if (aux * aux == n)
-		return (n);
+		return (aux);
 	if (aux * aux > n)
 		return (-1);
 	else
