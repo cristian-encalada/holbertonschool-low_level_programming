@@ -4,9 +4,9 @@
   * @s: input string to be converted
   * Return: num = the converted string
 */
-unsigned long int _atoi2(char *s)
+long long int _atoi2(char *s)
 {
-	unsigned long int num = 0;
+	long long int num = 0;
 
 	for (; *s != '\0'; s++)
 		if (*s >= '0' && *s <= '9')
@@ -28,9 +28,9 @@ unsigned long int _atoi2(char *s)
  */
 char *infinite_add(char *n1, char *n2, char *r, int size_r)
 {
-	unsigned long int num1 = _atoi2(n1);
-	unsigned long int num2 = _atoi2(n2);
-	unsigned long int res = num1 + num2;
+	long long int num1 = _atoi2(n1);
+	long long int num2 = _atoi2(n2);
+	long long int res = num1 + num2;
 	int i = 0, j, k;
 	char c;
 	/** convert the res (sum) into a string*/
