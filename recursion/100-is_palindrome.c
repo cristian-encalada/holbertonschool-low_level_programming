@@ -16,21 +16,32 @@ int _strlen(char *s)
 	return (count);
 }
 /**
+ * verify_palindrome - function that verifies if a string is a palindrome
+ * @s: input string
+ * @size: string size
+ * Return: 1 if a string is a palindrome and 0 if not.
+ */
+int verify_palindrome(char *s, int size)
+{
+	/* base case: empty or single-character string is a palindrome */
+	if (size <= 1)
+		return (1);
+
+	/* check if first and last characters match */
+	if (*s != *(s + size - 1))
+		return (0);
+
+	/* recursive call */
+	return (verify_palindrome(s + 1, size - 2));
+}
+/**
  * is_palindrome - function that verifies if a string is a palindrome
  * @s: input string
  * Return: 1 if a string is a palindrome and 0 if not.
  */
 int is_palindrome(char *s)
 {
-	char *start = s;
-	char *end = s + _strlen(s) - 1;
-
-	while (start < end)
-	{
-		if (*start != *end)
-			return (0);
-		start++;
-		end--;
-	}
-	return (1);
+	int len = _strlen(s);
+	/* recursive call */
+	return (verify_palindrome(s, len));
 }
