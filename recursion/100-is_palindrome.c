@@ -6,14 +6,10 @@
  */
 int _strlen(char *s)
 {
-	int count = 0;
-
-	while (*s != '\0')
-	{
-		s++;
-		count++;
-	}
-	return (count);
+	if (*s == '\0')
+		return (0);
+	else
+		return (1 + _strlen(s + 1));
 }
 /**
  * verify_palindrome - function that verifies if a string is a palindrome
