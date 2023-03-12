@@ -13,7 +13,8 @@ Holberton Dev Bootcamp - Montevideo 2023
 - [x] [C - More functions, more nested loops](https://github.com/cristian-encalada/holbertonschool-low_level_programming/tree/master/more_functions_nested_loops)
 	- Project about C prototypes, nested loops and scope of variables
 - [x] [C - More functions, more nested loops](https://github.com/cristian-encalada/holbertonschool-low_level_programming/tree/master/more_functions_nested_loops)
-- [x] [C - More functions, more nested loops](https://github.com/cristian-encalada/holbertonschool-low_level_programming/tree/master/more_functions_nested_loops)
+- [x] [C - Recursion](https://github.com/cristian-encalada/holbertonschool-low_level_programming/tree/master/recursion)
+	- Project about recursive tasks, when and how implement it.
 - [x] [C - Static libraries](https://github.com/cristian-encalada/holbertonschool-low_level_programming/tree/master/static_libraries)
 	- How to create, use and how a C static library works.
 - [x] [C - argc, argv](https://github.com/cristian-encalada/holbertonschool-low_level_programming/tree/master/argc_argv)
