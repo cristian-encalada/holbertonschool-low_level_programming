@@ -8,3 +8,5 @@ Holberton Dev Bootcamp - Montevideo 2023
 	- Tasks related to arithmetic, logical and relational operators and basics tasks with variables.
 - [x] [C - Functions, nested loops](https://github.com/cristian-encalada/holbertonschool-low_level_programming/tree/master/functions_nested_loops)
 	- Tasks about nested loops, functions, header files, prototypes, and scope of variables
+- [x] [C - Makefiles](https://github.com/cristian-encalada/holbertonschool-low_level_programming/tree/master/makefiles)
+	- Task about C Makefiles, how to use them and how to set and use different rules for makefiles.
