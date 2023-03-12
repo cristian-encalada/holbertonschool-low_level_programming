@@ -12,7 +12,9 @@ Holberton Dev Bootcamp - Montevideo 2023
 	- Tasks about C Makefiles, how to use them and how to set and use different rules for makefiles.
 - [x] [C - More functions, more nested loops](https://github.com/cristian-encalada/holbertonschool-low_level_programming/tree/master/more_functions_nested_loops)
 	- Project about C prototypes, nested loops and scope of variables
-- [x] [C - More functions, more nested loops](https://github.com/cristian-encalada/holbertonschool-low_level_programming/tree/master/more_functions_nested_loops)
+- [x] [C - Pointers, arrays and strings](https://github.com/cristian-encalada/holbertonschool-low_level_programming/tree/master/pointers_arrays_strings/pointers_arrays_strings)
+- [x] [C - More pointers, arrays and strings](https://github.com/cristian-encalada/holbertonschool-low_level_programming/tree/master/pointers_arrays_strings/more_pointers_arrays_strings)
+- [x] [C - Even more pointers, arrays and strings](https://github.com/cristian-encalada/holbertonschool-low_level_programming/tree/master/pointers_arrays_strings/even_more_pointers_arrays_strings)
 - [x] [C - Recursion](https://github.com/cristian-encalada/holbertonschool-low_level_programming/tree/master/recursion)
 	- Project about recursive tasks, when and how implement it.
 - [x] [C - Static libraries](https://github.com/cristian-encalada/holbertonschool-low_level_programming/tree/master/static_libraries)
