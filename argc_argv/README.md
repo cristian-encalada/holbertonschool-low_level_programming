@@ -1,4 +1,4 @@
-# C - Variables, if, else, while
+# C - argc, argv
 > Repository created to work in C related projects <br>
 Holberton Dev Bootcamp - Montevideo 2023
 ## Resoruces
