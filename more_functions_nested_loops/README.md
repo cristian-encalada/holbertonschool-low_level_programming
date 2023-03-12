@@ -1,4 +1,4 @@
-# C - C - More functions, more nested loops
+# C - More functions, more nested loops
 > Repository created to work in C related projects <br>
 Holberton Dev Bootcamp - Montevideo 2023
 ## Learned Topics
