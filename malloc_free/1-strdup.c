@@ -45,9 +45,13 @@ char *_strcpy(char *dest, char *src)
 char *_strdup(char *str)
 {
 	char *array, *aux_pointer;
-	int len = _strlen(str);
+	int len = 0;
 
-	array = malloc(len * sizeof(str));
+	if (str == NULL)
+		return (NULL);
+	len = _strlen(str);
+
+	array = malloc(len * sizeof(char));
 	if (array == NULL)
 		exit(1);
 	_strcpy(array, str);
