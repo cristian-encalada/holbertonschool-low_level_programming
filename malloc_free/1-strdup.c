@@ -14,7 +14,7 @@ int _strlen(char *s)
 		s++;
 		count++;
 	}
-	return (count);
+	return (count + 1); /** +1 to include the \0 character*/
 }
 /**
 * *_strcpy - function that swaps the values of two integers
