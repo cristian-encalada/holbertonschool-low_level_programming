@@ -14,7 +14,7 @@ int _strlen(char *s)
 		s++;
 		count++;
 	}
-	return (count + 1); /** +1 to include the \0 character*/
+	return (count); /** +1 to include the \0 character*/
 }
 /**
 * _strcat - function that concatenates two strings.
@@ -54,7 +54,7 @@ char *str_concat(char *s1, char *s2)
 		s2 = "";
 	len1 = _strlen(s1);
 	len2 = _strlen(s2);
-	aux_pointer = malloc((len1 + len2) * sizeof(char));
+	aux_pointer = malloc((len1 + len2 + 1) * sizeof(char));
 	if (aux_pointer == NULL)
 		exit(1);
 	_strcat(aux_pointer, s1);
