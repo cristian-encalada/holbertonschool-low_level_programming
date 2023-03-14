@@ -21,3 +21,5 @@ Holberton Dev Bootcamp - Montevideo 2023
 	- How to create, use and how a C static library works.
 - [x] [C - argc, argv](https://github.com/cristian-encalada/holbertonschool-low_level_programming/tree/master/argc_argv)
 	- Tasks about C arguments passed to the program (argc and argv)
+- [x] [C - malloc, free](https://github.com/cristian-encalada/holbertonschool-low_level_programming/tree/master/malloc_free)
+	- Task about dynamic memory allocation (malloc and free)
