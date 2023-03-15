@@ -36,7 +36,8 @@ char *string_nconcat(char *s1, char *s2, unsigned int n)
 {
 	char *ptr;
 
-	ptr = malloc(b);
+	ptr = _strncat(s2, s1, n);
+	ptr = malloc();
 	if (ptr == NULL)
 		exit(98);
 	return (ptr);
