@@ -33,15 +33,15 @@ char *_strncat(char *dest, char *src, int n)
 		return (dest);
 	if (n >= 0)
 	{
-	while (*dest != '\0')
-		dest++;
-	while ((*src != '\0') && (n > 0))
-	{
-		*dest = *src;
-		dest++;
-		src++;
-		n--;
-	}
+		while (*dest != '\0')
+			dest++;
+		while ((*src != '\0') && (n > 0))
+		{
+			*dest = *src;
+			dest++;
+			src++;
+			n--;
+		}
 	}
 	*dest = '\0';
 	return (aux);
@@ -56,7 +56,7 @@ char *_strncat(char *dest, char *src, int n)
 char *string_nconcat(char *s1, char *s2, unsigned int n)
 {
 	char *ptr;
-	unsigned int len1 = 0, len2 = 0;
+	unsigned int len1 = 0, len2 = 0, i, j;
 
 	if (s1 == NULL)
 		s1 = "";
@@ -66,19 +66,23 @@ char *string_nconcat(char *s1, char *s2, unsigned int n)
 	len2 = _strlen(s2);
 	if (n >= len2)
 	{
-		ptr = calloc((len1 + len2 + 1), sizeof(char));
+		ptr = malloc((len1 + len2 + 1) * sizeof(char));
+		/** Initializing elements to 0*/
+		for (i = 0; i < (len1 + len2); i++)
+			ptr[i] = 0;
 		if (ptr == NULL)
 			exit(1);
-		_strncat(ptr, s1, len1);
-		_strncat(ptr, s2, n);
 	}
 	else
 	{
-		ptr = calloc((len1 + n + 1), sizeof(char));
+		ptr = malloc((len1 + n + 1) * sizeof(char));
+		/** Initializing elements to 0*/
+		for (j = 0; j < (len1 + n); j++)
+			ptr[j] = 0;
 		if (ptr == NULL)
 			exit(1);
-		_strncat(ptr, s1, len1);
-		_strncat(ptr, s2, n);
 	}
+	_strncat(ptr, s1, len1);
+	_strncat(ptr, s2, n);
 	return (ptr);
 }
