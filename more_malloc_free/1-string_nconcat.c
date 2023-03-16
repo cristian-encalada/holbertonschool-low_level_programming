@@ -14,7 +14,7 @@ int _strlen(char *s)
 		s++;
 		count++;
 	}
-	return (count); /** +1 to include the \0 character*/
+	return (count); 
 }
 /**
 * *_strncat - function that concatenates two strings.
@@ -25,10 +25,9 @@ int _strlen(char *s)
 */
 char *_strncat(char *dest, char *src, int n)
 {
-	char *start = dest;
+	char *aux = dest;
 
 	if (n >= 0)
-	{
 	while (*dest != '\0')
 		dest++;
 	while ((*src != '\0') && (n > 0))
@@ -38,10 +37,7 @@ char *_strncat(char *dest, char *src, int n)
 		src++;
 		n--;
 	}
-	}
-	else
-		*dest = '\0'; /**add '\0' at the end */
-	return (start);
+	return (aux);
 }
 /**
  * string_nconcat - concatenates two strings
@@ -64,7 +60,7 @@ char *string_nconcat(char *s1, char *s2, unsigned int n)
 	ptr = malloc((len1 + len2 + 1) * sizeof(char));
 	if (ptr == NULL)
 		exit(1);
-	_strncat(ptr, s1, n);
+	_strncat(ptr, s1, len1);
 	_strncat(ptr, s2, n);
 	return (ptr);
 }
