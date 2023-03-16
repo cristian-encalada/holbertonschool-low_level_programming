@@ -55,13 +55,13 @@ char *_strncat(char *dest, char *src, int n)
 */
 char *string_nconcat(char *s1, char *s2, unsigned int n)
 {
-	char *ptr;
+	char *ptr, *empty_str = "";
 	unsigned int len1 = 0, len2 = 0, i, j;
 
 	if (s1 == NULL)
-		s1 = "";
+		s1 = empty_str;
 	if (s2 == NULL)
-		s2 = "";
+		s2 = empty_str;
 	len1 = _strlen(s1);
 	len2 = _strlen(s2);
 	if (n >= len2)
