@@ -47,6 +47,28 @@ char *_strncat(char *dest, char *src, int n)
 	return (aux);
 }
 /**
+ * _calloc - allocates memory using malloc and initialize to 0
+ * @nmemb: # of elements to be allocated
+ * @size: input - # of int bytes to be allocated
+ * Return: If nmemb or size is 0, then _calloc returns NULL
+ * If malloc fails, then _calloc returns NULL
+*/
+void *_calloc(unsigned int nmemb, unsigned int size)
+{
+	unsigned int i;
+	char *ptr;
+
+	if (nmemb <= 0 || size <= 0)
+		return (NULL);
+	ptr = malloc(nmemb * size);
+	if (ptr == NULL)
+		return (NULL);
+	/** Initializing elements to 0*/
+	for (i = 0; i < (nmemb * size); i++)
+		ptr[i] = 0;
+	return (ptr);
+}
+/**
  * string_nconcat - concatenates two strings
  * @s1: input string 1
  * @s2: input string 2
@@ -56,7 +78,7 @@ char *_strncat(char *dest, char *src, int n)
 char *string_nconcat(char *s1, char *s2, unsigned int n)
 {
 	char *ptr, *empty_str = "";
-	unsigned int len1 = 0, len2 = 0, i, j;
+	unsigned int len1 = 0, len2 = 0;
 
 	if (s1 == NULL)
 		s1 = empty_str;
@@ -66,21 +88,15 @@ char *string_nconcat(char *s1, char *s2, unsigned int n)
 	len2 = _strlen(s2);
 	if (n >= len2)
 	{
-		ptr = malloc((len1 + len2 + 1) * sizeof(char));
+		ptr = _calloc((len1 + len2 + 1), sizeof(char));
 		if (ptr == NULL)
 			exit(1);
-		/** Initializing elements to 0*/
-		for (i = 0; i < (len1 + len2); i++)
-			ptr[i] = 0;
 	}
 	else
 	{
-		ptr = malloc((len1 + n + 1) * sizeof(char));
+		ptr = _calloc((len1 + n + 1), sizeof(char));
 		if (ptr == NULL)
 			exit(1);
-		/** Initializing elements to 0*/
-		for (j = 0; j < (len1 + n); j++)
-			ptr[j] = 0;
 	}
 	_strncat(ptr, s1, len1);
 	_strncat(ptr, s2, n);
