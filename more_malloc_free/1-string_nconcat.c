@@ -28,6 +28,8 @@ int _strlen(char *s)
 char *_strncat(char *dest, char *src, int n)
 {
 	char *aux = dest;
+	char *dest_start = dest;
+	char *src_start = src;
 
 	if (n < 0)
 		return (dest);
@@ -44,6 +46,8 @@ char *_strncat(char *dest, char *src, int n)
 	}
 	}
 	*dest = '\0';
+	dest = dest_start;
+	src = src_start;
 	return (aux);
 }
 /**
@@ -55,7 +59,7 @@ char *_strncat(char *dest, char *src, int n)
 */
 char *string_nconcat(char *s1, char *s2, unsigned int n)
 {
-	char *ptr = s1;
+	char *ptr;
 	unsigned int len1 = 0, len2 = 0;
 
 	if (s1 == NULL)
