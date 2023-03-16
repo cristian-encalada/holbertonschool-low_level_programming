@@ -55,8 +55,8 @@ char *_strncat(char *dest, char *src, int n)
 */
 char *string_nconcat(char *s1, char *s2, unsigned int n)
 {
-	char *ptr;
-	int len1 = 0, len2 = 0;
+	char *ptr = s1;
+	unsigned int len1 = 0, len2 = 0;
 
 	if (s1 == NULL)
 		s1 = "";
@@ -64,9 +64,18 @@ char *string_nconcat(char *s1, char *s2, unsigned int n)
 		s2 = "";
 	len1 = _strlen(s1);
 	len2 = _strlen(s2);
-	ptr = malloc((len1 + len2 + 1) * sizeof(char));
-	if (ptr == NULL)
-		exit(1);
+	if (n >= len2)
+	{
+		ptr = malloc((len1 + len2 + 1) * sizeof(char));
+		if (ptr == NULL)
+			exit(1);
+	}
+	else
+	{
+		ptr = malloc((len1 + n + 1) * sizeof(char));
+		if (ptr == NULL)
+			exit(1);
+	}
 	_strncat(ptr, s1, len1);
 	_strncat(ptr, s2, n);
 	return (ptr);
