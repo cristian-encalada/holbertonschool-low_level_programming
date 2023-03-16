@@ -67,20 +67,20 @@ char *string_nconcat(char *s1, char *s2, unsigned int n)
 	if (n >= len2)
 	{
 		ptr = malloc((len1 + len2 + 1) * sizeof(char));
+		if (ptr == NULL)
+			exit(1);
 		/** Initializing elements to 0*/
 		for (i = 0; i < (len1 + len2); i++)
 			ptr[i] = 0;
-		if (ptr == NULL)
-			exit(1);
 	}
 	else
 	{
 		ptr = malloc((len1 + n + 1) * sizeof(char));
+		if (ptr == NULL)
+			exit(1);
 		/** Initializing elements to 0*/
 		for (j = 0; j < (len1 + n); j++)
 			ptr[j] = 0;
-		if (ptr == NULL)
-			exit(1);
 	}
 	_strncat(ptr, s1, len1);
 	_strncat(ptr, s2, n);
