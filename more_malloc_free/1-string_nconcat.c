@@ -9,12 +9,14 @@ int _strlen(char *s)
 {
 	int count = 0;
 
+	if (s == NULL)
+		return (0);
 	while (*s != '\0')
 	{
 		s++;
 		count++;
 	}
-	return (count); 
+	return (count);
 }
 /**
 * *_strncat - function that concatenates two strings.
@@ -27,7 +29,10 @@ char *_strncat(char *dest, char *src, int n)
 {
 	char *aux = dest;
 
+	if (n < 0)
+		return (dest);
 	if (n >= 0)
+	{
 	while (*dest != '\0')
 		dest++;
 	while ((*src != '\0') && (n > 0))
@@ -37,6 +42,8 @@ char *_strncat(char *dest, char *src, int n)
 		src++;
 		n--;
 	}
+	}
+	*dest = '\0';
 	return (aux);
 }
 /**
