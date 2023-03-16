@@ -28,8 +28,6 @@ int _strlen(char *s)
 char *_strncat(char *dest, char *src, int n)
 {
 	char *aux = dest;
-	char *dest_start = dest;
-	char *src_start = src;
 
 	if (n < 0)
 		return (dest);
@@ -46,8 +44,6 @@ char *_strncat(char *dest, char *src, int n)
 	}
 	}
 	*dest = '\0';
-	dest = dest_start;
-	src = src_start;
 	return (aux);
 }
 /**
@@ -70,17 +66,19 @@ char *string_nconcat(char *s1, char *s2, unsigned int n)
 	len2 = _strlen(s2);
 	if (n >= len2)
 	{
-		ptr = malloc((len1 + len2 + 1) * sizeof(char));
+		ptr = calloc((len1 + len2 + 1), sizeof(char));
 		if (ptr == NULL)
 			exit(1);
+		_strncat(ptr, s1, len1);
+		_strncat(ptr, s2, n);
 	}
 	else
 	{
-		ptr = malloc((len1 + n + 1) * sizeof(char));
+		ptr = calloc((len1 + n + 1), sizeof(char));
 		if (ptr == NULL)
 			exit(1);
+		_strncat(ptr, s1, len1);
+		_strncat(ptr, s2, n);
 	}
-	_strncat(ptr, s1, len1);
-	_strncat(ptr, s2, n);
 	return (ptr);
 }
