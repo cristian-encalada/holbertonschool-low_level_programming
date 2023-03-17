@@ -57,7 +57,7 @@ julien@ubuntu:~/0x0c. macro, structures$ ./a
 1122
 julien@ubuntu:~/0x0c. macro, structures$ 
 ```
-- [x] [1-pi.h](https://github.com/cristian-encalada/holbertonschool-low_level_programming/blob/master/1-pi.h)
+- [x] [1-pi.h](https://github.com/cristian-encalada/holbertonschool-low_level_programming/blob/master/preprocessor/1-pi.h)
 	- Create a header file that defines a macro named ``PI`` as an abbreviation for the token ``3.14159265359``.
 ```
 julien@ubuntu:~/0x0c. macro, structures$ cat 1-main.c
@@ -85,7 +85,7 @@ julien@ubuntu:~/0x0c. macro, structures$ ./b
 30171.855
 julien@ubuntu:~/0x0c. macro, structures$ 
 ```
-- [x] [2-main.c](https://github.com/cristian-encalada/holbertonschool-low_level_programming/blob/master/2-main.c)
+- [x] [2-main.c](https://github.com/cristian-encalada/holbertonschool-low_level_programming/blob/master/preprocessor/2-main.c)
 	- Write a program that prints the name of the file it was compiled from, followed by a new line.
 		- You are allowed to use the standard library
 ```
@@ -98,7 +98,7 @@ julien@ubuntu:~/0x0c. macro, structures$ ./cc
 02-main.c
 julien@ubuntu:~/0x0c. macro, structures$ 
 ```
-- [x] [3-function_like_macro.h](https://github.com/cristian-encalada/holbertonschool-low_level_programming/blob/master/3-function_like_macro.h)
+- [x] [3-function_like_macro.h](https://github.com/cristian-encalada/holbertonschool-low_level_programming/blob/master/preprocessor/3-function_like_macro.h)
 	- Write a function-like macro ``ABS(x)`` that computes the absolute value of a number ``x``.
 ```
 julien@ubuntu:~/0x0c. macro, structures$ cat 3-main.c
@@ -126,7 +126,7 @@ julien@ubuntu:~/0x0c. macro, structures$ ./d
 980, 980
 julien@ubuntu:~/0x0c. macro, structures$ 
 ```
-- [x] [4-sum.h](https://github.com/cristian-encalada/holbertonschool-low_level_programming/blob/master/4-sum.h)
+- [x] [4-sum.h](https://github.com/cristian-encalada/holbertonschool-low_level_programming/blob/master/preprocessor/4-sum.h)
 	- Write a function-like macro ``SUM(x, y)`` that computes the sum of the numbers ``x`` and ``y``.
 ```
 julien@ubuntu:~/0x0c. macro, structures$ cat 4-main.c
