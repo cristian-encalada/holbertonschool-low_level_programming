@@ -22,4 +22,7 @@ Holberton Dev Bootcamp - Montevideo 2023
 - [x] [C - argc, argv](https://github.com/cristian-encalada/holbertonschool-low_level_programming/tree/master/argc_argv)
 	- Tasks about C arguments passed to the program (argc and argv)
 - [x] [C - malloc, free](https://github.com/cristian-encalada/holbertonschool-low_level_programming/tree/master/malloc_free)
-	- Task about dynamic memory allocation (malloc and free)
+	- Tasks about dynamic memory allocation (malloc and free)
+- [x] [C - More malloc, free](https://github.com/cristian-encalada/holbertonschool-low_level_programming/tree/master/more_malloc_free)
+- [x] [C - Preprocessor](https://github.com/cristian-encalada/holbertonschool-low_level_programming/tree/master/preprocessor)
+	- Tasks related to macros and how to include guards to the header files

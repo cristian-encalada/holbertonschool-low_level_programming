@@ -1,10 +1,18 @@
-# C - More malloc, Free
+# C - Preprocessor
 ## Resources
-* [Do I cast the result of malloc?](https://stackoverflow.com/questions/605845/do-i-cast-the-result-of-malloc)
+* [Understanding C program Compilation Process](https://www.youtube.com/watch?v=VDslRumKvRA&ab_channel=HowTo)
+* [Object-like Macros](https://gcc.gnu.org/onlinedocs/gcc-5.1.0/cpp/Object-like-Macros.html#Object-like-Macros)
+* [Macro Arguments](https://gcc.gnu.org/onlinedocs/gcc-5.1.0/cpp/Macro-Arguments.html#Macro-Arguments)
+* [Pre Processor Directives in C](https://www.youtube.com/watch?v=X6HiYbY3Uak&ab_channel=BestDotNetTraining)
+* [The C Preprocessor](https://www.cprogramming.com/tutorial/cpreprocessor.html)
+* [Standard Predefined Macros](https://gcc.gnu.org/onlinedocs/gcc-5.1.0/cpp/Standard-Predefined-Macros.html#Standard-Predefined-Macros)
+* [Include guard](https://en.wikipedia.org/wiki/Include_guard)
+* [Common Predefined Macros](https://gcc.gnu.org/onlinedocs/gcc-5.1.0/cpp/Common-Predefined-Macros.html#Common-Predefined-Macros)
 ## Learned Topics
 ### General
-* How to use the ``exit`` function
-* What are the functions ``calloc`` and realloc from the standard library and how to use them
+* What are macros and how to use them
+* What are the most common predefined macros
+* How to include guard your header files
 ## Requirements
 ### General
 * Allowed editors: ``vi``, ``vim``, ``emacs``
@@ -21,20 +29,15 @@
 * In the following examples, the ``main.c`` files are shown as examples. You can use them to test your functions, but you don’t have to push them to your repo (if you do we won’t take them into account). We will use our own main.c files at compilation. Our main.c files might be different from the one shown in the examples
 * The prototypes of all your functions and the prototype of the function _putchar should be included in your header file called ``main.h``
 * Don’t forget to push your header file
-* ``You are not allowed to use any kind of loops``
-* You are not allowed to use static variables
+* All your header files should be include guarded
 ## Tasks completed
-- [x] [0-malloc_checked.c](https://github.com/cristian-encalada/holbertonschool-low_level_programming/blob/master/more_malloc_free/0-malloc_checked.c)
-	- Write a function that allocates memory using ``malloc``.
-		- Prototype: ``void *malloc_checked(unsigned int b)``;
-		- Returns a pointer to the allocated memory
-		- if ``malloc`` fails, the ``malloc_checked`` function should cause normal process termination with a status value of ``98``
+- [x] [0-object_like_macro.h](https://github.com/cristian-encalada/holbertonschool-low_level_programming/blob/master/preprocessor/0-object_like_macro.h)
+	- Create a header file that defines a macro named ``SIZE`` as an abbreviation for the token ``1024``.
 ```
-julien@ubuntu:~/0x0b. more malloc, free$ cat 0-main.c
-#include "main.h"
+julien@ubuntu:~/0x0c. macro, structures$ cat 0-main.c
+#include "0-object_like_macro.h"
+#include "0-object_like_macro.h"
 #include <stdio.h>
-#include <stdlib.h>
-#include <limits.h>
 
 /**
  * main - check the code
@@ -43,47 +46,24 @@ julien@ubuntu:~/0x0b. more malloc, free$ cat 0-main.c
  */
 int main(void)
 {
-    char *c;
-    int *i;
-    float *f;
-    double *d;
+    int s;
 
-    c = malloc_checked(sizeof(char) * 1024);
-    printf("%p\n", (void *)c);
-    i = malloc_checked(sizeof(int) * 402);
-    printf("%p\n", (void *)i);
-    f = malloc_checked(sizeof(float) * 100000000);
-    printf("%p\n", (void *)f);
-    d = malloc_checked(INT_MAX);
-    printf("%p\n", (void *)d);
-    free(c);
-    free(i);
-    free(f);
-    free(d);
+    s = 98 + SIZE;
+    printf("%d\n", s);
     return (0);
 }
-julien@ubuntu:~/0x0b. more malloc, free$ gcc -Wall -pedantic -Werror -Wextra -std=gnu89 0-main.c 0-malloc_checked.c -o a
-julien@ubuntu:~/0x0b. more malloc, free$ ./a 
-0x1e39010
-0x1e39830
-0x7f31f6c19010
-0x6f55f6c19011
-julien@ubuntu:~/0x0b. more malloc, free$ echo $?
-0
-julien@ubuntu:~/0x0b. more malloc, free$ 
+julien@ubuntu:~/0x0c. macro, structures$ gcc -Wall -pedantic -Werror -Wextra -std=gnu89 0-main.c -o a
+julien@ubuntu:~/0x0c. macro, structures$ ./a 
+1122
+julien@ubuntu:~/0x0c. macro, structures$ 
 ```
-- [x] [1-string_nconcat.c](https://github.com/cristian-encalada/holbertonschool-low_level_programming/blob/master/more_malloc_free/1-string_nconcat.c)
-	- Write a function that concatenates two strings.
-		- Prototype: ``char *string_nconcat(char *s1, char *s2, unsigned int n)``;
-		- The returned pointer shall point to a newly allocated space in memory, which contains ``s1``, followed by the first ``n`` bytes of ``s2``, and null terminated
-		- If the function fails, it should return ``NULL``
-		- If ``n`` is greater or equal to the length of ``s2`` then use the entire string ``s2``
-		- if ``NULL`` is passed, treat it as an empty string
+- [x] [1-pi.h](https://github.com/cristian-encalada/holbertonschool-low_level_programming/blob/master/1-pi.h)
+	- Create a header file that defines a macro named ``PI`` as an abbreviation for the token ``3.14159265359``.
 ```
-julien@ubuntu:~/0x0b. more malloc, free$ cat 1-main.c
-#include "main.h"
+julien@ubuntu:~/0x0c. macro, structures$ cat 1-main.c
+#include "1-pi.h"
+#include "1-pi.h"
 #include <stdio.h>
-#include <stdlib.h>
 
 /**
  * main - check the code
@@ -92,60 +72,39 @@ julien@ubuntu:~/0x0b. more malloc, free$ cat 1-main.c
  */
 int main(void)
 {
-    char *concat;
+    float a;
+    float r;
 
-    concat = string_nconcat("Best ", "School !!!", 6);
-    printf("%s\n", concat);
-    free(concat);
+    r = 98;
+    a = PI * r * r;
+    printf("%.3f\n", a);
     return (0);
 }
-julien@ubuntu:~/0x0b. more malloc, free$ gcc -Wall -pedantic -Werror -Wextra -std=gnu89 1-main.c 1-string_nconcat.c -o 1-string_nconcat
-julien@ubuntu:~/0x0b. more malloc, free$ ./1-string_nconcat
-Best School
-julien@ubuntu:~/0x0b. more malloc, free$
+julien@ubuntu:~/0x0c. macro, structures$ gcc -Wall -pedantic -Werror -Wextra -std=gnu89 1-main.c -o b
+julien@ubuntu:~/0x0c. macro, structures$ ./b
+30171.855
+julien@ubuntu:~/0x0c. macro, structures$ 
 ```
-- [x] [2-calloc.c](https://github.com/cristian-encalada/holbertonschool-low_level_programming/blob/master/more_malloc_free/2-calloc.c)
-	- Write a function that allocates memory for an array, using ``malloc``.
-		- Prototype: ``void *_calloc(unsigned int nmemb, unsigned int size)``;
-		- The ``_calloc`` function allocates memory for an array of ``nmemb`` elements of ``size`` bytes each and returns a pointer to the allocated memory.
-		- The memory is set to zero
-		- If ``nmemb`` or ``size`` is ``0``, then ``_calloc`` returns ``NULL``
-		- If ``malloc`` fails, then ``_calloc`` returns ``NULL``
-		- FYI: The standard library provides a different function: calloc. Run man calloc to learn more.
+- [x] [2-main.c](https://github.com/cristian-encalada/holbertonschool-low_level_programming/blob/master/2-main.c)
+	- Write a program that prints the name of the file it was compiled from, followed by a new line.
+		- You are allowed to use the standard library
 ```
-julien@ubuntu:~/0x0b. more malloc, free$ cat 2-main.c
-#include "main.h"
+julien@ubuntu:~/0x0c. macro, structures$ gcc -Wall -pedantic -Werror -Wextra -std=gnu89 2-main.c -o c
+julien@ubuntu:~/0x0c. macro, structures$ ./c 
+2-main.c
+julien@ubuntu:~/0x0c. macro, structures$ cp 2-main.c 02-main.c
+julien@ubuntu:~/0x0c. macro, structures$ gcc -Wall -pedantic -Werror -Wextra -std=gnu89 02-main.c -o cc
+julien@ubuntu:~/0x0c. macro, structures$ ./cc
+02-main.c
+julien@ubuntu:~/0x0c. macro, structures$ 
+```
+- [x] [3-function_like_macro.h](https://github.com/cristian-encalada/holbertonschool-low_level_programming/blob/master/3-function_like_macro.h)
+	- Write a function-like macro ``ABS(x)`` that computes the absolute value of a number ``x``.
+```
+julien@ubuntu:~/0x0c. macro, structures$ cat 3-main.c
 #include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-
-/**
- * simple_print_buffer - prints buffer in hexa
- * @buffer: the address of memory to print
- * @size: the size of the memory to print
- *
- * Return: Nothing.
- */
-void simple_print_buffer(char *buffer, unsigned int size)
-{
-    unsigned int i;
-
-    i = 0;
-    while (i < size)
-    {
-        if (i % 10)
-        {
-            printf(" ");
-        }
-        if (!(i % 10) && i)
-        {
-            printf("\n");
-        }
-        printf("0x%02x", buffer[i]);
-        i++;
-    }
-    printf("\n");
-}
+#include "3-function_like_macro.h"
+#include "3-function_like_macro.h"
 
 /**
  * main - check the code
@@ -154,71 +113,26 @@ void simple_print_buffer(char *buffer, unsigned int size)
  */
 int main(void)
 {
-    char *a;
+    int i;
+    int j;
 
-    a = _calloc(98, sizeof(char));
-    strcpy(a, "Best");
-    strcpy(a + 4, " School! :)\n");
-    a[97] = '!';
-    simple_print_buffer(a, 98);
-    free(a);
+    i = ABS(-98) * 10;
+    j = ABS(98) * 10;
+    printf("%d, %d\n", i, j);
     return (0);
 }
-julien@ubuntu:~/0x0b. more malloc, free$ gcc -Wall -pedantic -Werror -Wextra -std=gnu89 2-main.c 2-calloc.c -o 2-calloc
-julien@ubuntu:~/0x0b. more malloc, free$ ./2-calloc
-0x42 0x65 0x73 0x74 0x20 0x53 0x63 0x68 0x6f 0x6f
-0x6c 0x21 0x20 0x3a 0x29 0x0a 0x00 0x00 0x00 0x00
-0x00 0x00 0x00 0x00 0x00 0x00 0x00 0x00 0x00 0x00
-0x00 0x00 0x00 0x00 0x00 0x00 0x00 0x00 0x00 0x00
-0x00 0x00 0x00 0x00 0x00 0x00 0x00 0x00 0x00 0x00
-0x00 0x00 0x00 0x00 0x00 0x00 0x00 0x00 0x00 0x00
-0x00 0x00 0x00 0x00 0x00 0x00 0x00 0x00 0x00 0x00
-0x00 0x00 0x00 0x00 0x00 0x00 0x00 0x00 0x00 0x00
-0x00 0x00 0x00 0x00 0x00 0x00 0x00 0x00 0x00 0x00
-0x00 0x00 0x00 0x00 0x00 0x00 0x00 0x21
-julien@ubuntu:~/0x0b. more malloc, free$ 
+julien@ubuntu:~/0x0c. macro, structures$ gcc -Wall -pedantic -Werror -Wextra -std=gnu89 3-main.c -o d
+julien@ubuntu:~/0x0c. macro, structures$ ./d 
+980, 980
+julien@ubuntu:~/0x0c. macro, structures$ 
 ```
-- [x] [3-array_range.c](https://github.com/cristian-encalada/holbertonschool-low_level_programming/blob/master/more_malloc_free/3-array_range.c)
-	- Write a function that creates an array of integers.
-		- Prototype: int ``*array_range(int min, int max)``;
-		- The array created should contain all the values from ``min`` (included) to ``max`` (included), ordered from min to max
-		- Return: the pointer to the newly created array
-		- If ``min`` > ``max``, return ``NULL``
-		- If ``malloc`` fails, return ``NULL``
+- [x] [4-sum.h](https://github.com/cristian-encalada/holbertonschool-low_level_programming/blob/master/4-sum.h)
+	- Write a function-like macro ``SUM(x, y)`` that computes the sum of the numbers ``x`` and ``y``.
 ```
-julien@ubuntu:~/0x0b. more malloc, free$ cat 3-main.c
-#include "main.h"
+julien@ubuntu:~/0x0c. macro, structures$ cat 4-main.c
 #include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-
-/**
- * simple_print_buffer - prints buffer in hexa
- * @buffer: the address of memory to print
- * @size: the size of the memory to print
- *
- * Return: Nothing.
- */
-void simple_print_buffer(int *buffer, unsigned int size)
-{
-    unsigned int i;
-
-    i = 0;
-    while (i < size)
-    {
-        if (i % 10)
-        {
-            printf(" ");
-        }
-        if (!(i % 10) && i)
-        {
-            printf("\n");
-        }
-        printf("0x%02x", buffer[i]);
-        i++;
-    }
-    printf("\n");
-}
+#include "4-sum.h"
+#include "4-sum.h"
 
 /**
  * main - check the code
@@ -227,16 +141,14 @@ void simple_print_buffer(int *buffer, unsigned int size)
  */
 int main(void)
 {
-    int *a;
+    int s;
 
-    a = array_range(0, 10);
-    simple_print_buffer(a, 11);
-    free(a);
+    s = SUM(98, 1024);
+    printf("%d\n", s);
     return (0);
 }
-julien@ubuntu:~/0x0b. more malloc, free$ gcc -Wall -pedantic -Werror -Wextra -std=gnu89 3-main.c 3-array_range.c -o 3-array_range
-julien@ubuntu:~/0x0b. more malloc, free$ ./3-array_range
-0x00 0x01 0x02 0x03 0x04 0x05 0x06 0x07 0x08 0x09
-0x0a
-julien@ubuntu:~/0x0b. more malloc, free$ 
+julien@ubuntu:~/0x0c. macro, structures$ gcc -Wall -pedantic -Werror -Wextra -std=gnu89 4-main.c -o e
+julien@ubuntu:~/0x0c. macro, structures$ ./e 
+1122
+julien@ubuntu:~/0x0c. macro, structures$ 
 ```
