@@ -52,7 +52,7 @@ char *argstostr(int ac, char **av)
 	/* calculate length of concatenated string */
 	for (i = 0; i < ac; i++)
 		len += _strlen(av[i]) + 1;
-	str = malloc(len * sizeof(char)); /* allocate memory for str */
+	str = malloc((len + 1) * sizeof(char)); /* allocate memory for str */
 	if (str == NULL) /* check if allocation was successful */
 		exit(1);
 	/* concatenate the strings */
@@ -62,6 +62,6 @@ char *argstostr(int ac, char **av)
 		j += _strlen(av[i]);
 		str[j++] = '\n';
 	}
-	str[len - 1] = '\0'; /* null-terminate the string */
+	str[len] = '\0'; /* null-terminate the string */
 	return (str);
 }
