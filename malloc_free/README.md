@@ -329,3 +329,101 @@ julien@ubuntu:~/0x0a. malloc, free$ valgrind ./4-free_grid
 ==5013== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
 julien@ubuntu:~/0x0a. malloc, free$ 
 ```
+- [x] [100-argstostr.c](https://github.com/cristian-encalada/holbertonschool-low_level_programming/blob/master/malloc_free/100-argstostr.c)
+	- Write a function that concatenates all the arguments of your program.
+		- Prototype: ``char *argstostr(int ac, char **av)``;
+		- Returns ``NULL`` if ``ac == 0`` or ``av == NULL``
+		- Returns a pointer to a new string, or ``NULL`` if it fails
+		- Each argument should be followed by a ``\n`` in the new string
+```
+julien@ubuntu:~/0x0a. malloc, free$ cat 100-main.c
+#include "main.h"
+#include <stdio.h>
+#include <stdlib.h>
+
+/**
+ * main - check the code
+ *
+ * Return: Always 0.
+ */
+int main(int ac, char *av[])
+{
+    char *s;
+
+    s = argstostr(ac, av);
+    if (s == NULL)
+    {
+        return (1);
+    }
+    printf("%s", s);
+    free(s);
+    return (0);
+}
+julien@ubuntu:~/0x0a. malloc, free$ gcc -Wall -pedantic -Werror -Wextra -std=gnu89 100-main.c 100-argstostr.c -o args
+julien@ubuntu:~/0x0a. malloc, free$ ./args I will "show you" how great I am
+./args
+I
+will
+show you
+how
+great
+I
+am
+julien@ubuntu:~/0x0a. malloc, free$
+```
+- [x] [101-strtow.c](https://github.com/cristian-encalada/holbertonschool-low_level_programming/blob/master/malloc_free/101-strtow.c)
+	- Write a function that splits a string into words.
+		- Prototype: ``char **strtow(char *str)``;
+		- The function returns a pointer to an array of strings (words)
+		- Each element of this array should contain a single word, null-terminated
+		- The last element of the returned array should be ``NULL``
+		- Words are separated by spaces
+		- Returns ``NULL`` if ``str == NULL`` or ``str == ""``
+		- If your function fails, it should return ``NULL``
+```
+julien@ubuntu:~/0x0a. malloc, free$ cat 101-main.c
+#include "main.h"
+#include <stdio.h>
+#include <stdlib.h>
+
+/**
+ * print_tab - Prints an array of string
+ * @tab: The array to print
+ *
+ * Return: nothing
+ */
+void print_tab(char **tab)
+{
+    int i;
+
+    for (i = 0; tab[i] != NULL; ++i)
+    {
+        printf("%s\n", tab[i]);
+    }
+}
+
+/**
+ * main - check the code
+ *
+ * Return: 1 if an error occurred, 0 otherwise
+ */
+int main(void)
+{
+    char **tab;
+
+    tab = strtow("      Best School         #cisfun      ");
+    if (tab == NULL)
+    {
+        printf("Failed\n");
+        return (1);
+    }
+    print_tab(tab);
+    return (0);
+}
+julien@ubuntu:~/0x0a. malloc, free$ gcc -Wall -pedantic -Werror -Wextra -std=gnu89 101-main.c 101-strtow.c -o strtow
+julien@ubuntu:~/0x0a. malloc, free$ ./strtow | cat -e
+Best$
+School$
+#cisfun$
+julien@ubuntu:~/0x0a. malloc, free$
+```
