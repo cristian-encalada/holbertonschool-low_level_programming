@@ -14,138 +14,78 @@ int _strlen(char *s)
 		s++;
 		count++;
 	}
-	return (count); 
+	return (count);
 }
 /**
-* *_strchr - function that locates a character in a string.
-* @s: input string
-* @c: character to be located
-* Return: a pointer to the first occurrence of the character c in the string
-* or NULL if the character is not found
-*/
-char *_strchr(char *s, char c)
+ * count_words - Counts the number of words in a string
+ * @str: The string to count the words of
+ *
+ * Return: The number of words in @str
+ */
+int count_words(char *str)
 {
-	while (*s != '\0' && *s != c)
-		s++;
-	if (*s == c)
-		return (s);
-	else
-		return ('\0');
-}
-/**
-* *_strcpy - function that swaps the values of two integers
-* @src: input string (source to be copied)
-* @dest: output string (destination array)
-* Return: the copied array
-*/
-char *_strcpy(char *dest, char *src)
-{
-	char *start = dest;
+	int i, count = 0;
 
-	while (*src != '\0')
+	for (i = 0; str[i] != '\0'; i++)
 	{
-		*dest = *src;
-		dest++;
-		src++;
+	if (str[i] != ' ' && (str[i + 1] == ' ' || str[i + 1] == '\0'))
+		count++;
 	}
-	*dest = '\0'; /**add '\0' at the end */
-	return (start);
+	return (count);
+}
+/**
+ * free_words - Frees an array of strings
+ * @words: The array of strings to free
+ * @size: The size of the array
+ *
+ * Return: Nothing
+ */
+void free_words(char **words, int size)
+{
+	int i;
+
+	for (i = 0; i < size; i++)
+		free(words[i]);
+	free(words);
 }
 /**
  * strtow - function that splits a string into words
  * @str: input string
  * Return: A pointer to an array of strings (words)
- * 	Returns NULL if str == NULL or str == ""
+ *	Returns NULL if str == NULL or str == ""
  */
-char **strtow(char *str) 
+char **strtow(char *str)
 {
-	int len = _strlen(str);
-	int *count = 0; /* number of substrings */
-  /* We make one pass of the string to first determine how many substrings 
-   we'll need to create, so we can allocate space for a large enough array 
-   of pointer to strings.  The variable i will keep track of our current 
-   index in the string */
-	int i = 0, old_i, j = 0, string_index = 0, to_allocate;
-	char **strings;
-	char buffer[16384];
-	char *seperators = " ";
-	while (i < len)
+	char **words;
+	int i, j, k, len, count = 0;
+
+	if (str == NULL || str[0] == '\0')
+		return (NULL);
+
+	len = _strlen(str);
+	words = malloc((count_words(str) + 1) * sizeof(char *));
+	if (words == NULL)
+		return (NULL);
+	for (i = 0; i < len; ++i)
 	{
-    /* skip over the next group of separator characters */
-		while (i < len)
+		if (str[i] != ' ')
 		{
-      /* keep incrementing i until the character at index i is NOT found in the 
-      separators array, indicating we've reached the next substring to create  */
-		if (_strchr(seperators, str[i]) == NULL)
-			break;
-		i++;
+		j = i;
+		while (str[j] != ' ' && str[j] != '\0')
+		++j;
+		words[count] = malloc((j - i + 1) * sizeof(char));
+		if (words[count] == NULL)
+		{
+			free_words(words, count);
+			return (NULL);
 		}
-    /* skip over the next group of substring (i.e. non-separator characters), 
-    we'll use old_i to verify that we actually did detect non-separator 
-    characters (perhaps we're at the end of the string) */
-	old_i = i;
-	while (i < len)
-	{
-	/*  increment i until the character at index i IS found in the separators 
-       array, indicating we've reached the next group of separator 
-       character(s) */
-	if (_strchr(seperators, str[i]) != NULL)
-		break;
-	i++;
+		for (k = 0; k < j - i; ++k)
+		words[count][k] = str[i + k];
+		words[count][k] = '\0';
+		++count;
+		i = j;
+		}
 	}
-    /* if we did encounter non-seperator characters, increase the count of 
-     substrings that will need to be created  */
-	if (i > old_i) *count = *count + 1;
-	}
-  /* allocate space for a dynamically allocated array of *count* number of 
-   pointers to strings */
-	strings = malloc(sizeof(char *) * *count);
-  /* we'll make another pass of the string using more or less the same logic as 
-  above, but this time we'll dynamically allocate space for each substring 
-  and store the substring into this space */
-	i = 0;
-  /* buffer will temporarily store each substring, string_index will keep track 
-  of the current index we are storing the next substring into using the 
-  dynamically allocated array above */
-	while (i < len)
-	{
-   /* skip through the next group of separators, exactly the same as above */
-    while (i < len)
-    {
-      if (_strchr(seperators, str[i]) == NULL)
-        break;
-      i++;
-    }
-    /* store the next substring into the buffer char array, use j to keep 
-     track of the index in the buffer array to store the next char */
-    while (i < len)
-    {
-      if (_strchr(seperators, str[i]) != NULL)
-        break;
-      buffer[j] = str[i];
-      i++;
-      j++;
-    }
-    /* only copy the substring into the array of substrings if we actually 
-    read in characters with the above loop... it's possible we won't if 
-    the string ends with a group of separator characters! */
-    if (j > 0)
-    {
-      /* add a null terminator on to the end of buffer to terminate the string */
-      buffer[j] = '\0';
-      /* calculate how much space to allocate... we need to be able to store 
-       the length of buffer (including a null terminator) number of characters  */
-      to_allocate = sizeof(char) *
-                        (_strlen(buffer) + 1);
-      /* allocate enough space using malloc, store the pointer into the strings 
-       array of pointers at hte current string_index */
-      strings[string_index] = malloc(to_allocate);
-      /* copy the buffer into this dynamically allocated space */
-      _strcpy(strings[string_index], buffer);
-      /* advance string_index so we store the next string at the next index in 
-       the strings array */
-      string_index++;
-    }
-  }
-  return (strings);
+	words[count] = NULL;
+	return (words);
 }
