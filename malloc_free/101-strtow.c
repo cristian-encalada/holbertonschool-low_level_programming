@@ -35,7 +35,10 @@ int count_words(char *str)
 			count++;
 		prev_char = str[i];
 	}
-	return (count);
+	if (count == 0)
+		return (0);
+	else
+		return (count);
 }
 /**
  * free_words - Frees an array of strings
@@ -65,6 +68,8 @@ char **strtow(char *str)
 
 	if (str == NULL  || str[0] == '\0')
 		return (NULL);
+	if (count_words(str) == 0)
+		return (NULL);
 	len = _strlen(str);
 	words = malloc((count_words(str) + 1) * sizeof(char *));
 	if (words == NULL)
@@ -75,7 +80,7 @@ char **strtow(char *str)
 		{
 		j = i;
 		while (str[j] != ' ' && str[j] != '\0')
-		++j;
+			++j;
 		words[count] = malloc((j - i + 1) * sizeof(char));
 		if (words[count] == NULL)
 		{
