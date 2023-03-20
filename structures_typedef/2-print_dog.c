@@ -13,12 +13,8 @@ void init_dog(struct dog *d, char *name, float age, char *owner)
 {
 	if (d != 0) /* Check if d is not NULL */
 	{
-		if (name == NULL)
-			d->name = "nil";
 		d->name = name;
 		d->age = age;
-		if (name == NULL)
-			d->owner = "nil";
 		d->owner = owner;
 	}
 }
@@ -31,8 +27,14 @@ void print_dog(struct dog *d)
 {
 	if (d != 0) /* Check if d is not NULL */
 	{
-		printf("%s\n", (*d).name);
-		printf("%f\n", (*d).age);
-		printf("%s\n", (*d).owner);
+		if ((*d).name == NULL)
+			printf("Name: (nil)\n");
+		else
+			printf("Name: %s\n", (*d).name);
+		printf("Age: %f\n", (*d).age);
+		if ((*d).owner == NULL)
+			printf("Owner: (nil)\n");
+		else
+		printf("Owner: %s\n", (*d).owner);
 	}
 }
