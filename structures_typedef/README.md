@@ -1,38 +1,39 @@
 # C - Structures, typedef
 ## Resources
-* [Do I cast the result of malloc?](https://stackoverflow.com/questions/605845/do-i-cast-the-result-of-malloc)
+* [0x0d. Structures.pdf](https://s3.eu-west-3.amazonaws.com/hbtn.intranet/uploads/misc/2021/1/6eb80c79c99f6125450a0dc11b300d46238d1a5a.pdf?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIA4MYA5JM5DUTZGMZG%2F20230320%2Feu-west-3%2Fs3%2Faws4_request&X-Amz-Date=20230320T191615Z&X-Amz-Expires=86400&X-Amz-SignedHeaders=host&X-Amz-Signature=96d53a6e880a70759acb29336d25515f5450992352b13dc6eeea1eb49def40c3)
+* [struct (C programming language)](https://en.wikipedia.org/wiki/Struct_(C_programming_language))
+* [Documentation: structures](https://github.com/hs-hq/Betty/wiki/Documentation:-Data-structures)
+* [0x0d. Typedef and structures.pdf](https://s3.eu-west-3.amazonaws.com/hbtn.intranet/uploads/misc/2021/1/c8ff3e6f7202be7fa489a584e41d005504a07c23.pdf?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIA4MYA5JM5DUTZGMZG%2F20230320%2Feu-west-3%2Fs3%2Faws4_request&X-Amz-Date=20230320T191722Z&X-Amz-Expires=86400&X-Amz-SignedHeaders=host&X-Amz-Signature=6443a98a604d49e309ce47247f9bdcd4984f318fa520ff765ed753a990976c29)
+* [typedef](https://publications.gbdirect.co.uk//c_book/chapter8/typedef.html)
+* **Programming in C** by Stephen Kochan - Chapter 8, Working with Structures p163-189
+* [The Lost Art of C Structure Packing](http://www.catb.org/esr/structure-packing/)
 ## Learned Topics
 ### General
-* How to use the ``exit`` function
-* What are the functions ``calloc`` and realloc from the standard library and how to use them
+* What are structures, when, why and how to use them
+* How to use ``typedef``
 ## Requirements
 ### General
 * Allowed editors: ``vi``, ``vim``, ``emacs``
 * All your files will be compiled on Ubuntu 20.04 LTS using gcc, using the options ``-Wall -Werror -Wextra -pedantic -std=gnu89``
 * All your files should end with a new line
 * A ``README.md`` file, at the root of the folder of the project
-* There should be no errors and no warnings during compilation
 * Your code should use the ``Betty`` style. It will be checked using [betty-style.pl](https://github.com/hs-hq/Betty/blob/main/betty-style.pl) and [betty-doc.pl](https://github.com/hs-hq/Betty/blob/main/betty-doc.pl)
 * You are not allowed to use global variables
 * No more than 5 functions per file
-* The only C standard library functions allowed are ``malloc`` and ``free``. Any use of functions like ``printf``, ``puts``, ``calloc``, ``realloc`` etc… is forbidden
-* You are allowed to use [_putchar](https://github.com/hs-hq/_putchar.c/blob/main/_putchar.c)
-* You don’t have to push ``_putchar.c``, we will use our file. If you do it won’t be taken into account
+* The only C standard library functions allowed are ``malloc``, ``free``, ``printf`` and ``exit``.
 * In the following examples, the ``main.c`` files are shown as examples. You can use them to test your functions, but you don’t have to push them to your repo (if you do we won’t take them into account). We will use our own main.c files at compilation. Our main.c files might be different from the one shown in the examples
-* The prototypes of all your functions and the prototype of the function _putchar should be included in your header file called ``main.h``
 * Don’t forget to push your header file
+* All your header files should be include guarded
 ## Tasks completed
-- [x] [0-malloc_checked.c](https://github.com/cristian-encalada/holbertonschool-low_level_programming/blob/master/more_malloc_free/0-malloc_checked.c)
-	- Write a function that allocates memory using ``malloc``.
-		- Prototype: ``void *malloc_checked(unsigned int b)``;
-		- Returns a pointer to the allocated memory
-		- if ``malloc`` fails, the ``malloc_checked`` function should cause normal process termination with a status value of ``98``
+- [x] [dog.h](https://github.com/cristian-encalada/holbertonschool-low_level_programming/blob/master/structures_typedef/dog.h)
+	- Define a new type ``struct dog`` with the following elements:
+		- ``name``, type = ``char *``
+		- ``age``, type = ``float``
+		- ``owner``, type = ``char *``
 ```
-julien@ubuntu:~/0x0b. more malloc, free$ cat 0-main.c
-#include "main.h"
+julien@ubuntu:~/0x0d. structures, typedef$ cat 0-main.c
 #include <stdio.h>
-#include <stdlib.h>
-#include <limits.h>
+#include "dog.h"
 
 /**
  * main - check the code
@@ -41,47 +42,26 @@ julien@ubuntu:~/0x0b. more malloc, free$ cat 0-main.c
  */
 int main(void)
 {
-    char *c;
-    int *i;
-    float *f;
-    double *d;
+    struct dog my_dog;
 
-    c = malloc_checked(sizeof(char) * 1024);
-    printf("%p\n", (void *)c);
-    i = malloc_checked(sizeof(int) * 402);
-    printf("%p\n", (void *)i);
-    f = malloc_checked(sizeof(float) * 100000000);
-    printf("%p\n", (void *)f);
-    d = malloc_checked(INT_MAX);
-    printf("%p\n", (void *)d);
-    free(c);
-    free(i);
-    free(f);
-    free(d);
+    my_dog.name = "Poppy";
+    my_dog.age = 3.5;
+    my_dog.owner = "Bob";
+    printf("My name is %s, and I am %.1f :) - Woof!\n", my_dog.name, my_dog.age);
     return (0);
 }
-julien@ubuntu:~/0x0b. more malloc, free$ gcc -Wall -pedantic -Werror -Wextra -std=gnu89 0-main.c 0-malloc_checked.c -o a
-julien@ubuntu:~/0x0b. more malloc, free$ ./a 
-0x1e39010
-0x1e39830
-0x7f31f6c19010
-0x6f55f6c19011
-julien@ubuntu:~/0x0b. more malloc, free$ echo $?
-0
-julien@ubuntu:~/0x0b. more malloc, free$ 
+julien@ubuntu:~/0x0d. structures, typedef$ gcc -Wall -pedantic -Werror -Wextra -std=gnu89 0-main.c -o a
+julien@ubuntu:~/0x0d. structures, typedef$ ./a 
+My name is Poppy, and I am 3.5 :) - Woof!
+julien@ubuntu:~/0x0d. structures, typedef$ 
 ```
-- [x] [1-string_nconcat.c](https://github.com/cristian-encalada/holbertonschool-low_level_programming/blob/master/more_malloc_free/1-string_nconcat.c)
-	- Write a function that concatenates two strings.
-		- Prototype: ``char *string_nconcat(char *s1, char *s2, unsigned int n)``;
-		- The returned pointer shall point to a newly allocated space in memory, which contains ``s1``, followed by the first ``n`` bytes of ``s2``, and null terminated
-		- If the function fails, it should return ``NULL``
-		- If ``n`` is greater or equal to the length of ``s2`` then use the entire string ``s2``
-		- if ``NULL`` is passed, treat it as an empty string
+- [x] [1-init_dog.c](https://github.com/cristian-encalada/holbertonschool-low_level_programming/blob/master/structures_typedef/1-init_dog.c)
+	- Write a function that initialize a variable of type ``struct dog``
+		- Prototype: ``void init_dog(struct dog *d, char *name, float age, char *owner)``;
 ```
-julien@ubuntu:~/0x0b. more malloc, free$ cat 1-main.c
-#include "main.h"
+julien@ubuntu:~/0x0d. structures, typedef$ cat 1-main.c
 #include <stdio.h>
-#include <stdlib.h>
+#include "dog.h"
 
 /**
  * main - check the code
@@ -90,60 +70,28 @@ julien@ubuntu:~/0x0b. more malloc, free$ cat 1-main.c
  */
 int main(void)
 {
-    char *concat;
+    struct dog my_dog;
 
-    concat = string_nconcat("Best ", "School !!!", 6);
-    printf("%s\n", concat);
-    free(concat);
+    init_dog(&my_dog, "Poppy", 3.5, "Bob");
+    printf("My name is %s, and I am %.1f :) - Woof!\n", my_dog.name, my_dog.age);
     return (0);
 }
-julien@ubuntu:~/0x0b. more malloc, free$ gcc -Wall -pedantic -Werror -Wextra -std=gnu89 1-main.c 1-string_nconcat.c -o 1-string_nconcat
-julien@ubuntu:~/0x0b. more malloc, free$ ./1-string_nconcat
-Best School
-julien@ubuntu:~/0x0b. more malloc, free$
+julien@ubuntu:~/0x0d. structures, typedef$ gcc -Wall -pedantic -Werror -Wextra -std=gnu89 1-main.c 1-init_dog.c -o b
+julien@ubuntu:~/0x0d. structures, typedef$ ./b 
+My name is Poppy, and I am 3.5 :) - Woof!
+julien@ubuntu:~/0x0d. structures, typedef$ 
 ```
-- [x] [2-calloc.c](https://github.com/cristian-encalada/holbertonschool-low_level_programming/blob/master/more_malloc_free/2-calloc.c)
-	- Write a function that allocates memory for an array, using ``malloc``.
-		- Prototype: ``void *_calloc(unsigned int nmemb, unsigned int size)``;
-		- The ``_calloc`` function allocates memory for an array of ``nmemb`` elements of ``size`` bytes each and returns a pointer to the allocated memory.
-		- The memory is set to zero
-		- If ``nmemb`` or ``size`` is ``0``, then ``_calloc`` returns ``NULL``
-		- If ``malloc`` fails, then ``_calloc`` returns ``NULL``
-		- FYI: The standard library provides a different function: calloc. Run man calloc to learn more.
+- [x] [2-print_dog.c](https://github.com/cristian-encalada/holbertonschool-low_level_programming/blob/master/structures_typedef/2-print_dog.c)
+	- Write a function that prints a ``struct dog``
+		- Prototype: ``void print_dog(struct dog *d)``;
+		- Format: see example bellow
+		- You are allowed to use the standard library
+		- If an element of ``d`` is ``NULL``, print ``(nil)`` instead of this element. (if ``name`` is ``NULL``, print ``Name: (nil)``)
+		- If ``d`` is ``NULL`` print nothing.
 ```
-julien@ubuntu:~/0x0b. more malloc, free$ cat 2-main.c
-#include "main.h"
+julien@ubuntu:~/0x0d. structures, typedef$ cat 2-main.c
 #include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-
-/**
- * simple_print_buffer - prints buffer in hexa
- * @buffer: the address of memory to print
- * @size: the size of the memory to print
- *
- * Return: Nothing.
- */
-void simple_print_buffer(char *buffer, unsigned int size)
-{
-    unsigned int i;
-
-    i = 0;
-    while (i < size)
-    {
-        if (i % 10)
-        {
-            printf(" ");
-        }
-        if (!(i % 10) && i)
-        {
-            printf("\n");
-        }
-        printf("0x%02x", buffer[i]);
-        i++;
-    }
-    printf("\n");
-}
+#include "dog.h"
 
 /**
  * main - check the code
@@ -152,71 +100,27 @@ void simple_print_buffer(char *buffer, unsigned int size)
  */
 int main(void)
 {
-    char *a;
+    struct dog my_dog;
 
-    a = _calloc(98, sizeof(char));
-    strcpy(a, "Best");
-    strcpy(a + 4, " School! :)\n");
-    a[97] = '!';
-    simple_print_buffer(a, 98);
-    free(a);
+    my_dog.name = "Poppy";
+    my_dog.age = 3.5;
+    my_dog.owner = "Bob";
+    print_dog(&my_dog);
     return (0);
 }
-julien@ubuntu:~/0x0b. more malloc, free$ gcc -Wall -pedantic -Werror -Wextra -std=gnu89 2-main.c 2-calloc.c -o 2-calloc
-julien@ubuntu:~/0x0b. more malloc, free$ ./2-calloc
-0x42 0x65 0x73 0x74 0x20 0x53 0x63 0x68 0x6f 0x6f
-0x6c 0x21 0x20 0x3a 0x29 0x0a 0x00 0x00 0x00 0x00
-0x00 0x00 0x00 0x00 0x00 0x00 0x00 0x00 0x00 0x00
-0x00 0x00 0x00 0x00 0x00 0x00 0x00 0x00 0x00 0x00
-0x00 0x00 0x00 0x00 0x00 0x00 0x00 0x00 0x00 0x00
-0x00 0x00 0x00 0x00 0x00 0x00 0x00 0x00 0x00 0x00
-0x00 0x00 0x00 0x00 0x00 0x00 0x00 0x00 0x00 0x00
-0x00 0x00 0x00 0x00 0x00 0x00 0x00 0x00 0x00 0x00
-0x00 0x00 0x00 0x00 0x00 0x00 0x00 0x00 0x00 0x00
-0x00 0x00 0x00 0x00 0x00 0x00 0x00 0x21
-julien@ubuntu:~/0x0b. more malloc, free$ 
+julien@ubuntu:~/0x0d. structures, typedef$ gcc -Wall -pedantic -Werror -Wextra -std=gnu89 2-main.c 2-print_dog.c -o c
+julien@ubuntu:~/0x0d. structures, typedef$ ./c 
+Name: Poppy
+Age: 3.500000
+Owner: Bob
+julien@ubuntu:~/0x0d. structures, typedef$ 
 ```
-- [x] [3-array_range.c](https://github.com/cristian-encalada/holbertonschool-low_level_programming/blob/master/more_malloc_free/3-array_range.c)
-	- Write a function that creates an array of integers.
-		- Prototype: int ``*array_range(int min, int max)``;
-		- The array created should contain all the values from ``min`` (included) to ``max`` (included), ordered from min to max
-		- Return: the pointer to the newly created array
-		- If ``min`` > ``max``, return ``NULL``
-		- If ``malloc`` fails, return ``NULL``
+- [x] [dog.h](https://github.com/cristian-encalada/holbertonschool-low_level_programming/blob/master/structures_typedef/dog.h)
+	- Define a new type ``dog_t`` as a new name for the type ``struct dog``.
 ```
-julien@ubuntu:~/0x0b. more malloc, free$ cat 3-main.c
-#include "main.h"
+julien@ubuntu:~/0x0d. structures, typedef$ cat 3-main.c
 #include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-
-/**
- * simple_print_buffer - prints buffer in hexa
- * @buffer: the address of memory to print
- * @size: the size of the memory to print
- *
- * Return: Nothing.
- */
-void simple_print_buffer(int *buffer, unsigned int size)
-{
-    unsigned int i;
-
-    i = 0;
-    while (i < size)
-    {
-        if (i % 10)
-        {
-            printf(" ");
-        }
-        if (!(i % 10) && i)
-        {
-            printf("\n");
-        }
-        printf("0x%02x", buffer[i]);
-        i++;
-    }
-    printf("\n");
-}
+#include "dog.h"
 
 /**
  * main - check the code
@@ -225,116 +129,85 @@ void simple_print_buffer(int *buffer, unsigned int size)
  */
 int main(void)
 {
-    int *a;
+    dog_t my_dog;
 
-    a = array_range(0, 10);
-    simple_print_buffer(a, 11);
-    free(a);
+    my_dog.name = "Poppy";
+    my_dog.age = 3.5;
+    my_dog.owner = "Bob";
+    printf("My name is %s, and I am %.1f :) - Woof!\n", my_dog.name, my_dog.age);
     return (0);
 }
-julien@ubuntu:~/0x0b. more malloc, free$ gcc -Wall -pedantic -Werror -Wextra -std=gnu89 3-main.c 3-array_range.c -o 3-array_range
-julien@ubuntu:~/0x0b. more malloc, free$ ./3-array_range
-0x00 0x01 0x02 0x03 0x04 0x05 0x06 0x07 0x08 0x09
-0x0a
-julien@ubuntu:~/0x0b. more malloc, free$ 
+julien@ubuntu:~/0x0d. structures, typedef$ gcc -Wall -pedantic -Werror -Wextra -std=gnu89 3-main.c -o d
+julien@ubuntu:~/0x0d. structures, typedef$ ./d 
+My name is Poppy, and I am 3.5 :) - Woof!
+julien@ubuntu:~/0x0d. structures, typedef$ 
 ```
-- [x] [100-realloc.c](https://github.com/cristian-encalada/holbertonschool-low_level_programming/blob/master/more_malloc_free/100-realloc.c)
-	- Write a function that reallocates a memory block using ``malloc`` and ``free``
-		- Prototype: ``void *_realloc(void *ptr, unsigned int old_size, unsigned int new_size)``;
-		- where ``ptr`` is a pointer to the memory previously allocated with a call to ``malloc: malloc(old_size)``
-		- ``old_size`` is the size, in bytes, of the allocated space for ``ptr``
-		- and ``new_size`` is the new size, in bytes of the new memory block
-		- The contents will be copied to the newly allocated space, in the range from the start of ``ptr`` up to the minimum of the old and new sizes
-		- If ``new_size`` > ``old_size``, the “added” memory should not be initialized
-		- If ``new_size`` == ``old_size`` do not do anything and return ``ptr``
-		- If ``ptr`` is ``NULL``, then the call is equivalent to ``malloc(new_size)``, for all values of ``old_size`` and ``new_size``
-		- If ``new_size`` is equal to zero, and ``ptr`` is not ``NULL``, then the call is equivalent to ``free(ptr)``. Return ``NULL``
-		- Don’t forget to free ``ptr`` when it makes sense
-		- FYI: The standard library provides a different function: ``realloc``. Run ``man realloc`` to learn more.
+- [x] [4-new_dog.c](https://github.com/cristian-encalada/holbertonschool-low_level_programming/blob/master/structures_typedef/4-new_dog.c)
+	- Write a function that creates a new dog.
+		- Prototype: ``dog_t *new_dog(char *name, float age, char *owner)``;
+		- You have to store a copy of ``name`` and ``owner``
+		- Return ``NULL`` if the function fails
 ```
-julien@ubuntu:~/0x0b. more malloc, free$ cat 100-main.c
-#include "main.h"
+julien@ubuntu:~/0x0d. structures, typedef$ cat 4-main.c
 #include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
+#include "dog.h"
 
 /**
- * simple_print_buffer - prints buffer in hexa
- * @buffer: the address of memory to print
- * @size: the size of the memory to print
- *
- * Return: Nothing.
- */
-void simple_print_buffer(char *buffer, unsigned int size)
-{
-    unsigned int i;
-
-    i = 0;
-    while (i < size)
-    {
-        if (i % 10)
-        {
-            printf(" ");
-        }
-        if (!(i % 10) && i)
-        {
-            printf("\n");
-        }
-        printf("0x%02x", buffer[i]);
-        i++;
-    }
-    printf("\n");
-}
-
-/**
- * main - check the code for
+ * main - check the code
  *
  * Return: Always 0.
  */
 int main(void)
 {
-    char *p;
-    int i;
+    dog_t *my_dog;
 
-    p = malloc(sizeof(char) * 10);
-    p = _realloc(p, sizeof(char) * 10, sizeof(char) * 98);
-    i = 0;
-    while (i < 98)
-    {
-        p[i++] = 98;
-    }
-    simple_print_buffer(p, 98);
-    free(p);
+    my_dog = new_dog("Poppy", 3.5, "Bob");
+    printf("My name is %s, and I am %.1f :) - Woof!\n", my_dog->name, my_dog->age);
     return (0);
 }
-julien@ubuntu:~/0x0b. more malloc, free$ gcc -Wall -pedantic -Werror -Wextra -std=gnu89 100-main.c 100-realloc.c -o 100-realloc
-julien@ubuntu:~/0x0b. more malloc, free$ ./100-realloc
-0x62 0x62 0x62 0x62 0x62 0x62 0x62 0x62 0x62 0x62
-0x62 0x62 0x62 0x62 0x62 0x62 0x62 0x62 0x62 0x62
-0x62 0x62 0x62 0x62 0x62 0x62 0x62 0x62 0x62 0x62
-0x62 0x62 0x62 0x62 0x62 0x62 0x62 0x62 0x62 0x62
-0x62 0x62 0x62 0x62 0x62 0x62 0x62 0x62 0x62 0x62
-0x62 0x62 0x62 0x62 0x62 0x62 0x62 0x62 0x62 0x62
-0x62 0x62 0x62 0x62 0x62 0x62 0x62 0x62 0x62 0x62
-0x62 0x62 0x62 0x62 0x62 0x62 0x62 0x62 0x62 0x62
-0x62 0x62 0x62 0x62 0x62 0x62 0x62 0x62 0x62 0x62
-0x62 0x62 0x62 0x62 0x62 0x62 0x62 0x62
-julien@ubuntu:~/0x0b. more malloc, free$ 
+julien@ubuntu:~/0x0d. structures, typedef$ gcc -Wall -pedantic -Werror -Wextra -std=gnu89 4-main.c 4-new_dog.c -o e
+julien@ubuntu:~/0x0d. structures, typedef$ ./e
+My name is Poppy, and I am 3.5 :) - Woof!
+julien@ubuntu:~/0x0d. structures, typedef$ 
 ```
-- [x] [101-mul.c] 
-	- Write a program that multiplies two positive numbers.
-		- Usage: ``mul num1 num2``
-		- ``num1`` and ``num2`` will be passed in base 10
-		- Print the result, followed by a new line
-		- If the number of arguments is incorrect, print ``Error``, followed by a new line, and exit with a status of ``98``
-		- ``num1`` and ``num2`` should only be composed of digits. If not, print ``Error``, followed by a new line, and exit with a status of ``98``
-		- You are allowed to use more than 5 functions in your file
-		- You can use ``bc`` (``man bc``) to check your results.
+- [x] [5-free_dog.c](https://github.com/cristian-encalada/holbertonschool-low_level_programming/blob/master/structures_typedef/5-free_dog.c)
+	- Write a function that frees dogs.
+		- Prototype: ``void free_dog(dog_t *d)``;
 ```
-julien@ubuntu:~/0x0b. more malloc, free$ gcc -Wall -pedantic -Werror -Wextra -std=gnu89 101-mul.c _putchar.c -o 101-mul
-julien@ubuntu:~/0x0b. more malloc, free$ ./101-mul 10 98
-980
-julien@ubuntu:~/0x0b. more malloc, free$ ./101-mul 235234693269436436223446526546334576437634765378653875874687649698659586695898579 28658034365084365083426083109679137608216408631430814308651084650816406134060831608310853086103769013709675067130586570832760732096730978014607369739567864508634086304807450973045703428580934825098342095832409850394285098342509834209583425345267413639235755891879970464524226159074760914989935413350556875770807019893069201247121855122836389417022552166316010013074258781583143870461182707893577849408672040555089482160343085482612348145322689883025225988799452329290281169927532160590651993511788518550547570284574715925006962738262888617840435389140329668772644708
-6741363923575589187997046452422615907476091498993541335055687577080701989306920124712185512283638941702255216631601001307425878158314387046118270789357784940867204055508948216034308548261234814532268988302522598879945232929028116992753216059081057377926651337612618248332113256902485974371969385156015068813868274000683912187818601667058605418678284322237297213673482412392922068159291496274311170208689056585352782844484721140846367741649962638649229509281867896067208474178402156294978940712959518351846413859141792380853313812015295333546716634344284086426775480775747808150030732119704867805688704303461042373101473485092019906795014369069932
-julien@ubuntu:~/0x0b. more malloc, free$
+julien@ubuntu:~/0x0d. structures, typedef$ cat 5-main.c
+#include <stdio.h>
+#include "dog.h"
+
+/**
+ * main - check the code
+ *
+ * Return: Always 0.
+ */
+int main(void)
+{
+    dog_t *my_dog;
+
+    my_dog = new_dog("Poppy", 3.5, "Bob");
+    printf("My name is %s, and I am %.1f :) - Woof!\n", my_dog->name, my_dog->age);
+    free_dog(my_dog);
+    return (0);
+}
+julien@ubuntu:~/0x0d. structures, typedef$ gcc -Wall -pedantic -Werror -Wextra -std=gnu89 5-main.c 5-free_dog.c 4-new_dog.c -o f
+julien@ubuntu:~/0x0d. structures, typedef$ valgrind ./f
+==22840== Memcheck, a memory error detector
+==22840== Copyright (C) 2002-2015, and GNU GPL'd, by Julian Seward et al.
+==22840== Using Valgrind-3.11.0 and LibVEX; rerun with -h for copyright info
+==22840== Command: ./f
+==22840== 
+My name is Poppy, and I am 3.5 :) - Woof!
+==22840== 
+==22840== HEAP SUMMARY:
+==22840==     in use at exit: 0 bytes in 0 blocks
+==22840==   total heap usage: 4 allocs, 4 frees, 1,059 bytes allocated
+==22840== 
+==22840== All heap blocks were freed -- no leaks are possible
+==22840== 
+==22840== For counts of detected and suppressed errors, rerun with: -v
+==22840== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+julien@ubuntu:~/0x0d. structures, typedef$ 
 ```
