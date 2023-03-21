@@ -17,10 +17,14 @@ int (*get_op_func(char *s))(int, int)
 		{"%", op_mod},
 		{NULL, NULL}
 	};
-	int i = 0;
+	int i;
 
-		while (*(ops[i].op) != *s)
-		i++;
-
-	return (ops[i].f);
+	for (i = 0; i < 6; i++)
+	{/* strcmp returns 0 if strings are equal */
+		if (strcmp(ops[i].op, s) == 0)
+			return (ops[i].f);
+		else
+			return (NULL);
+	}
+	return (NULL);
 }
