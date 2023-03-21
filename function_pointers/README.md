@@ -27,7 +27,7 @@
 * The prototypes of all your functions and the prototype of the function _putchar should be included in your header file called ``main.h``
 * Don’t forget to push your header file
 ## Tasks completed
-- [x] [0-print_name.c](https://github.com/cristian-encalada/holbertonschool-low_level_programming/blob/master/0-print_name.c)
+- [x] [0-print_name.c](https://github.com/cristian-encalada/holbertonschool-low_level_programming/blob/master/function_pointers/0-print_name.c)
 	- Write a function that prints a name.
 		- Prototype: ``void print_name(char *name, void (*f)(char *))``;
 ```
@@ -90,7 +90,7 @@ Hello, my name is Bob
 Hello, my uppercase name is BOB DYLAN
 julien@ubuntu:~/0x0e. Function pointers$ 
 ```
-- [x] [1-array_iterator.c](https://github.com/cristian-encalada/holbertonschool-low_level_programming/blob/master/1-array_iterator.c)
+- [x] [1-array_iterator.c](https://github.com/cristian-encalada/holbertonschool-low_level_programming/blob/master/function_pointers/1-array_iterator.c)
 	- Write a function that executes a function given as a parameter on each element of an array.
 		- Prototype: ``void array_iterator(int *array, size_t size, void (*action)(int))``;
 		- where ``size`` is the size of the array
@@ -149,7 +149,7 @@ julien@ubuntu:~/0x0e. Function pointers$ ./b
 0x1000
 julien@ubuntu:~//0x0e. Function pointers$ 
 ```
-- [x] [2-int_index.c](https://github.com/cristian-encalada/holbertonschool-low_level_programming/blob/master/2-int_index.c)
+- [x] [2-int_index.c](https://github.com/cristian-encalada/holbertonschool-low_level_programming/blob/master/function_pointers/2-int_index.c)
 	- Write a function that searches for an integer.
 		- Prototype: ``int int_index(int *array, int size, int (*cmp)(int))``;
 		- where ``size`` is the number of elements in the array ``array``
@@ -221,10 +221,10 @@ julien@ubuntu:~/0x0e. Function pointers$ ./c
 2
 julien@ubuntu:~/0x0e. Function pointers$ 
 ```
-- [x] [3-main.c](https://github.com/cristian-encalada/holbertonschool-low_level_programming/blob/master/3-main.c)
-- [x] [3-op_functions.c](https://github.com/cristian-encalada/holbertonschool-low_level_programming/blob/master/3-op_functions.c)
-- [x] [3-get_op_func.c](https://github.com/cristian-encalada/holbertonschool-low_level_programming/blob/master/3-get_op_func.c)
-- [x] [3-calc.h](https://github.com/cristian-encalada/holbertonschool-low_level_programming/blob/master/3-calc.h)
+- [x] [3-main.c](https://github.com/cristian-encalada/holbertonschool-low_level_programming/blob/master/function_pointers/3-main.c)
+- [x] [3-op_functions.c](https://github.com/cristian-encalada/holbertonschool-low_level_programming/blob/master/function_pointers/3-op_functions.c)
+- [x] [3-get_op_func.c](https://github.com/cristian-encalada/holbertonschool-low_level_programming/blob/master/function_pointers/3-get_op_func.c)
+- [x] [3-calc.h](https://github.com/cristian-encalada/holbertonschool-low_level_programming/blob/master/function_pointers/3-calc.h)
 	- Write a program that performs simple operations.
 		- You are allowed to use the standard library
 		- Usage: ``calc num1 operator num2``
