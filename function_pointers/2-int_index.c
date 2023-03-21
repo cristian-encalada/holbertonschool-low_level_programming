@@ -23,6 +23,8 @@ int int_index(int *array, int size, int (*cmp)(int))
 	for (; size > 0; size--)
 	{
 		cmp(array[index]);
+		if (cmp(array[index]) == 0 && size == 1)
+			return (-1);
 		if (cmp(array[index]) != 0)
 		{
 			first_index = index;
