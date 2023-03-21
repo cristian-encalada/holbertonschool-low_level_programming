@@ -28,8 +28,6 @@ int int_index(int *array, int size, int (*cmp)(int))
 			first_index = index;
 			break; /* Stop searching once 1st value found */
 		}
-		else
-			return (-1);
 		index++;
 	}
 	return (first_index);
