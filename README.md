@@ -26,3 +26,6 @@ Holberton Dev Bootcamp - Montevideo 2023
 - [x] [C - More malloc, free](https://github.com/cristian-encalada/holbertonschool-low_level_programming/tree/master/more_malloc_free)
 - [x] [C - Preprocessor](https://github.com/cristian-encalada/holbertonschool-low_level_programming/tree/master/preprocessor)
 	- Tasks related to macros and how to include guards to the header files
+- [x] [C - Structures, Tyoedef](https://github.com/cristian-encalada/holbertonschool-low_level_programming/tree/master/structures_typedef)
+- [x] [C - Function pointers](https://github.com/cristian-encalada/holbertonschool-low_level_programming/tree/master/function_pointers)
+- [x] [C - Variadic functions](https://github.com/cristian-encalada/holbertonschool-low_level_programming/tree/master/variadic_functions)
