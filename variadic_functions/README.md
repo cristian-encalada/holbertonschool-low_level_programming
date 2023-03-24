@@ -1,15 +1,13 @@
 # C - Variadic functions
 ## Resources
-* [Function Pointer in C](https://www.geeksforgeeks.org/function-pointer-in-c/)
-* [Pointers to functions](https://publications.gbdirect.co.uk//c_book/chapter5/function_pointers.html)
-* [Function Pointers in C / C++](https://www.youtube.com/watch?v=ynYtgGUNelE&ab_channel=mycodeschool)
-* [why pointers to functions?](https://www.youtube.com/watch?v=sxTFSDAZM8s&ab_channel=mycodeschool)
-* [Everything you need to know about pointers in C](https://boredzo.org/pointers/)
+* [stdarg.h](https://en.wikipedia.org/wiki/Stdarg.h)
+* [Variadic Functions](https://www.gnu.org/software/libc/manual/html_node/Variadic-Functions.html)
+* [Const Keyword](https://www.youtube.com/watch?v=1W4oyuOdXv8&ab_channel=iTzAdam5X)
 ## Learned Topics
 ### General
-* What are function pointers and how to use them
-* What does a function pointer exactly hold
-* Where does a function pointer point to in the virtual memory
+* What are variadic functions
+* How to use ``va_start``, ``va_arg`` and ``va_end`` macros
+* Why and how to use the const type qualifier
 ## Requirements
 ### General
 * Allowed editors: ``vi``, ``vim``, ``emacs``
@@ -24,53 +22,18 @@
 * You are allowed to use [_putchar](https://github.com/hs-hq/_putchar.c/blob/main/_putchar.c)
 * You don’t have to push ``_putchar.c``, we will use our file. If you do it won’t be taken into account
 * In the following examples, the ``main.c`` files are shown as examples. You can use them to test your functions, but you don’t have to push them to your repo (if you do we won’t take them into account). We will use our own main.c files at compilation. Our main.c files might be different from the one shown in the examples
-* The prototypes of all your functions and the prototype of the function _putchar should be included in your header file called ``main.h``
+* The prototypes of all your functions and the prototype of the function ``_putchar`` should be included in your header file called ``variadic_functions.h``
 * Don’t forget to push your header file
+* All your header files should be include guarded
 ## Tasks completed
-- [x] [0-print_name.c](https://github.com/cristian-encalada/holbertonschool-low_level_programming/blob/master/function_pointers/0-print_name.c)
-	- Write a function that prints a name.
-		- Prototype: ``void print_name(char *name, void (*f)(char *))``;
+- [x] [0-sum_them_all.c](https://github.com/cristian-encalada/holbertonschool-low_level_programming/blob/master/variadic_functions/0-sum_them_all.c)
+	- Write a function that returns the sum of all its parameters.
+		- Prototype: ``int sum_them_all(const unsigned int n, ...)``;
+		- If ``n == 0``, return ``0``
 ```
-julien@ubuntu:~/0x0e. Function pointers$ cat 0-main.c
+julien@ubuntu:~/0x0f. variadic functions$ cat 0-main.c
 #include <stdio.h>
-#include "function_pointers.h"
-
-/**
- * print_name_as_is - prints a name as is
- * @name: name of the person
- *
- * Return: Nothing.
- */
-void print_name_as_is(char *name)
-{
-    printf("Hello, my name is %s\n", name);
-}
-
-/**
- * print_name_uppercase - print a name in uppercase
- * @name: name of the person
- *
- * Return: Nothing.
- */
-void print_name_uppercase(char *name)
-{
-    unsigned int i;
-
-    printf("Hello, my uppercase name is ");
-    i = 0;
-    while (name[i])
-    {
-        if (name[i] >= 'a' && name[i] <= 'z')
-        {
-            putchar(name[i] + 'A' - 'a');
-        }
-        else
-        {
-            putchar(name[i]);
-        }
-        i++;
-    }
-}
+#include "variadic_functions.h"
 
 /**
  * main - check the code
@@ -79,48 +42,31 @@ void print_name_uppercase(char *name)
  */
 int main(void)
 {
-    print_name("Bob", print_name_as_is);
-    print_name("Bob Dylan", print_name_uppercase);
-    printf("\n");
+    int sum;
+
+    sum = sum_them_all(2, 98, 1024);
+    printf("%d\n", sum);
+    sum = sum_them_all(4, 98, 1024, 402, -1024);
+    printf("%d\n", sum);    
     return (0);
 }
-julien@ubuntu:~/0x0e. Function pointers$ gcc -Wall -pedantic -Werror -Wextra -std=gnu89 0-main.c 0-print_name.c -o a
-julien@ubuntu:~/0x0e. Function pointers$ ./a 
-Hello, my name is Bob
-Hello, my uppercase name is BOB DYLAN
-julien@ubuntu:~/0x0e. Function pointers$ 
+julien@ubuntu:~/0x0f. variadic functions$ gcc -Wall -pedantic -Werror -Wextra -std=gnu89 0-main.c 0-sum_them_all.c -o a
+julien@ubuntu:~/0x0f. variadic functions$ ./a 
+1122
+500
+julien@ubuntu:~/0x0f. variadic functions$ 
 ```
-- [x] [1-array_iterator.c](https://github.com/cristian-encalada/holbertonschool-low_level_programming/blob/master/function_pointers/1-array_iterator.c)
-	- Write a function that executes a function given as a parameter on each element of an array.
-		- Prototype: ``void array_iterator(int *array, size_t size, void (*action)(int))``;
-		- where ``size`` is the size of the array
-		- and ``action`` is a pointer to the function you need to use
+- [x] [1-print_numbers.c](https://github.com/cristian-encalada/holbertonschool-low_level_programming/blob/master/variadic_functions/1-print_numbers.c)
+	- Write a function that prints numbers, followed by a new line.
+		- Prototype: ``void print_numbers(const char *separator, const unsigned int n, ...)``;
+		- where ``separator`` is the string to be printed between numbers
+		- and ``n`` is the number of integers passed to the function
+		- You are allowed to use ``printf``
+		- If ``separator`` is ``NULL``, don’t print it
+		- Print a new line at the end of your function
 ```
-julien@ubuntu:~/0x0e. Function pointers$ cat 1-main.c
-#include <stdio.h>
-#include "function_pointers.h"
-
-/**
- * print_elem - prints an integer
- * @elem: the integer to print
- *
- * Return: Nothing.
- */
-void print_elem(int elem)
-{
-    printf("%d\n", elem);
-}
-
-/**
- * print_elem_hex - prints an integer, in hexadecimal
- * @elem: the integer to print
- *
- * Return: Nothing.
- */
-void print_elem_hex(int elem)
-{
-    printf("0x%x\n", elem);
-}
+julien@ubuntu:~/0x0f. variadic functions$ cat 1-main.c
+#include "variadic_functions.h"
 
 /**
  * main - check the code
@@ -129,72 +75,26 @@ void print_elem_hex(int elem)
  */
 int main(void)
 {
-    int array[5] = {0, 98, 402, 1024, 4096};
-
-    array_iterator(array, 5, &print_elem);
-    array_iterator(array, 5, &print_elem_hex);
+    print_numbers(", ", 4, 0, 98, -1024, 402);
     return (0);
 }
-julien@ubuntu:~/0x0e. Function pointers$ gcc -Wall -pedantic -Werror -Wextra -std=gnu89 1-main.c 1-array_iterator.c -o b
-julien@ubuntu:~/0x0e. Function pointers$ ./b 
-0
-98
-402
-1024
-4096
-0x0
-0x62
-0x192
-0x400
-0x1000
-julien@ubuntu:~//0x0e. Function pointers$ 
+julien@ubuntu:~/0x0f. variadic functions$ gcc -Wall -pedantic -Werror -Wextra -std=gnu89 1-main.c 1-print_numbers.c -o b
+julien@ubuntu:~/0x0f. variadic functions$ ./b
+0, 98, -1024, 402
+julien@ubuntu:~/0x0f. variadic functions$ 
 ```
-- [x] [2-int_index.c](https://github.com/cristian-encalada/holbertonschool-low_level_programming/blob/master/function_pointers/2-int_index.c)
-	- Write a function that searches for an integer.
-		- Prototype: ``int int_index(int *array, int size, int (*cmp)(int))``;
-		- where ``size`` is the number of elements in the array ``array``
-		- ``cmp`` is a pointer to the function to be used to compare values
-		- ``int_index`` returns the index of the first element for which the ``cmp`` function does not return ``0``
-		- If no element matches, return ``-1``
-		- If size <= ``0``, return ``-1``
+- [x] [2-print_strings.c](https://github.com/cristian-encalada/holbertonschool-low_level_programming/blob/master/variadic_functions/2-print_strings.c)
+	- Write a function that prints strings, followed by a new line.
+		- Prototype: ``void print_strings(const char *separator, const unsigned int n, ...)``;
+		- where ``separator`` is the string to be printed between the strings
+		- and ``n`` is the number of strings passed to the function
+		- You are allowed to use ``printf``
+		- If separator is NULL, don’t print it
+		- If one of the string is ``NULL``, print ``(nil)`` instead
+		- Print a new line at the end of your function
 ```
-julien@ubuntu:~/0x0e. Function pointers$ cat 2-main.c
-#include <stdio.h>
-#include "function_pointers.h"
-
-/**
- * is_98 - check if a number is equal to 98
- * @elem: the integer to check
- *
- * Return: 0 if false, something else otherwise.
- */
-int is_98(int elem)
-{
-    return (98 == elem);
-}
-
-/**
- * is_strictly_positive - check if a number is greater than 0
- * @elem: the integer to check
- *
- * Return: 0 if false, something else otherwise.
- */
-int is_strictly_positive(int elem)
-{
-    return (elem > 0);
-}
-
-
-/**
- * abs_is_98 - check if the absolute value of a number is 98
- * @elem: the integer to check
- *
- * Return: 0 if false, something else otherwise.
- */
-int abs_is_98(int elem)
-{
-    return (elem == 98 || -elem == 98);
-}
+julien@ubuntu:~/0x0f. Variadic functions$ cat 2-main.c
+#include "variadic_functions.h"
 
 /**
  * main - check the code
@@ -203,113 +103,57 @@ int abs_is_98(int elem)
  */
 int main(void)
 {
-    int array[20] = {0, -98, 98, 402, 1024, 4096, -1024, -98, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 98};
-    int index;
-
-    index = int_index(array, 20, is_98);
-    printf("%d\n", index);
-    index = int_index(array, 20, abs_is_98);
-    printf("%d\n", index);
-    index = int_index(array, 20, is_strictly_positive);
-    printf("%d\n", index);
+    print_strings(", ", 2, "Jay", "Django");
     return (0);
 }
-julien@ubuntu:~/0x0e. Function pointers$ gcc -Wall -pedantic -Werror -Wextra -std=gnu89 2-main.c 2-int_index.c -o c
-julien@ubuntu:~/0x0e. Function pointers$ ./c 
-2
-1
-2
-julien@ubuntu:~/0x0e. Function pointers$ 
+julien@ubuntu:~/0x0f. Variadic functions$ gcc -Wall -pedantic -Werror -Wextra -std=gnu89 2-main.c 2-print_strings.c -o c
+julien@ubuntu:~/0x0f. Variadic functions$ ./c 
+Jay, Django
+julien@ubuntu:~/0x0f. Variadic functions$ 
 ```
-- [x] [3-main.c](https://github.com/cristian-encalada/holbertonschool-low_level_programming/blob/master/function_pointers/3-main.c)
-- [x] [3-op_functions.c](https://github.com/cristian-encalada/holbertonschool-low_level_programming/blob/master/function_pointers/3-op_functions.c)
-- [x] [3-get_op_func.c](https://github.com/cristian-encalada/holbertonschool-low_level_programming/blob/master/function_pointers/3-get_op_func.c)
-- [x] [3-calc.h](https://github.com/cristian-encalada/holbertonschool-low_level_programming/blob/master/function_pointers/3-calc.h)
-	- Write a program that performs simple operations.
-		- You are allowed to use the standard library
-		- Usage: ``calc num1 operator num2``
-		- You can assume ``num1`` and ``num2`` are integers, so use the atoi function to convert them from the string input to ``int``
-		- operator is one of the following:
-			- ``+``: addition
-			- ``-``: subtraction
-			- ``*``: multiplication
-			- ``/``: division
-			- ``%``: modulo
-		- The program prints the result of the operation, followed by a new line
-		- You can assume that the result of all operations can be stored in an ``int``
-		- if the number of arguments is wrong, print ``Error``, followed by a new line, and exit with the status ``98``
-		- if the ``operator`` is none of the above, print ``Error``, followed by a new line, and exit with the status ``99``
-		- if the user tries to divide (``/`` or ``%``) by ``0``, print ``Error``, followed by a new line, and exit with the status ``100``
-	- This task requires that you create four different files.<br>
-``3-calc.h``
-<br> This file should contain all the function prototypes and data structures used by the program. You can use this structure:
+- [x] [3-print_all.c](https://github.com/cristian-encalada/holbertonschool-low_level_programming/blob/master/variadic_functions/3-print_all.c)
+	- Write a function that prints anything.
+		- Prototype: ``void print_all(const char * const format, ...)``;
+		- where ``format`` is a list of types of arguments passed to the function
+			- ``c: char``
+			- ``i: integer``
+			- ``f: float``
+			- ``s: char *`` (if the string is NULL, print ``(nil)`` instead
+			- any other char should be ignored
+			- see example
+		- You are not allowed to use for, goto, ternary operator, else, do ... while
+		- You can use a maximum of
+			- 2 ``while`` loops
+			- 2 ``if``
+		- You can declare a maximum of ``9`` variables
+		- You are allowed to use ``printf``
+		- Print a new line at the end of your function
 ```
+julien@ubuntu:~/0x0f. Variadic functions$ cat 3-main.c
+#include "variadic_functions.h"
+
 /**
- * struct op - Struct op
+ * main - check the code
  *
- * @op: The operator
- * @f: The function associated
+ * Return: Always 0.
  */
-typedef struct op
+int main(void)
 {
-    char *op;
-    int (*f)(int a, int b);
-} op_t;
+    print_all("ceis", 'B', 3, "stSchool");
+    return (0);
+}
+julien@ubuntu:~/0x0f. Variadic functions$ gcc -Wall -pedantic -Werror -Wextra -std=gnu89 3-main.c 3-print_all.c -o d
+julien@ubuntu:~/0x0f. Variadic functions$ ./d 
+B, 3, stSchool
+julien@ubuntu:~/0x0f. Variadic functions$ 
 ```
-``3-op_functions.c``
-<br> This file should contain the 5 following functions (not more):<br>
-* ``op_add``: returns the sum of ``a`` and ``b``. Prototype: ``int op_add(int a, int b)``;
-* ``op_sub``: returns the difference of ``a`` and ``b``. Prototype: ``int op_sub(int a, int b)``;
-* ``op_mul``: returns the product of ``a`` and ``b``. Prototype: ``int op_mul(int a, int b)``;
-* ``op_div``: returns the result of the division of ``a`` by ``b``. Prototype: ``int op_div(int a, int b)``;
-* ``op_mod``: returns the remainder of the division of ``a`` by ``b``. Prototype: ``int op_mod(int a, int b)``;
-``3-get_op_func.c``
-<br> This file should contain the function that selects the correct function to perform the operation asked by the user. You’re not allowed to declare any other function.<br>
-* Prototype: ``int (*get_op_func(char *s))(int, int)``;
-* where ``s`` is the operator passed as argument to the program
-* This function returns a pointer to the function that corresponds to the operator given as a parameter. Example: ``get_op_func("+")`` should return a pointer to the function ``op_add``
-* You are not allowed to use ``switch`` statements
-* You are not allowed to use ``for`` or ``do ... while`` loops
-* You are not allowed to use ``goto``
-* You are not allowed to use ``else``
-* You are not allowed to use more than one ``if`` statement in your code
-* You are not allowed to use more than one ``while`` loop in your code
-* If ``s`` does not match any of the 5 expected operators (``+, -, *, /, %``), return ``NULL``
-* You are only allowed to declare these two variables in this function:
+- [x] [100-hello_world.asm](https://github.com/cristian-encalada/holbertonschool-low_level_programming/blob/master/variadic_functions/100-hello_world.asm)
+	- Write a 64-bit program in assembly that prints ``Hello, World``, followed by a new line.
+		- You are only allowed to use the system call ``write`` (use ``int`` or ``syscall``, not a call)
+		- Your program will be compiled using ``nasm`` and ``gcc`` (as follows)
 ```
-   op_t ops[] = {
-        {"+", op_add},
-        {"-", op_sub},
-        {"*", op_mul},
-        {"/", op_div},
-        {"%", op_mod},
-        {NULL, NULL}
-    };
-    int i;
-```
-``3-main.c``
-<br> This file should contain your ``main`` function only.<br>
-* You are not allowed to code any other function than ``main`` in this file
-* You are not allowed to directly call ``op_add``, ``op_sub``, ``op_mul``, ``op_div`` or ``op_mod`` from the ``main`` function
-* You have to use ``atoi`` to convert arguments to ``int``
-* You are not allowed to use any kind of loop
-* You are allowed to use a maximum of 3 ``if`` statements
-``Compilation and examples``
-```
-julien@ubuntu:~/0x0e. Function pointers$ gcc -Wall -pedantic -Werror -Wextra -std=gnu89 3-main.c 3-op_functions.c 3-get_op_func.c -o calc
-julien@ubuntu:~/0x0e. Function pointers$ ./calc 1 + 1
-2
-julien@ubuntu:~/0x0e. Function pointers$ ./calc 97 + 1
-98
-julien@ubuntu:~/0x0e. Function pointers$ ./calc 1024 / 10
-102
-julien@ubuntu:~/0x0e. Function pointers$ ./calc 1024 '*' 98
-100352
-julien@ubuntu:~/0x0e. Function pointers$ ./calc 1024 '\*' 98
-Error
-julien@ubuntu:~/0x0e. Function pointers$ ./calc 1024 - 98
-926
-julien@ubuntu:~/0x0e. Function pointers$ ./calc 1024 '%' 98
-44
-julien@ubuntu:~/0x0e. Function pointers$ 
+julien@ubuntu:~/0x0f. Variadic functions$ nasm -f elf64 100-hello_world.asm && gcc -no-pie -std=gnu89 100-hello_world.o -o hello
+julien@ubuntu:~/0x0f. Variadic functions$ ./hello 
+Hello, World
+julien@ubuntu:~/0x0f. Variadic functions$ 
 ```
