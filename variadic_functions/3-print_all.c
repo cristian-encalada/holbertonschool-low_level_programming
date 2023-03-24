@@ -1,20 +1,18 @@
 #include "variadic_functions.h"
-
 /**
  * print_all - prints different variables types
  * @format: list of types of arguments
 */
-
 void print_all(const char * const format, ...)
 {
 	va_list all;
 	int num = 0, c;
 	char *str = NULL;
 	double f = 0.0;
-	const char *p = format;
+	const char *p = format; /* aux ptr */
 
 	va_start(all, format); /* Initialize the argument list */
-	while (*p != '\0')
+	while (format != NULL && *p != '\0')
 	{
 		switch (*p)
 		{
