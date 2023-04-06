@@ -11,16 +11,16 @@ dlistint_t *insert_dnodeint_at_index(dlistint_t **h, unsigned int idx, int n)
 	unsigned int i;
 	dlistint_t *new, *temp, *verify;
 
-	verify = *h;
-
+	if (h == NULL || *h == NULL) /* Check for NULL pointers */
+		return (NULL);
 	/* Verify if the index is valid */
-	for (i = 0; i < idx; i++)
+	verify = *h;
+	for (i = 0; i < idx && verify != NULL; i++)
 	{
-		if (verify == NULL) /* last node exceeded */
-			return (NULL);
 		verify = verify->next;
 	}
-
+	if (i < idx) /*	index > number of nodes */
+		return (NULL);
 	new = malloc(sizeof(dlistint_t));
 	if (new == NULL)
 		return (NULL);
@@ -30,6 +30,7 @@ dlistint_t *insert_dnodeint_at_index(dlistint_t **h, unsigned int idx, int n)
 	if (*h == NULL)
 	{
 		*h = new;
+		new->prev = NULL;
 		return (*h);
 	}
 	/* Adding the new node at the index specified */
