@@ -11,13 +11,11 @@ int delete_dnodeint_at_index(dlistint_t **head, unsigned int index)
 
 	if (*head == NULL)
 		return (-1);
-
 	/* Delete a node at the beginning of the list */
 	if (index == 0)
 	{
 		if (temp->next != NULL) /* Is there a next node? */
 		{
-			
 			temp->next->prev = NULL;
 			*head = (*head)->next;
 			free(temp);
