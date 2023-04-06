@@ -13,18 +13,16 @@ dlistint_t *insert_dnodeint_at_index(dlistint_t **h, unsigned int idx, int n)
 
 	/* Verify if the index is valid */
 	verify = *h;
-	for (node = 1; node < idx && verify->next != NULL; node++)
+	for (node = 0; node < idx && verify->next != NULL; node++)
 	{
 		verify = verify->next;
 	}
-	if (node < idx)
+	if (idx > node)
 		return (NULL);
 	new = malloc(sizeof(dlistint_t));
 	if (new == NULL)
 		return (NULL);
-
 	new->n = n;
-
 	/* if the list is empty, add new node as the first node */
 	if (idx == 0)
 	{
