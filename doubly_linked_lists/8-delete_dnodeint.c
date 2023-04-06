@@ -15,24 +15,26 @@ int delete_dnodeint_at_index(dlistint_t **head, unsigned int index)
 	/* Delete a node at the beginning of the list */
 	if (index == 0)
 	{
-		if ((*head)->next != NULL) /* Is there a next node? */
+		if (temp->next != NULL) /* Is there a next node? */
 		{
-			(*head)->next->prev = NULL;
+			
+			temp->next->prev = NULL;
 			*head = (*head)->next;
+			free(temp);
 		}
 		else
 		{
-			free(*head);
 			*head = NULL;
+			free(temp);
 		}
 		return (1);
 	}
 	/* Verify if the index is valid */
 	for (; index > 0; index--)
 	{
+		temp = temp->next;
 		if (temp == NULL)
 			return (-1);
-		temp = temp->next;
 	}
 	/* Delete a node at the end of the list */
 	if (temp->next == NULL)
