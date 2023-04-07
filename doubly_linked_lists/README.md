@@ -1,13 +1,12 @@
 # C - Doubly linked lists
 ## Resources
-* [data-structures](https://www.geeksforgeeks.org/data-structures/)
-* [data_structures_basics.htm](https://www.tutorialspoint.com/data_structures_algorithms/data_structures_basics.htm)
-* [choosing-the-right-data-structure-to-solve-problems](https://www.careerdrill.com/blog/coding-interview/choosing-the-right-data-structure-to-solve-problems/)
-* [Neso Academy](https://www.youtube.com/watch?v=R9PTBwOzceo&list=PLBlnK6fEyqRhX6r2uhhlubuF5QextdCSM&index=201&ab_channel=NesoAcademy)
+* [What is a Doubly Linked List](https://www.youtube.com/watch?v=k0pjD12bzP0)
+* [Neso Academy - Linked lists](https://www.youtube.com/watch?v=R9PTBwOzceo&list=PLBlnK6fEyqRhX6r2uhhlubuF5QextdCSM&index=201&ab_channel=NesoAcademy)
 ## Learned Topics
 ### General
-* When and why using linked lists vs arrays
-* How to build and use linked lists
+* What is a doubly linked list
+* How to use doubly linked lists
+* Start to look for the right source of information without too much help
 ## Requirements
 ### General
 * Allowed editors: ``vi``, ``vim``, ``emacs``
@@ -29,30 +28,29 @@
 Please use this data structure for this project:
 ```
 /**
- * struct list_s - singly linked list
- * @str: string - (malloc'ed string)
- * @len: length of the string
+ * struct dlistint_s - doubly linked list
+ * @n: integer
+ * @prev: points to the previous node
  * @next: points to the next node
  *
- * Description: singly linked list node structure
+ * Description: doubly linked list node structure
+ * 
  */
-typedef struct list_s
+typedef struct dlistint_s
 {
-    char *str;
-    unsigned int len;
-    struct list_s *next;
-} list_t;
+    int n;
+    struct dlistint_s *prev;
+    struct dlistint_s *next;
+} dlistint_t;
 ```
 ## Tasks completed
-- [x] [0-print_list.c](./0-print_list.c)
- * Write a function that prints all the elements of a list_t list.
-	- Prototype: ``size_t print_list(const list_t *h)``;
-	- Return: the number of nodes
-	- Format: see example
-	- If ``str`` is ``NULL``, print ``[0] (nil)``
-	- You are allowed to use ``printf``
+- [x] [0-print_dlistint.c](./0-print_dlistint.c)
+	- Write a function that prints all the elements of a ``dlistint_t list``.
+		- Prototype: ``size_t print_dlistint(const dlistint_t *h)``;
+		- Return: the number of nodes
+		- Format: see example
 ```
-julien@ubuntu:~/Singly linked lists$ cat 0-main.c
+julien@ubuntu:~/Doubly linked lists$ cat 0-main.c 
 #include <stdlib.h>
 #include <string.h>
 #include <stdio.h>
@@ -61,54 +59,44 @@ julien@ubuntu:~/Singly linked lists$ cat 0-main.c
 /**
  * main - check the code
  *
- * Return: Always 0.
+ * Return: Always EXIT_SUCCESS.
  */
 int main(void)
 {
-    list_t *head;
-    list_t *new;
-    list_t hello = {"World", 5, NULL};
+    dlistint_t *head;
+    dlistint_t *new;
+    dlistint_t hello = {8, NULL, NULL};
     size_t n;
 
     head = &hello;
-    new = malloc(sizeof(list_t));
+    new = malloc(sizeof(dlistint_t));
     if (new == NULL)
     {
-        printf("Error\n");
-        return (1);
+        dprintf(2, "Error: Can't malloc\n");
+        return (EXIT_FAILURE);
     }
-    new->str = strdup("Hello");
-    new->len = 5;
+    new->n = 9;
+    head->prev = new;
     new->next = head;
+    new->prev = NULL;
     head = new;
-    n = print_list(head);
+    n = print_dlistint(head);
     printf("-> %lu elements\n", n);
-
-    printf("\n");
-    free(new->str);
-    new->str = NULL;
-    n = print_list(head);
-    printf("-> %lu elements\n", n);
-
     free(new);
-    return (0);
+    return (EXIT_SUCCESS);
 }
-julien@ubuntu:~/Singly linked lists$ gcc -Wall -pedantic -Werror -Wextra -std=gnu89 0-main.c 0-print_list.c -o a
-julien@ubuntu:~/Singly linked lists$ ./a 
-[5] Hello
-[5] World
+julien@ubuntu:~/Doubly linked lists$ gcc -Wall -pedantic -Werror -Wextra -std=gnu89 0-main.c 0-print_dlistint.c -o a
+julien@ubuntu:~/Doubly linked lists$ ./a 
+9
+8
 -> 2 elements
-
-[0] (nil)
-[5] World
--> 2 elements
-julien@ubuntu:~/Singly linked lists$ 
+julien@ubuntu:~/Doubly linked lists$ 
 ```
-- [x] [1-list_len.c](./1-list_len.c)
-	- Write a function that returns the number of elements in a linked ``list_t`` list.
-		- Prototype: ``size_t list_len(const list_t *h)``;
+- [x] [1-dlistint_len.c](./1-dlistint_len.c)
+	- Write a function that returns the number of elements in a linked ``dlistint_t list``.
+		- Prototype: ``size_t dlistint_len(const dlistint_t *h)``;
 ```
-julien@ubuntu:~/Singly linked lists$ cat 1-main.c
+julien@ubuntu:~/Doubly linked lists$ cat 1-main.c 
 #include <stdlib.h>
 #include <string.h>
 #include <stdio.h>
@@ -117,45 +105,43 @@ julien@ubuntu:~/Singly linked lists$ cat 1-main.c
 /**
  * main - check the code
  *
- * Return: Always 0.
+ * Return: Always EXIT_SUCCESS.
  */
 int main(void)
 {
-    list_t *head;
-    list_t *new;
-    list_t hello = {"World", 5, NULL};
+    dlistint_t *head;
+    dlistint_t *new;
+    dlistint_t hello = {8, NULL, NULL};
     size_t n;
 
     head = &hello;
-    new = malloc(sizeof(list_t));
+    new = malloc(sizeof(dlistint_t));
     if (new == NULL)
     {
-        printf("Error\n");
-        return (1);
+        dprintf(2, "Error: Can't malloc\n");
+        return (EXIT_FAILURE);
     }
-    new->str = strdup("Hello");
-    new->len = 5;
+    new->n = 9;
+    head->prev = new;
     new->next = head;
+    new->prev = NULL;
     head = new;
-    n = list_len(head);
+    n = dlistint_len(head);
     printf("-> %lu elements\n", n);
-    free(new->str);
     free(new);
-    return (0);
+    return (EXIT_SUCCESS);
 }
-julien@ubuntu:~/Singly linked lists$ gcc -Wall -pedantic -Werror -Wextra -std=gnu89 1-main.c 1-list_len.c -o b
-julien@ubuntu:~/Singly linked lists$ ./b 
+julien@ubuntu:~/Doubly linked lists$ gcc -Wall -pedantic -Werror -Wextra -std=gnu89 1-main.c 1-dlistint_len.c -o b
+julien@ubuntu:~/Doubly linked lists$ ./b 
 -> 2 elements
-julien@ubuntu:~/Singly linked lists$ 
+julien@ubuntu:~/Doubly linked lists$ 
 ```
-- [x] [2-add_node.c](./2-add_node.c)
-	- Write a function that adds a new node at the beginning of a ``list_t`` list.
-		- Prototype: ``list_t *add_node(list_t **head, const char *str)``;
+- [x] [2-add_dnodeint.c](./2-add_dnodeint.c)
+	- Write a function that adds a new node at the beginning of a ``dlistint_t list``.
+		- Prototype: ``dlistint_t *add_dnodeint(dlistint_t **head, const int n)``;
 		- Return: the address of the new element, or ``NULL`` if it failed
-		- ``str`` needs to be duplicated
-		- You are allowed to use ``strdup``
 ```
-julien@ubuntu:~/Singly linked lists$ cat 2-main.c
+julien@ubuntu:~/Doubly linked lists$ cat 2-main.c 
 #include <stdlib.h>
 #include <string.h>
 #include <stdio.h>
@@ -164,84 +150,42 @@ julien@ubuntu:~/Singly linked lists$ cat 2-main.c
 /**
  * main - check the code
  *
- * Return: Always 0.
+ * Return: Always EXIT_SUCCESS.
  */
 int main(void)
 {
-    list_t *head;
+    dlistint_t *head;
 
     head = NULL;
-    add_node(&head, "Alexandro");
-    add_node(&head, "Asaia");
-    add_node(&head, "Augustin");
-    add_node(&head, "Bennett");
-    add_node(&head, "Bilal");
-    add_node(&head, "Chandler");
-    add_node(&head, "Damian");
-    add_node(&head, "Daniel");
-    add_node(&head, "Dora");
-    add_node(&head, "Electra");
-    add_node(&head, "Gloria");
-    add_node(&head, "Joe");
-    add_node(&head, "John");
-    add_node(&head, "John");
-    add_node(&head, "Josquin");
-    add_node(&head, "Kris");
-    add_node(&head, "Marine");
-    add_node(&head, "Mason");
-    add_node(&head, "Praylin");
-    add_node(&head, "Rick");
-    add_node(&head, "Rick");
-    add_node(&head, "Rona");
-    add_node(&head, "Siphan");
-    add_node(&head, "Sravanthi");
-    add_node(&head, "Steven");
-    add_node(&head, "Tasneem");
-    add_node(&head, "William");
-    add_node(&head, "Zee");
-    print_list(head);
-    return (0);
+    add_dnodeint(&head, 0);
+    add_dnodeint(&head, 1);
+    add_dnodeint(&head, 2);
+    add_dnodeint(&head, 3);
+    add_dnodeint(&head, 4);
+    add_dnodeint(&head, 98);
+    add_dnodeint(&head, 402);
+    add_dnodeint(&head, 1024);
+    print_dlistint(head);
+    return (EXIT_SUCCESS);
 }
-julien@ubuntu:~/Singly linked lists$ gcc -Wall -pedantic -Werror -Wextra -std=gnu89 2-main.c 2-add_node.c 0-print_list.c -o c
-julien@ubuntu:~/Singly linked lists$ ./c 
-[3] Zee
-[7] William
-[7] Tasneem
-[6] Steven
-[9] Sravanthi
-[6] Siphan
-[4] Rona
-[4] Rick
-[4] Rick
-[7] Praylin
-[5] Mason
-[6] Marine
-[4] Kris
-[7] Josquin
-[4] John
-[4] John
-[3] Joe
-[6] Gloria
-[7] Electra
-[4] Dora
-[6] Daniel
-[6] Damian
-[8] Chandler
-[5] Bilal
-[7] Bennett
-[8] Augustin
-[5] Asaia
-[9] Alexandro
-julien@ubuntu:~/Singly linked lists$ 
+julien@ubuntu:~/Doubly linked lists$ gcc -Wall -pedantic -Werror -Wextra -std=gnu89 2-main.c 2-add_dnodeint.c 0-print_dlistint.c -o c
+julien@ubuntu:~/Doubly linked lists$ ./c 
+1024
+402
+98
+4
+3
+2
+1
+0
+julien@ubuntu:~/Doubly linked lists$ 
 ```
-- [x] [3-add_node_end.c](./3-add_node_end.c)
-	- Write a function that adds a new node at the end of a ``list_t`` list.
-		- Prototype: ``list_t *add_node_end(list_t **head, const char *str)``;
+- [x] [3-add_dnodeint_end.c](./3-add_dnodeint_end.c)
+	- Write a function that adds a new node at the end of a ``dlistint_t list``.
+		- Prototype: ``dlistint_t *add_dnodeint_end(dlistint_t **head, const int n)``;
 		- Return: the address of the new element, or ``NULL`` if it failed
-		- ``str`` needs to be duplicated
-		- You are allowed to use ``strdup``
 ```
-julien@ubuntu:~/Singly linked lists$ cat 3-main.c
+julien@ubuntu:~/Doubly linked lists$ cat 3-main.c 
 #include <stdlib.h>
 #include <string.h>
 #include <stdio.h>
@@ -250,81 +194,41 @@ julien@ubuntu:~/Singly linked lists$ cat 3-main.c
 /**
  * main - check the code
  *
- * Return: Always 0.
+ * Return: Always EXIT_SUCCESS.
  */
 int main(void)
 {
-    list_t *head;
+    dlistint_t *head;
 
     head = NULL;
-    add_node_end(&head, "Anne");
-    add_node_end(&head, "Colton");
-    add_node_end(&head, "Corbin");
-    add_node_end(&head, "Daniel");
-    add_node_end(&head, "Danton");
-    add_node_end(&head, "David");
-    add_node_end(&head, "Gary");
-    add_node_end(&head, "Holden");
-    add_node_end(&head, "Ian");
-    add_node_end(&head, "Ian");
-    add_node_end(&head, "Jay");
-    add_node_end(&head, "Jennie");
-    add_node_end(&head, "Jimmy");
-    add_node_end(&head, "Justin");
-    add_node_end(&head, "Kalson");
-    add_node_end(&head, "Kina");
-    add_node_end(&head, "Matthew");
-    add_node_end(&head, "Max");
-    add_node_end(&head, "Michael");
-    add_node_end(&head, "Ntuj");
-    add_node_end(&head, "Philip");
-    add_node_end(&head, "Richard");
-    add_node_end(&head, "Samantha");
-    add_node_end(&head, "Stuart");
-    add_node_end(&head, "Swati");
-    add_node_end(&head, "Timothy");
-    add_node_end(&head, "Victor");
-    add_node_end(&head, "Walton");
-    print_list(head);
-    return (0);
+    add_dnodeint_end(&head, 0);
+    add_dnodeint_end(&head, 1);
+    add_dnodeint_end(&head, 2);
+    add_dnodeint_end(&head, 3);
+    add_dnodeint_end(&head, 4);
+    add_dnodeint_end(&head, 98);
+    add_dnodeint_end(&head, 402);
+    add_dnodeint_end(&head, 1024);
+    print_dlistint(head);
+    return (EXIT_SUCCESS);
 }
-julien@ubuntu:~/Singly linked lists$ gcc -Wall -pedantic -Werror -Wextra -std=gnu89 3-main.c 3-add_node_end.c 0-print_list.c -o d
-julien@ubuntu:~/Singly linked lists$ ./d 
-[4] Anne
-[6] Colton
-[6] Corbin
-[6] Daniel
-[6] Danton
-[5] David
-[4] Gary
-[6] Holden
-[3] Ian
-[3] Ian
-[3] Jay
-[6] Jennie
-[5] Jimmy
-[6] Justin
-[6] Kalson
-[4] Kina
-[7] Matthew
-[3] Max
-[7] Michael
-[4] Ntuj
-[6] Philip
-[7] Richard
-[8] Samantha
-[6] Stuart
-[5] Swati
-[7] Timothy
-[6] Victor
-[6] Walton
-julien@ubuntu:~/Singly linked lists$ 
+julien@ubuntu:~/Doubly linked lists$ gcc -Wall -pedantic -Werror -Wextra -std=gnu89 3-main.c 3-add_dnodeint_end.c 0-print_dlistint.c -o d
+julien@ubuntu:~/Doubly linked lists$ ./d 
+0
+1
+2
+3
+4
+98
+402
+1024
+julien@ubuntu:~/Doubly linked lists$ 
 ```
-- [x] [4-free_list.c](./4-free_list.c)
-	- Write a function that frees a ``list_t`` list.
-		- Prototype: ``void free_list(list_t *head)``;
+- [x] [4-free_dlistint.c](./4-free_dlistint.c)
+	- Write a function that frees a ``dlistint_t list``.
+		- Prototype: ``void free_dlistint(dlistint_t *head)``;
 ```
-julien@ubuntu:~/Singly linked lists$ cat 4-main.c
+julien@ubuntu:~/Doubly linked lists$ cat 4-main.c
 #include <stdlib.h>
 #include <string.h>
 #include <stdio.h>
@@ -333,43 +237,335 @@ julien@ubuntu:~/Singly linked lists$ cat 4-main.c
 /**
  * main - check the code
  *
- * Return: Always 0.
+ * Return: Always EXIT_SUCCESS.
  */
 int main(void)
 {
-    list_t *head;
+    dlistint_t *head;
 
     head = NULL;
-    add_node_end(&head, "Bob");
-    add_node_end(&head, "&");
-    add_node_end(&head, "Kris");
-    add_node_end(&head, "love");
-    add_node_end(&head, "asm");
-    print_list(head);
-    free_list(head);
+    add_dnodeint_end(&head, 0);
+    add_dnodeint_end(&head, 1);
+    add_dnodeint_end(&head, 2);
+    add_dnodeint_end(&head, 3);
+    add_dnodeint_end(&head, 4);
+    add_dnodeint_end(&head, 98);
+    add_dnodeint_end(&head, 402);
+    add_dnodeint_end(&head, 1024);
+    print_dlistint(head);
+    free_dlistint(head);
     head = NULL;
+    return (EXIT_SUCCESS);
+}
+julien@ubuntu:~/Doubly linked lists$ gcc -Wall -pedantic -Werror -Wextra -std=gnu89 4-main.c 3-add_dnodeint_end.c 0-print_dlistint.c 4-free_dlistint.c -o e
+julien@ubuntu:~/Doubly linked lists$ valgrind ./e 
+==4197== Memcheck, a memory error detector
+==4197== Copyright (C) 2002-2015, and GNU GPL'd, by Julian Seward et al.
+==4197== Using Valgrind-3.11.0 and LibVEX; rerun with -h for copyright info
+==4197== Command: ./e
+==4197== 
+0
+1
+2
+3
+4
+98
+402
+1024
+==4197== 
+==4197== HEAP SUMMARY:
+==4197==     in use at exit: 0 bytes in 0 blocks
+==4197==   total heap usage: 9 allocs, 9 frees, 1,216 bytes allocated
+==4197== 
+==4197== All heap blocks were freed -- no leaks are possible
+==4197== 
+==4197== For counts of detected and suppressed errors, rerun with: -v
+==4197== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+julien@ubuntu:~/Doubly linked lists$ 
+```
+- [x] [5-get_dnodeint.c](./5-get_dnodeint.c)
+	- Write a function that returns the nth node of a ``dlistint_t`` linked list.
+		- Prototype: ``dlistint_t *get_dnodeint_at_index(dlistint_t *head, unsigned int index)``;
+		- where index is the ``index`` of the node, starting from ``0``
+		- if the node does not exist, return ``NULL``
+```
+julien@ubuntu:~/Doubly linked lists$ cat 5-main.c
+#include <stdlib.h>
+#include <string.h>
+#include <stdio.h>
+#include "lists.h"
+
+/**
+ * main - check the code
+ *
+ * Return: Always EXIT_SUCCESS.
+ */
+int main(void)
+{
+    dlistint_t *head;
+    dlistint_t *node;
+
+    head = NULL;
+    add_dnodeint_end(&head, 0);
+    add_dnodeint_end(&head, 1);
+    add_dnodeint_end(&head, 2);
+    add_dnodeint_end(&head, 3);
+    add_dnodeint_end(&head, 4);
+    add_dnodeint_end(&head, 98);
+    add_dnodeint_end(&head, 402);
+    add_dnodeint_end(&head, 1024);
+    print_dlistint(head);
+    node = get_dnodeint_at_index(head, 5);
+    printf("%d\n", node->n);
+    free_dlistint(head);
+    head = NULL;
+    return (EXIT_SUCCESS);
+}
+julien@ubuntu:~/Doubly linked lists$ gcc -Wall -pedantic -Werror -Wextra -std=gnu89 5-main.c 3-add_dnodeint_end.c 0-print_dlistint.c 4-free_dlistint.c 5-get_dnodeint.c -o h
+julien@ubuntu:~/Doubly linked lists$ ./h
+0
+1
+2
+3
+4
+98
+402
+1024
+98
+julien@ubuntu:~/Doubly linked lists$ 
+```
+- [x] [6-sum_dlistint.c](./6-sum_dlistint.c)
+	- Write a function that returns the sum of all the data (n) of a ``dlistint_t`` linked list.
+		- Prototype: ``int sum_dlistint(dlistint_t *head)``;
+		- if the list is empty, return ``0``
+```
+julien@ubuntu:~/Doubly linked lists$ cat 6-main.c 
+#include <stdlib.h>
+#include <string.h>
+#include <stdio.h>
+#include "lists.h"
+
+/**
+ * main - check the code
+ *
+ * Return: Always EXIT_SUCCESS.
+ */
+int main(void)
+{
+    dlistint_t *head;
+    int sum;
+
+    head = NULL;
+    add_dnodeint_end(&head, 0);
+    add_dnodeint_end(&head, 1);
+    add_dnodeint_end(&head, 2);
+    add_dnodeint_end(&head, 3);
+    add_dnodeint_end(&head, 4);
+    add_dnodeint_end(&head, 98);
+    add_dnodeint_end(&head, 402);
+    add_dnodeint_end(&head, 1024);
+    sum = sum_dlistint(head);
+    printf("sum = %d\n", sum);
+    free_dlistint(head);
+    head = NULL;
+    return (EXIT_SUCCESS);
+}
+julien@ubuntu:~/Doubly linked lists$ gcc -Wall -pedantic -Werror -Wextra 6-main.c -std=gnu89 3-add_dnodeint_end.c 4-free_dlistint.c 6-sum_dlistint.c -o i
+julien@ubuntu:~/Doubly linked lists$ ./i 
+sum = 1534
+julien@ubuntu:~/Doubly linked lists$ 
+```
+- [x] [7-insert_dnodeint.c](./7-insert_dnodeint.c)
+	- Write a function that inserts a new node at a given position.
+		- Prototype: ``dlistint_t *insert_dnodeint_at_index(dlistint_t **h, unsigned int idx, int n)``;
+		- where ``idx`` is the index of the list where the new node should be added. Index starts at ``0``
+		- Returns: the address of the new node, or ``NULL`` if it failed
+		- if it is not possible to add the new node at index ``idx``, do not add the new node and return ``NULL``
+		- Your files ``2-add_dnodeint.c`` and ``3-add_dnodeint_end.c`` will be compiled during the correction
+```
+julien@ubuntu:~/Doubly linked lists$ cat 7-main.c
+#include <stdlib.h>
+#include <string.h>
+#include <stdio.h>
+#include "lists.h"
+
+/**
+ * main - check the code
+ *
+ * Return: Always EXIT_SUCCESS.
+ */
+int main(void)
+{
+    dlistint_t *head;
+
+    head = NULL;
+    add_dnodeint_end(&head, 0);
+    add_dnodeint_end(&head, 1);
+    add_dnodeint_end(&head, 2);
+    add_dnodeint_end(&head, 3);
+    add_dnodeint_end(&head, 4);
+    add_dnodeint_end(&head, 98);
+    add_dnodeint_end(&head, 402);
+    add_dnodeint_end(&head, 1024);
+    print_dlistint(head);
+    printf("-----------------\n");
+    insert_dnodeint_at_index(&head, 5, 4096);
+    print_dlistint(head);
+    free_dlistint(head);
+    head = NULL;
+    return (EXIT_SUCCESS);
+}
+julien@ubuntu:~/Doubly linked lists$ gcc -Wall -pedantic -Werror -Wextra -std=gnu89 7-main.c 2-add_dnodeint.c 3-add_dnodeint_end.c 0-print_dlistint.c 4-free_dlistint.c 7-insert_dnodeint.c -o j
+julien@ubuntu:~/Doubly linked lists$ ./j 
+0
+1
+2
+3
+4
+98
+402
+1024
+-----------------
+0
+1
+2
+3
+4
+4096
+98
+402
+1024
+julien@ubuntu:~/Doubly linked lists$
+```
+- [x] [8-delete_dnodeint.c](./8-delete_dnodeint.c)
+	- Write a function that deletes the node at ``index`` index of a ``dlistint_t linked list``.
+		- Prototype: ``int delete_dnodeint_at_index(dlistint_t **head, unsigned int index)``;
+		- where ``index`` is the index of the node that should be deleted. Index starts at ``0``
+		- Returns: ``1`` if it succeeded, ``-1`` if it failed
+```
+julien@ubuntu:~/Doubly linked lists$ cat 8-main.c
+#include <stdlib.h>
+#include <string.h>
+#include <stdio.h>
+#include "lists.h"
+
+/**
+ * main - check the code
+ *
+ * Return: Always EXIT_SUCCESS.
+ */
+int main(void)
+{
+    dlistint_t *head;
+
+    head = NULL;
+    add_dnodeint_end(&head, 0);
+    add_dnodeint_end(&head, 1);
+    add_dnodeint_end(&head, 2);
+    add_dnodeint_end(&head, 3);
+    add_dnodeint_end(&head, 4);
+    add_dnodeint_end(&head, 98);
+    add_dnodeint_end(&head, 402);
+    add_dnodeint_end(&head, 1024);
+    print_dlistint(head);
+    printf("-----------------\n");
+    delete_dnodeint_at_index(&head, 5);
+    print_dlistint(head);
+    printf("-----------------\n");
+    delete_dnodeint_at_index(&head, 0);
+    print_dlistint(head);
+    printf("-----------------\n");
+    delete_dnodeint_at_index(&head, 0);
+    print_dlistint(head);
+    printf("-----------------\n");
+    delete_dnodeint_at_index(&head, 0);
+    print_dlistint(head);
+    printf("-----------------\n");
+    delete_dnodeint_at_index(&head, 0);
+    print_dlistint(head);
+    printf("-----------------\n");
+    delete_dnodeint_at_index(&head, 0);
+    print_dlistint(head);
+    printf("-----------------\n");
+    delete_dnodeint_at_index(&head, 0);
+    print_dlistint(head);
+    printf("-----------------\n");
+    delete_dnodeint_at_index(&head, 0);
+    printf("-----------------\n");
+    delete_dnodeint_at_index(&head, 0);
+    printf("-----------------\n");
+    delete_dnodeint_at_index(&head, 0);
+    printf("-----------------\n");
+    delete_dnodeint_at_index(&head, 0);
+    printf("-----------------\n");
+    delete_dnodeint_at_index(&head, 0);
+    printf("-----------------\n");
+    delete_dnodeint_at_index(&head, 0);
+    printf("-----------------\n");
+    delete_dnodeint_at_index(&head, 0);
+    printf("-----------------\n");
+    delete_dnodeint_at_index(&head, 0);
+    printf("-----------------\n");
+    delete_dnodeint_at_index(&head, 0);
+    printf("-----------------\n");
+    delete_dnodeint_at_index(&head, 0);
+    print_dlistint(head);
     return (0);
 }
-julien@ubuntu:~/Singly linked lists$ gcc -Wall -pedantic -Werror -Wextra -std=gnu89 4-main.c 4-free_list.c 3-add_node_end.c 0-print_list.c -o e
-julien@ubuntu:~/Singly linked lists$ valgrind ./e
-==3598== Memcheck, a memory error detector
-==3598== Copyright (C) 2002-2015, and GNU GPL'd, by Julian Seward et al.
-==3598== Using Valgrind-3.11.0 and LibVEX; rerun with -h for copyright info
-==3598== Command: ./e
-==3598== 
-[6] Bob
-[1] &
-[3] Kris
-[4] love
-[3] asm
-==3598== 
-==3598== HEAP SUMMARY:
-==3598==     in use at exit: 0 bytes in 0 blocks
-==3598==   total heap usage: 11 allocs, 11 frees, 1,166 bytes allocated
-==3598== 
-==3598== All heap blocks were freed -- no leaks are possible
-==3598== 
-==3598== For counts of detected and suppressed errors, rerun with: -v
-==3598== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
-julien@ubuntu:~/Singly linked lists$ 
+julien@ubuntu:~/Doubly linked lists$ gcc -Wall -pedantic -Werror -Wextra -std=gnu89 8-main.c 3-add_dnodeint_end.c 0-print_dlistint.c 4-free_dlistint.c 8-delete_dnodeint.c -o k
+julien@ubuntu:~/Doubly linked lists$ ./k
+0
+1
+2
+3
+4
+98
+402
+1024
+-----------------
+0
+1
+2
+3
+4
+402
+1024
+-----------------
+1
+2
+3
+4
+402
+1024
+-----------------
+2
+3
+4
+402
+1024
+-----------------
+3
+4
+402
+1024
+-----------------
+4
+402
+1024
+-----------------
+402
+1024
+-----------------
+1024
+-----------------
+-----------------
+-----------------
+-----------------
+-----------------
+-----------------
+-----------------
+-----------------
+-----------------
+-----------------
+julien@ubuntu:~/Doubly linked lists$ 
 ```
