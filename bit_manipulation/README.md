@@ -1,12 +1,8 @@
-# C - Doubly linked lists
-## Resources
-* [What is a Doubly Linked List](https://www.youtube.com/watch?v=k0pjD12bzP0)
-* [Neso Academy - Linked lists](https://www.youtube.com/watch?v=R9PTBwOzceo&list=PLBlnK6fEyqRhX6r2uhhlubuF5QextdCSM&index=201&ab_channel=NesoAcademy)
+# C - Bit manipulation
 ## Learned Topics
 ### General
-* What is a doubly linked list
-* How to use doubly linked lists
-* Start to look for the right source of information without too much help
+* Look for the right source of information without too much help
+* How to manipulate bits and use bitwise operators
 ## Requirements
 ### General
 * Allowed editors: ``vi``, ``vim``, ``emacs``
@@ -21,212 +17,168 @@
 * You are allowed to use [_putchar](https://github.com/hs-hq/_putchar.c/blob/main/_putchar.c)
 * You don’t have to push ``_putchar.c``, we will use our file. If you do it won’t be taken into account
 * In the following examples, the ``main.c`` files are shown as examples. You can use them to test your functions, but you don’t have to push them to your repo (if you do we won’t take them into account). We will use our own main.c files at compilation. Our main.c files might be different from the one shown in the examples
-* The prototypes of all your functions and the prototype of the function ``_putchar`` should be included in your header file called ``lists.h``
+* The prototypes of all your functions and the prototype of the function ``_putchar`` should be included in your header file called ``main.h``
 * Don’t forget to push your header file
 * All your header files should be include guarded
-## More info
-Please use this data structure for this project:
+## Tasks completed
+- [x] [0-binary_to_uint.c](./0-binary_to_uint.c)
+	- Write a function that converts a binary number to an unsigned int.
+		- Prototype: ``unsigned int binary_to_uint(const char *b)``;
+		- where ``b`` is pointing to a string of 0 and 1 chars
+		- Return: the converted number, or ``0`` if
+			- there is one or more chars in the string ``b`` that is not ``0`` or ``1``
+			- ``b`` is ``NULL``
 ```
+julien@ubuntu:~/Binary$ cat 0-main.c
+#include <stdio.h>
+#include "main.h"
+
 /**
- * struct dlistint_s - doubly linked list
- * @n: integer
- * @prev: points to the previous node
- * @next: points to the next node
+ * main - check the code
  *
- * Description: doubly linked list node structure
- * 
+ * Return: Always 0.
  */
-typedef struct dlistint_s
+int main(void)
+{
+    unsigned int n;
+
+    n = binary_to_uint("1");
+    printf("%u\n", n);
+    n = binary_to_uint("101");
+    printf("%u\n", n);
+    n = binary_to_uint("1e01");
+    printf("%u\n", n);
+    n = binary_to_uint("1100010");
+    printf("%u\n", n);
+    n = binary_to_uint("0000000000000000000110010010");
+    printf("%u\n", n);
+    return (0);
+}
+julien@ubuntu:~/Binary$ gcc -Wall -pedantic -Werror -Wextra -std=gnu89 0-main.c 0-binary_to_uint.c -o a
+julien@ubuntu:~/Binary$ ./a 
+1
+5
+0
+98
+402
+julien@ubuntu:~/Binary$ 
+```
+- [x] [1-print_binary.c](./1-print_binary.c)
+	- Write a function that prints the binary representation of a number.
+		- Prototype: ``void print_binary(unsigned long int n)``;
+		- Format: see example
+		- You are not allowed to use arrays
+		- You are not allowed to use malloc
+		- You are not allowed to use the ``%`` or ``/`` operators
+```
+julien@ubuntu:~/Binary$ cat 1-main.c 
+#include <stdio.h>
+#include "main.h"
+
+/**
+ * main - check the code
+ *
+ * Return: Always 0.
+ */
+int main(void)
+{
+    print_binary(0);
+    printf("\n");
+    print_binary(1);
+    printf("\n");
+    print_binary(98);
+    printf("\n");
+    print_binary(1024);
+    printf("\n");
+    print_binary((1 << 10) + 1);
+    printf("\n");
+    return (0);
+}
+julien@ubuntu:~/Binary$ gcc -Wall -pedantic -Werror -Wextra -std=gnu89 1-main.c 1-print_binary.c _putchar.c -o b
+julien@ubuntu:~/Binary$ ./b 
+0
+1
+1100010
+10000000000
+10000000001
+julien@ubuntu:~/Binary$ 
+```
+- [x] [2-get_bit.c](./2-get_bit.c)
+	- Write a function that returns the value of a bit at a given index.
+		- Prototype: ``int get_bit(unsigned long int n, unsigned int index)``;
+		- where index is the ``index``, starting from ``0`` of the bit you want to get
+		- Returns: the value of the bit at ``index`` or ``-1`` if an error occured
+```
+julien@ubuntu:~/Binary$ cat 2-main.c
+#include <stdio.h>
+#include "main.h"
+
+/**
+ * main - check the code
+ *
+ * Return: Always 0.
+ */
+int main(void)
 {
     int n;
-    struct dlistint_s *prev;
-    struct dlistint_s *next;
-} dlistint_t;
-```
-## Tasks completed
-- [x] [0-print_dlistint.c](./0-print_dlistint.c)
-	- Write a function that prints all the elements of a ``dlistint_t list``.
-		- Prototype: ``size_t print_dlistint(const dlistint_t *h)``;
-		- Return: the number of nodes
-		- Format: see example
-```
-julien@ubuntu:~/Doubly linked lists$ cat 0-main.c 
-#include <stdlib.h>
-#include <string.h>
-#include <stdio.h>
-#include "lists.h"
 
-/**
- * main - check the code
- *
- * Return: Always EXIT_SUCCESS.
- */
-int main(void)
-{
-    dlistint_t *head;
-    dlistint_t *new;
-    dlistint_t hello = {8, NULL, NULL};
-    size_t n;
-
-    head = &hello;
-    new = malloc(sizeof(dlistint_t));
-    if (new == NULL)
-    {
-        dprintf(2, "Error: Can't malloc\n");
-        return (EXIT_FAILURE);
-    }
-    new->n = 9;
-    head->prev = new;
-    new->next = head;
-    new->prev = NULL;
-    head = new;
-    n = print_dlistint(head);
-    printf("-> %lu elements\n", n);
-    free(new);
-    return (EXIT_SUCCESS);
+    n = get_bit(1024, 10);
+    printf("%d\n", n);
+    n = get_bit(98, 1);
+    printf("%d\n", n);
+    n = get_bit(1024, 0);
+    printf("%d\n", n);
+    return (0);
 }
-julien@ubuntu:~/Doubly linked lists$ gcc -Wall -pedantic -Werror -Wextra -std=gnu89 0-main.c 0-print_dlistint.c -o a
-julien@ubuntu:~/Doubly linked lists$ ./a 
-9
-8
--> 2 elements
-julien@ubuntu:~/Doubly linked lists$ 
-```
-- [x] [1-dlistint_len.c](./1-dlistint_len.c)
-	- Write a function that returns the number of elements in a linked ``dlistint_t list``.
-		- Prototype: ``size_t dlistint_len(const dlistint_t *h)``;
-```
-julien@ubuntu:~/Doubly linked lists$ cat 1-main.c 
-#include <stdlib.h>
-#include <string.h>
-#include <stdio.h>
-#include "lists.h"
-
-/**
- * main - check the code
- *
- * Return: Always EXIT_SUCCESS.
- */
-int main(void)
-{
-    dlistint_t *head;
-    dlistint_t *new;
-    dlistint_t hello = {8, NULL, NULL};
-    size_t n;
-
-    head = &hello;
-    new = malloc(sizeof(dlistint_t));
-    if (new == NULL)
-    {
-        dprintf(2, "Error: Can't malloc\n");
-        return (EXIT_FAILURE);
-    }
-    new->n = 9;
-    head->prev = new;
-    new->next = head;
-    new->prev = NULL;
-    head = new;
-    n = dlistint_len(head);
-    printf("-> %lu elements\n", n);
-    free(new);
-    return (EXIT_SUCCESS);
-}
-julien@ubuntu:~/Doubly linked lists$ gcc -Wall -pedantic -Werror -Wextra -std=gnu89 1-main.c 1-dlistint_len.c -o b
-julien@ubuntu:~/Doubly linked lists$ ./b 
--> 2 elements
-julien@ubuntu:~/Doubly linked lists$ 
-```
-- [x] [2-add_dnodeint.c](./2-add_dnodeint.c)
-	- Write a function that adds a new node at the beginning of a ``dlistint_t list``.
-		- Prototype: ``dlistint_t *add_dnodeint(dlistint_t **head, const int n)``;
-		- Return: the address of the new element, or ``NULL`` if it failed
-```
-julien@ubuntu:~/Doubly linked lists$ cat 2-main.c 
-#include <stdlib.h>
-#include <string.h>
-#include <stdio.h>
-#include "lists.h"
-
-/**
- * main - check the code
- *
- * Return: Always EXIT_SUCCESS.
- */
-int main(void)
-{
-    dlistint_t *head;
-
-    head = NULL;
-    add_dnodeint(&head, 0);
-    add_dnodeint(&head, 1);
-    add_dnodeint(&head, 2);
-    add_dnodeint(&head, 3);
-    add_dnodeint(&head, 4);
-    add_dnodeint(&head, 98);
-    add_dnodeint(&head, 402);
-    add_dnodeint(&head, 1024);
-    print_dlistint(head);
-    return (EXIT_SUCCESS);
-}
-julien@ubuntu:~/Doubly linked lists$ gcc -Wall -pedantic -Werror -Wextra -std=gnu89 2-main.c 2-add_dnodeint.c 0-print_dlistint.c -o c
-julien@ubuntu:~/Doubly linked lists$ ./c 
-1024
-402
-98
-4
-3
-2
+julien@ubuntu:~/Binary$ gcc -Wall -pedantic -Werror -Wextra -std=gnu89 2-main.c 2-get_bit.c -o c    
+julien@ubuntu:~/Binary$ ./c
+1
 1
 0
-julien@ubuntu:~/Doubly linked lists$ 
+julien@ubuntu:~/Binary$ 
 ```
-- [x] [3-add_dnodeint_end.c](./3-add_dnodeint_end.c)
-	- Write a function that adds a new node at the end of a ``dlistint_t list``.
-		- Prototype: ``dlistint_t *add_dnodeint_end(dlistint_t **head, const int n)``;
-		- Return: the address of the new element, or ``NULL`` if it failed
+- [x] [3-set_bit.c](./3-set_bit.c)
+	- Write a function that sets the value of a bit to ``1`` at a given index.
+		- Prototype: ``int set_bit(unsigned long int *n, unsigned int index)``;
+		- where ``index`` is the index, starting from ``0`` of the bit you want to set
+		- Returns: ``1`` if it worked, or ``-1`` if an error occurred
 ```
-julien@ubuntu:~/Doubly linked lists$ cat 3-main.c 
-#include <stdlib.h>
-#include <string.h>
+julien@ubuntu:~/Binary$ cat 3-main.c
 #include <stdio.h>
-#include "lists.h"
+#include "main.h"
 
 /**
  * main - check the code
  *
- * Return: Always EXIT_SUCCESS.
+ * Return: Always 0.
  */
 int main(void)
 {
-    dlistint_t *head;
+    unsigned long int n;
 
-    head = NULL;
-    add_dnodeint_end(&head, 0);
-    add_dnodeint_end(&head, 1);
-    add_dnodeint_end(&head, 2);
-    add_dnodeint_end(&head, 3);
-    add_dnodeint_end(&head, 4);
-    add_dnodeint_end(&head, 98);
-    add_dnodeint_end(&head, 402);
-    add_dnodeint_end(&head, 1024);
-    print_dlistint(head);
-    return (EXIT_SUCCESS);
+    n = 1024;
+    set_bit(&n, 5);
+    printf("%lu\n", n);
+    n = 0;
+    set_bit(&n, 10);
+    printf("%lu\n", n);
+    n = 98;
+    set_bit(&n, 0);
+    printf("%lu\n", n);
+    return (0);
 }
-julien@ubuntu:~/Doubly linked lists$ gcc -Wall -pedantic -Werror -Wextra -std=gnu89 3-main.c 3-add_dnodeint_end.c 0-print_dlistint.c -o d
-julien@ubuntu:~/Doubly linked lists$ ./d 
-0
-1
-2
-3
-4
-98
-402
+julien@ubuntu:~/Binary$ gcc -Wall -pedantic -Werror -Wextra -std=gnu89 3-main.c 3-set_bit.c -o d
+julien@ubuntu:~/Binary$ ./d
+1056
 1024
-julien@ubuntu:~/Doubly linked lists$ 
+99
+julien@ubuntu:~/Binary$ 
 ```
-- [x] [4-free_dlistint.c](./4-free_dlistint.c)
-	- Write a function that frees a ``dlistint_t list``.
-		- Prototype: ``void free_dlistint(dlistint_t *head)``;
+- [x] [4-clear_bit.c](./4-clear_bit.c)
+	- Write a function that sets the value of a bit to ``0`` at a given index.
+		- Prototype: ``int clear_bit(unsigned long int *n, unsigned int index)``;
+		- where ``index`` is the index, starting from ``0`` of the bit you want to set
+		- Returns: ``1`` if it worked, or ``-1`` if an error occurred
 ```
 julien@ubuntu:~/Doubly linked lists$ cat 4-main.c
 #include <stdlib.h>
@@ -283,289 +235,39 @@ julien@ubuntu:~/Doubly linked lists$ valgrind ./e
 ==4197== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
 julien@ubuntu:~/Doubly linked lists$ 
 ```
-- [x] [5-get_dnodeint.c](./5-get_dnodeint.c)
-	- Write a function that returns the nth node of a ``dlistint_t`` linked list.
-		- Prototype: ``dlistint_t *get_dnodeint_at_index(dlistint_t *head, unsigned int index)``;
-		- where index is the ``index`` of the node, starting from ``0``
-		- if the node does not exist, return ``NULL``
+- [x] [5-flip_bits.c](./5-flip_bits.c)
+	- Write a function that returns the number of bits you would need to flip to get from one number to another.
+		- Prototype: ``unsigned int flip_bits(unsigned long int n, unsigned long int m)``;
+		- You are not allowed to use the ``%`` or ``/`` operators
 ```
-julien@ubuntu:~/Doubly linked lists$ cat 5-main.c
-#include <stdlib.h>
-#include <string.h>
+julien@ubuntu:~/Binary$ cat 5-main.c
 #include <stdio.h>
-#include "lists.h"
+#include "main.h"
 
 /**
  * main - check the code
  *
- * Return: Always EXIT_SUCCESS.
+ * Return: Always 0.
  */
 int main(void)
 {
-    dlistint_t *head;
-    dlistint_t *node;
+    unsigned int n;
 
-    head = NULL;
-    add_dnodeint_end(&head, 0);
-    add_dnodeint_end(&head, 1);
-    add_dnodeint_end(&head, 2);
-    add_dnodeint_end(&head, 3);
-    add_dnodeint_end(&head, 4);
-    add_dnodeint_end(&head, 98);
-    add_dnodeint_end(&head, 402);
-    add_dnodeint_end(&head, 1024);
-    print_dlistint(head);
-    node = get_dnodeint_at_index(head, 5);
-    printf("%d\n", node->n);
-    free_dlistint(head);
-    head = NULL;
-    return (EXIT_SUCCESS);
-}
-julien@ubuntu:~/Doubly linked lists$ gcc -Wall -pedantic -Werror -Wextra -std=gnu89 5-main.c 3-add_dnodeint_end.c 0-print_dlistint.c 4-free_dlistint.c 5-get_dnodeint.c -o h
-julien@ubuntu:~/Doubly linked lists$ ./h
-0
-1
-2
-3
-4
-98
-402
-1024
-98
-julien@ubuntu:~/Doubly linked lists$ 
-```
-- [x] [6-sum_dlistint.c](./6-sum_dlistint.c)
-	- Write a function that returns the sum of all the data (n) of a ``dlistint_t`` linked list.
-		- Prototype: ``int sum_dlistint(dlistint_t *head)``;
-		- if the list is empty, return ``0``
-```
-julien@ubuntu:~/Doubly linked lists$ cat 6-main.c 
-#include <stdlib.h>
-#include <string.h>
-#include <stdio.h>
-#include "lists.h"
-
-/**
- * main - check the code
- *
- * Return: Always EXIT_SUCCESS.
- */
-int main(void)
-{
-    dlistint_t *head;
-    int sum;
-
-    head = NULL;
-    add_dnodeint_end(&head, 0);
-    add_dnodeint_end(&head, 1);
-    add_dnodeint_end(&head, 2);
-    add_dnodeint_end(&head, 3);
-    add_dnodeint_end(&head, 4);
-    add_dnodeint_end(&head, 98);
-    add_dnodeint_end(&head, 402);
-    add_dnodeint_end(&head, 1024);
-    sum = sum_dlistint(head);
-    printf("sum = %d\n", sum);
-    free_dlistint(head);
-    head = NULL;
-    return (EXIT_SUCCESS);
-}
-julien@ubuntu:~/Doubly linked lists$ gcc -Wall -pedantic -Werror -Wextra 6-main.c -std=gnu89 3-add_dnodeint_end.c 4-free_dlistint.c 6-sum_dlistint.c -o i
-julien@ubuntu:~/Doubly linked lists$ ./i 
-sum = 1534
-julien@ubuntu:~/Doubly linked lists$ 
-```
-- [x] [7-insert_dnodeint.c](./7-insert_dnodeint.c)
-	- Write a function that inserts a new node at a given position.
-		- Prototype: ``dlistint_t *insert_dnodeint_at_index(dlistint_t **h, unsigned int idx, int n)``;
-		- where ``idx`` is the index of the list where the new node should be added. Index starts at ``0``
-		- Returns: the address of the new node, or ``NULL`` if it failed
-		- if it is not possible to add the new node at index ``idx``, do not add the new node and return ``NULL``
-		- Your files ``2-add_dnodeint.c`` and ``3-add_dnodeint_end.c`` will be compiled during the correction
-```
-julien@ubuntu:~/Doubly linked lists$ cat 7-main.c
-#include <stdlib.h>
-#include <string.h>
-#include <stdio.h>
-#include "lists.h"
-
-/**
- * main - check the code
- *
- * Return: Always EXIT_SUCCESS.
- */
-int main(void)
-{
-    dlistint_t *head;
-
-    head = NULL;
-    add_dnodeint_end(&head, 0);
-    add_dnodeint_end(&head, 1);
-    add_dnodeint_end(&head, 2);
-    add_dnodeint_end(&head, 3);
-    add_dnodeint_end(&head, 4);
-    add_dnodeint_end(&head, 98);
-    add_dnodeint_end(&head, 402);
-    add_dnodeint_end(&head, 1024);
-    print_dlistint(head);
-    printf("-----------------\n");
-    insert_dnodeint_at_index(&head, 5, 4096);
-    print_dlistint(head);
-    free_dlistint(head);
-    head = NULL;
-    return (EXIT_SUCCESS);
-}
-julien@ubuntu:~/Doubly linked lists$ gcc -Wall -pedantic -Werror -Wextra -std=gnu89 7-main.c 2-add_dnodeint.c 3-add_dnodeint_end.c 0-print_dlistint.c 4-free_dlistint.c 7-insert_dnodeint.c -o j
-julien@ubuntu:~/Doubly linked lists$ ./j 
-0
-1
-2
-3
-4
-98
-402
-1024
------------------
-0
-1
-2
-3
-4
-4096
-98
-402
-1024
-julien@ubuntu:~/Doubly linked lists$
-```
-- [x] [8-delete_dnodeint.c](./8-delete_dnodeint.c)
-	- Write a function that deletes the node at ``index`` index of a ``dlistint_t linked list``.
-		- Prototype: ``int delete_dnodeint_at_index(dlistint_t **head, unsigned int index)``;
-		- where ``index`` is the index of the node that should be deleted. Index starts at ``0``
-		- Returns: ``1`` if it succeeded, ``-1`` if it failed
-```
-julien@ubuntu:~/Doubly linked lists$ cat 8-main.c
-#include <stdlib.h>
-#include <string.h>
-#include <stdio.h>
-#include "lists.h"
-
-/**
- * main - check the code
- *
- * Return: Always EXIT_SUCCESS.
- */
-int main(void)
-{
-    dlistint_t *head;
-
-    head = NULL;
-    add_dnodeint_end(&head, 0);
-    add_dnodeint_end(&head, 1);
-    add_dnodeint_end(&head, 2);
-    add_dnodeint_end(&head, 3);
-    add_dnodeint_end(&head, 4);
-    add_dnodeint_end(&head, 98);
-    add_dnodeint_end(&head, 402);
-    add_dnodeint_end(&head, 1024);
-    print_dlistint(head);
-    printf("-----------------\n");
-    delete_dnodeint_at_index(&head, 5);
-    print_dlistint(head);
-    printf("-----------------\n");
-    delete_dnodeint_at_index(&head, 0);
-    print_dlistint(head);
-    printf("-----------------\n");
-    delete_dnodeint_at_index(&head, 0);
-    print_dlistint(head);
-    printf("-----------------\n");
-    delete_dnodeint_at_index(&head, 0);
-    print_dlistint(head);
-    printf("-----------------\n");
-    delete_dnodeint_at_index(&head, 0);
-    print_dlistint(head);
-    printf("-----------------\n");
-    delete_dnodeint_at_index(&head, 0);
-    print_dlistint(head);
-    printf("-----------------\n");
-    delete_dnodeint_at_index(&head, 0);
-    print_dlistint(head);
-    printf("-----------------\n");
-    delete_dnodeint_at_index(&head, 0);
-    printf("-----------------\n");
-    delete_dnodeint_at_index(&head, 0);
-    printf("-----------------\n");
-    delete_dnodeint_at_index(&head, 0);
-    printf("-----------------\n");
-    delete_dnodeint_at_index(&head, 0);
-    printf("-----------------\n");
-    delete_dnodeint_at_index(&head, 0);
-    printf("-----------------\n");
-    delete_dnodeint_at_index(&head, 0);
-    printf("-----------------\n");
-    delete_dnodeint_at_index(&head, 0);
-    printf("-----------------\n");
-    delete_dnodeint_at_index(&head, 0);
-    printf("-----------------\n");
-    delete_dnodeint_at_index(&head, 0);
-    printf("-----------------\n");
-    delete_dnodeint_at_index(&head, 0);
-    print_dlistint(head);
+    n = flip_bits(1024, 1);
+    printf("%u\n", n);
+    n = flip_bits(402, 98);
+    printf("%u\n", n);
+    n = flip_bits(1024, 3);
+    printf("%u\n", n);
+    n = flip_bits(1024, 1025);
+    printf("%u\n", n);
     return (0);
 }
-julien@ubuntu:~/Doubly linked lists$ gcc -Wall -pedantic -Werror -Wextra -std=gnu89 8-main.c 3-add_dnodeint_end.c 0-print_dlistint.c 4-free_dlistint.c 8-delete_dnodeint.c -o k
-julien@ubuntu:~/Doubly linked lists$ ./k
-0
+julien@ubuntu:~/Binary$ gcc -Wall -pedantic -Werror -Wextra -std=gnu89 5-main.c 5-flip_bits.c -o f
+julien@ubuntu:~/Binary$ ./f
+2
+5
+3
 1
-2
-3
-4
-98
-402
-1024
------------------
-0
-1
-2
-3
-4
-402
-1024
------------------
-1
-2
-3
-4
-402
-1024
------------------
-2
-3
-4
-402
-1024
------------------
-3
-4
-402
-1024
------------------
-4
-402
-1024
------------------
-402
-1024
------------------
-1024
------------------
------------------
------------------
------------------
------------------
------------------
------------------
------------------
------------------
------------------
-julien@ubuntu:~/Doubly linked lists$ 
+julien@ubuntu:~/Binary$ 
 ```
