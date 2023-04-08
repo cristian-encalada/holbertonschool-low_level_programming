@@ -9,6 +9,8 @@ int count_bits(int n);
  */
 unsigned int flip_bits(unsigned long int n, unsigned long int m)
 {
+	if (~n == 0 && m == 0)	/* Handle if n = ULONG_MAX */
+		return (sizeof(unsigned long int) * 8);
 	return (count_bits(n ^ m));
 }
 
