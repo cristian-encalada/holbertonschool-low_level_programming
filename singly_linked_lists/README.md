@@ -373,3 +373,27 @@ julien@ubuntu:~/Singly linked lists$ valgrind ./e
 ==3598== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
 julien@ubuntu:~/Singly linked lists$ 
 ```
+- [x] [100-first.c](./100-first.c) 
+	- Write a function that prints ``You're beat! and yet, you must allow,\nI bore my house upon my back!\n`` before the ``main`` function is executed.
+		- You are allowed to use the printf function
+```
+julien@ubuntu:~/Singly linked lists$ cat 100-main.c
+#include <stdio.h>
+
+/**
+ * main - check the code
+ *
+ * Return: Always 0.
+ */
+int main(void)
+{
+    printf("(A tortoise, having pretty good sense of a hare's nature, challenges one to a race.)\n");
+    return (0);
+}
+julien@ubuntu:~/$ gcc -Wall -pedantic -Werror -Wextra -std=gnu89 100-main.c 100-first.c -o first
+julien@ubuntu:~/$ ./first 
+You're beat! and yet, you must allow,
+I bore my house upon my back!
+(A tortoise, having pretty good sense of a hare's nature, challenges one to a race.)
+julien@ubuntu:~/$ 
+```
