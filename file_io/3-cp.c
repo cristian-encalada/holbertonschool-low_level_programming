@@ -1,27 +1,23 @@
 #include "main.h"
 
 int _strlen(const char *s);
-ssize_t copy_content(const char *file_from, char *file_to);
-#include <stdio.h>
-#include <stdlib.h>
-#include "main.h"
- /**
- * main - check the code
+void copy_content(const char *file_from, const char *file_to);
+/**
+ * main - Copies content of a file to another
+ * @argc: Number of command line arguments
+ * @argv: Array containing command line arguments
  *
- * Return: Always 0.
+ * Return: 0
  */
-int main(int ac, char **av)
+int main(int argc, char **argv)
 {
-    int res;
-
-    if (ac != 3)
-    {
-        dprintf(2, "Usage: %s cp file_from file_to\n", av[0]);
-        exit(97);
-    }
-    res = copy_content(av[1], av[2]);
-    printf("-> %i)\n", res);
-    return (0);
+	if (ac != 3)
+	{
+	dprintf(STDERR_FILENO, "Usage: %s cp file_from file_to\n", av[0]);
+	exit(97);
+	}
+	copy_content(av[1], av[2]);
+	return (0);
 }
 /**
  * copy_content - program that copies the content of a file to another file.
@@ -34,53 +30,25 @@ int main(int ac, char **av)
  *	- if you can not create or if write to file_to fails, exit with code 99
  *	- if you can not close a file descriptor , exit with code 100
  */
-ssize_t copy_content(const char *file_from, char *file_to)
+void copy_content(const char *file_from, const char *file_to)
 {
-	ssize_t r, o, w, len;
-	char *buffer;
+	ssize_t open_f1, open_f2, r, w;
+	char buffer[1024];
 
-	buffer = malloc(sizeof(char) * 1024);
-	if (buffer == NULL)
-		return (0);
-
-	len = _strlen(file_to);
-	o = open(file_from, O_CREAT | O_RDWR | O_TRUNC, 0664);
-	r = read(o, buffer, letters);           /* # of bytes read */
-	w = write(o, file_to, len);        /* # of bytes written */
-
-	if (file_from == NULL || r == -1)
+	open_f1 = open(file_from, O_RDONLY);
+	if (file_from == NULL || open_f1 == -1)
 	{
-		dprintf(2, "Error: Can't read from file %s\n", av[0]);
+		dprintf(STDERR_FILENO, "Error: Can't read from file %s\n", file_from)
 		exit(98);
 	}
-
-	if (o == -1 || w == -1)
-	{
-		dprintf(2, "Error: Can't write from file %s\n", av[0]);
-		exit(99);
-	}
-	close(o);
-	if (file_from == NULL || r == -1)
-	{
-		dprintf(2, "Error: Can't close from file %s\n", av[0]);
-		exit(100);
-	}
-	return (1);
-}
-
-/**
- * _strlen - Gets the length of a string
- * @s: String being evaluated
- * Return: Length of string or 0 if it fails
- */
-int _strlen(const char *s)
-{
-	size_t i = 0;
-
-	if (s == NULL)
-		return (0);
-
-	for (i = 0; s[i]; i++)
-		;
-	return (i);
+	open_f2 = open(file_to, O_WRONLY | O_CREAT | O_TRUNC, 0664);
+	r = read(open_f1, buffer, 1024);	/* # of bytes read (file 1) */
+	w = write(open_f2, buffer, r);		/* # of bytes written */
+	while (r > 0)
+		if (w == -1 || open_f2 == -1)
+		dprintf(STDERR_FILENO, "Error: Can't write to %s\n", file_to), exit(99);
+	if (close(open_f1))
+		dprintf(STDERR_FILENO, "Error: Can't close fd %ld\n", open_f1), exit(100);
+	if (close(open_f2))
+		dprintf(STDERR_FILENO, "Error: Can't close fd %ld\n", open_f2), exit(100);
 }
