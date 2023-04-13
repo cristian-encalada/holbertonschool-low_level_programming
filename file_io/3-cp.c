@@ -20,17 +20,17 @@ int main(int argc, char *argv[])
 	if (argc != 3)
 		dprintf(STDERR_FILENO, "Usage: cp file_from file_to\n"), exit(97);
 	open_f1 = open(argv[1], O_RDONLY);
-	r = read(open_f1, buffer, 1024);        /* # of bytes read from file 1 */
-	if (open_f1 == -1 || r == -1)
+	if (open_f1 == -1)
 	{
 		dprintf(STDERR_FILENO, "Error: Can't read from file %s\n", argv[1]);
 		exit(98);
 	}
 	open_f2 = open(argv[2], O_CREAT | O_WRONLY | O_TRUNC, 0664);
+	r = read(open_f1, buffer, 1024);        /* # of bytes read from file 1 */
 	while (r > 0)
 	{
 		w = write(open_f2, buffer, r);          /* # of bytes written to file 2 */
-		if (w != r)
+		if (open_f2 == -1 || w != r)
 			dprintf(STDERR_FILENO, "Error: Can't write to %s\n", argv[2]), exit(99);
 		r = read(open_f1, buffer, 1024);        /* Update # of bytes read */
 	}
