@@ -1,55 +1,55 @@
 #include "main.h"
 
-void copy_content(const char *file_from, const char *file_to);
+void close_file(int fd);
 /**
- * main - Copies content of a file to another
- * @argc: Number of command line arguments
- * @argv: Array containing command line arguments
- *
- * Return: 0
- */
-int main(int argc, char **argv)
-{
-	if (argc != 3)
-	{
-	dprintf(STDERR_FILENO, "Usage: %s cp file_from file_to\n", argv[0]);
-	exit(97);
-	}
-	copy_content(argv[1], argv[2]);
-	return (0);
-}
-/**
- * copy_content - program that copies the content of a file to another file.
- * @file_from: source file
- * @file_to: destination file
- * Return: 1 on success, -1 on failure
+ * main - copy content from a file to another file
+ * @argc: number of arguments supplied to the program.
+ * @argv: Array of pointers to the arguments
+ * Return: 0 on success
  *	- if the number of argument is not the correct one, exit with code 97
  *	- if the file already exists, truncate it
  *	- if file_from does not exist, or if you can not read it, exit with code 98
  *	- if you can not create or if write to file_to fails, exit with code 99
  *	- if you can not close a file descriptor , exit with code 100
  */
-void copy_content(const char *file_from, const char *file_to)
+int main(int argc, char *argv[])
 {
 	ssize_t open_f1, open_f2, r, w;
 	char buffer[1024];
 
-	open_f1 = open(file_from, O_RDONLY);
-	if (open_f1 == -1 || file_from == NULL)
+	if (argc != 3)
+		dprintf(STDERR_FILENO, "Usage: cp file_from file_to\n"), exit(97);
+	open_f1 = open(argv[1], O_RDONLY);
+	r = read(open_f1, buffer, 1024);        /* # of bytes read from file 1 */
+	if (open_f1 == -1 || r == -1)
 	{
-		dprintf(STDERR_FILENO, "Error: Can't read from file %s\n", file_from);
+		dprintf(STDERR_FILENO, "Error: Can't read from file %s\n", argv[1]);
 		exit(98);
 	}
-	open_f2 = open(file_to, O_WRONLY | O_CREAT | O_TRUNC, 0664);
-	r = read(open_f1, buffer, 1024);	/* # of bytes read (file 1) */
-	w = write(open_f2, buffer, r);		/* # of bytes written */
+	open_f2 = open(argv[2], O_CREAT | O_WRONLY | O_TRUNC, 0664);
 	while (r > 0)
 	{
-		if (w == -1 || open_f2 == -1)
-		dprintf(STDERR_FILENO, "Error: Can't write to %s\n", file_to), exit(99);
+		w = write(open_f2, buffer, r);          /* # of bytes written to file 2 */
+		if (w != r)
+			dprintf(STDERR_FILENO, "Error: Can't write to %s\n", argv[2]), exit(99);
+		r = read(open_f1, buffer, 1024);        /* Update # of bytes read */
 	}
-	if (close(open_f1))
-		dprintf(STDERR_FILENO, "Error: Can't close fd %ld\n", open_f1), exit(100);
-	if (close(open_f2))
-		dprintf(STDERR_FILENO, "Error: Can't close fd %ld\n", open_f2), exit(100);
+	close_file(open_f1);
+	close_file(open_f2);
+	return (0);
+}
+/**
+ * close_file - close a file descriptor
+ * @fd: file descriptor to be closed
+ */
+void close_file(int fd)
+{
+	int cf;
+
+	cf = close(fd);
+	if (cf == -1)
+	{
+		dprintf(STDERR_FILENO, "Error: Can't close fd %d\n", fd);
+		exit(100);
+	}
 }
