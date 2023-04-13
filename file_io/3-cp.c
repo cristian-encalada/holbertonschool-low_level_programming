@@ -34,6 +34,11 @@ int main(int argc, char *argv[])
 			dprintf(STDERR_FILENO, "Error: Can't write to %s\n", argv[2]), exit(99);
 		r = read(open_f1, buffer, 1024);        /* Update # of bytes read */
 	}
+	if (r == -1)
+	{
+		dprintf(STDERR_FILENO, "Error: Can't read from file %s\n", argv[1]);
+		exit(98);
+	}
 	close_file(open_f1);
 	close_file(open_f2);
 	return (0);
