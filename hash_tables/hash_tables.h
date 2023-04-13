@@ -4,10 +4,6 @@
 #include <stdlib.h> /* To use malloc, calloc, free */
 
 /**
- * Desc: Header file containing prototypes for all functions
-*/
-
-/**
  * struct hash_node_s - Node of a hash table
  *
  * @key: The key, string
