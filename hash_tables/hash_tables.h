@@ -3,6 +3,8 @@
 
 #include <stdlib.h> /* To use malloc, calloc, free */
 #include <string.h> /* To use strdup and strcmp */
+#include <stdio.h> /* To use printf */
+
 /**
  * struct hash_node_s - Node of a hash table
  *
@@ -37,5 +39,6 @@ unsigned long int hash_djb2(const unsigned char *str);
 unsigned long int key_index(const unsigned char *key, unsigned long int size);
 char *hash_table_get(const hash_table_t *ht, const char *key);
 int hash_table_set(hash_table_t *ht, const char *key, const char *value);
+void hash_table_print(const hash_table_t *ht);
 
 #endif /* _HASH_TABLES_H */
