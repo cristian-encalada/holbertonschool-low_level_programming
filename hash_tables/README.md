@@ -61,7 +61,7 @@ Python dictionaries are implemented using hash tables. When you will be done wit
 
 Note that all dictionaries are not implemented using hash tables and there is a difference between a dictionary and a hash table. [Read more here](https://stackoverflow.com/questions/2061222/what-is-the-true-difference-between-a-dictionary-and-a-hash-table) (not mandatory).
 ## Tasks completed
-- [x] [0-hash_table_create.c](.0-hash_table_create.c)
+- [x] [0-hash_table_create.c](./0-hash_table_create.c)
 * Write a function that creates a hash table.
 		- Prototype: ``hash_table_t *hash_table_create(unsigned long int size)``;
 			- where ``size`` is the size of the array

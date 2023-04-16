@@ -1,8 +1,18 @@
 # C - File I/O
+## Resources
+* [File Descriptors](https://en.wikipedia.org/wiki/File_descriptor)
+* [https://en.wikipedia.org/wiki/File_descriptor](https://www.youtube.com/watch?v=WxNSJAbQ8Ik)
 ## Learned Topics
 ### General
-* Look for the right source of information without too much help
-* How to manipulate bits and use bitwise operators
+* Look for the right source of information online
+* How to create, open, close, read and write files
+* What are file descriptors
+* What are the 3 standard file descriptors, what are their purpose and what are their POSIX names
+* How to use the I/O system calls ``open``, ``close``, ``read`` and ``write``
+* What are and how to use the flags ``O_RDONLY``, ``O_WRONLY``, ``O_RDWR``
+* What are file permissions, and how to set them when creating a file with the ``open`` system call
+* What is a system call
+* What is the difference between a function and a system call
 ## Requirements
 ### General
 * Allowed editors: ``vi``, ``vim``, ``emacs``
@@ -14,234 +24,55 @@
 * You are not allowed to use global variables
 * No more than 5 functions per file
 * The only C standard library functions allowed are ``malloc``, ``free`` and ``exit``. Any use of functions like ``printf``, ``puts``, ``calloc``, ``realloc`` etc… is forbidden
+* Allowed syscalls: ``read``, ``write``, ``open``, ``close``
 * You are allowed to use [_putchar](https://github.com/hs-hq/_putchar.c/blob/main/_putchar.c)
 * You don’t have to push ``_putchar.c``, we will use our file. If you do it won’t be taken into account
 * In the following examples, the ``main.c`` files are shown as examples. You can use them to test your functions, but you don’t have to push them to your repo (if you do we won’t take them into account). We will use our own main.c files at compilation. Our main.c files might be different from the one shown in the examples
 * The prototypes of all your functions and the prototype of the function ``_putchar`` should be included in your header file called ``main.h``
 * Don’t forget to push your header file
 * All your header files should be include guarded
+* Tip: always prefer using symbolic constants ``(POSIX)`` vs numbers when it makes sense. For instance ``read(STDIN_FILENO, ...`` vs ``read(0, ...``
 ## Tasks completed
-- [x] [0-binary_to_uint.c](./0-binary_to_uint.c)
-	- Write a function that converts a binary number to an unsigned int.
-		- Prototype: ``unsigned int binary_to_uint(const char *b)``;
-		- where ``b`` is pointing to a string of 0 and 1 chars
-		- Return: the converted number, or ``0`` if
-			- there is one or more chars in the string ``b`` that is not ``0`` or ``1``
-			- ``b`` is ``NULL``
+- [x] [0-read_textfile.c](./0-read_textfile.c)
+* Write a function that reads a text file and prints it to the POSIX standard output.
+		- Prototype: ``/ssize_t read_textfile(const char *filename, size_t letters);``
+		- where letters is the number of letters it should read and print
+		- returns the actual number of letters it could read and print
+		- if the file can not be opened or read, return ``0``
+		- if ``filename`` is ``NULL`` return 0
+		- if ``write`` fails or does not write the expected amount of bytes, return ``0``
 ```
-julien@ubuntu:~/Binary$ cat 0-main.c
+julien@ubuntu:~/File descriptors and permissions$ cat Requiescat 
+Requiescat
+by Oscar Wilde
+
+Tread lightly, she is near
+Under the snow,
+Speak gently, she can hear
+The daisies grow.
+
+All her bright golden hair
+Tarnished with rust,
+She that was young and fair
+Fallen to dust.
+
+Lily-like, white as snow,
+She hardly knew
+She was a woman, so
+Sweetly she grew.
+
+Coffin-board, heavy stone,
+Lie on her breast,
+I vex my heart alone,
+She is at rest.
+
+Peace, Peace, she cannot hear
+Lyre or sonnet,
+All my life's buried here,
+Heap earth upon it.
+julien@ubuntu:~/File descriptors and permissions$ cat 0-main.c
 #include <stdio.h>
-#include "main.h"
-
-/**
- * main - check the code
- *
- * Return: Always 0.
- */
-int main(void)
-{
-    unsigned int n;
-
-    n = binary_to_uint("1");
-    printf("%u\n", n);
-    n = binary_to_uint("101");
-    printf("%u\n", n);
-    n = binary_to_uint("1e01");
-    printf("%u\n", n);
-    n = binary_to_uint("1100010");
-    printf("%u\n", n);
-    n = binary_to_uint("0000000000000000000110010010");
-    printf("%u\n", n);
-    return (0);
-}
-julien@ubuntu:~/Binary$ gcc -Wall -pedantic -Werror -Wextra -std=gnu89 0-main.c 0-binary_to_uint.c -o a
-julien@ubuntu:~/Binary$ ./a 
-1
-5
-0
-98
-402
-julien@ubuntu:~/Binary$ 
-```
-- [x] [1-print_binary.c](./1-print_binary.c)
-	- Write a function that prints the binary representation of a number.
-		- Prototype: ``void print_binary(unsigned long int n)``;
-		- Format: see example
-		- You are not allowed to use arrays
-		- You are not allowed to use malloc
-		- You are not allowed to use the ``%`` or ``/`` operators
-```
-julien@ubuntu:~/Binary$ cat 1-main.c 
-#include <stdio.h>
-#include "main.h"
-
-/**
- * main - check the code
- *
- * Return: Always 0.
- */
-int main(void)
-{
-    print_binary(0);
-    printf("\n");
-    print_binary(1);
-    printf("\n");
-    print_binary(98);
-    printf("\n");
-    print_binary(1024);
-    printf("\n");
-    print_binary((1 << 10) + 1);
-    printf("\n");
-    return (0);
-}
-julien@ubuntu:~/Binary$ gcc -Wall -pedantic -Werror -Wextra -std=gnu89 1-main.c 1-print_binary.c _putchar.c -o b
-julien@ubuntu:~/Binary$ ./b 
-0
-1
-1100010
-10000000000
-10000000001
-julien@ubuntu:~/Binary$ 
-```
-- [x] [2-get_bit.c](./2-get_bit.c)
-	- Write a function that returns the value of a bit at a given index.
-		- Prototype: ``int get_bit(unsigned long int n, unsigned int index)``;
-		- where index is the ``index``, starting from ``0`` of the bit you want to get
-		- Returns: the value of the bit at ``index`` or ``-1`` if an error occured
-```
-julien@ubuntu:~/Binary$ cat 2-main.c
-#include <stdio.h>
-#include "main.h"
-
-/**
- * main - check the code
- *
- * Return: Always 0.
- */
-int main(void)
-{
-    int n;
-
-    n = get_bit(1024, 10);
-    printf("%d\n", n);
-    n = get_bit(98, 1);
-    printf("%d\n", n);
-    n = get_bit(1024, 0);
-    printf("%d\n", n);
-    return (0);
-}
-julien@ubuntu:~/Binary$ gcc -Wall -pedantic -Werror -Wextra -std=gnu89 2-main.c 2-get_bit.c -o c    
-julien@ubuntu:~/Binary$ ./c
-1
-1
-0
-julien@ubuntu:~/Binary$ 
-```
-- [x] [3-set_bit.c](./3-set_bit.c)
-	- Write a function that sets the value of a bit to ``1`` at a given index.
-		- Prototype: ``int set_bit(unsigned long int *n, unsigned int index)``;
-		- where ``index`` is the index, starting from ``0`` of the bit you want to set
-		- Returns: ``1`` if it worked, or ``-1`` if an error occurred
-```
-julien@ubuntu:~/Binary$ cat 3-main.c
-#include <stdio.h>
-#include "main.h"
-
-/**
- * main - check the code
- *
- * Return: Always 0.
- */
-int main(void)
-{
-    unsigned long int n;
-
-    n = 1024;
-    set_bit(&n, 5);
-    printf("%lu\n", n);
-    n = 0;
-    set_bit(&n, 10);
-    printf("%lu\n", n);
-    n = 98;
-    set_bit(&n, 0);
-    printf("%lu\n", n);
-    return (0);
-}
-julien@ubuntu:~/Binary$ gcc -Wall -pedantic -Werror -Wextra -std=gnu89 3-main.c 3-set_bit.c -o d
-julien@ubuntu:~/Binary$ ./d
-1056
-1024
-99
-julien@ubuntu:~/Binary$ 
-```
-- [x] [4-clear_bit.c](./4-clear_bit.c)
-	- Write a function that sets the value of a bit to ``0`` at a given index.
-		- Prototype: ``int clear_bit(unsigned long int *n, unsigned int index)``;
-		- where ``index`` is the index, starting from ``0`` of the bit you want to set
-		- Returns: ``1`` if it worked, or ``-1`` if an error occurred
-```
-julien@ubuntu:~/Doubly linked lists$ cat 4-main.c
 #include <stdlib.h>
-#include <string.h>
-#include <stdio.h>
-#include "lists.h"
-
-/**
- * main - check the code
- *
- * Return: Always EXIT_SUCCESS.
- */
-int main(void)
-{
-    dlistint_t *head;
-
-    head = NULL;
-    add_dnodeint_end(&head, 0);
-    add_dnodeint_end(&head, 1);
-    add_dnodeint_end(&head, 2);
-    add_dnodeint_end(&head, 3);
-    add_dnodeint_end(&head, 4);
-    add_dnodeint_end(&head, 98);
-    add_dnodeint_end(&head, 402);
-    add_dnodeint_end(&head, 1024);
-    print_dlistint(head);
-    free_dlistint(head);
-    head = NULL;
-    return (EXIT_SUCCESS);
-}
-julien@ubuntu:~/Doubly linked lists$ gcc -Wall -pedantic -Werror -Wextra -std=gnu89 4-main.c 3-add_dnodeint_end.c 0-print_dlistint.c 4-free_dlistint.c -o e
-julien@ubuntu:~/Doubly linked lists$ valgrind ./e 
-==4197== Memcheck, a memory error detector
-==4197== Copyright (C) 2002-2015, and GNU GPL'd, by Julian Seward et al.
-==4197== Using Valgrind-3.11.0 and LibVEX; rerun with -h for copyright info
-==4197== Command: ./e
-==4197== 
-0
-1
-2
-3
-4
-98
-402
-1024
-==4197== 
-==4197== HEAP SUMMARY:
-==4197==     in use at exit: 0 bytes in 0 blocks
-==4197==   total heap usage: 9 allocs, 9 frees, 1,216 bytes allocated
-==4197== 
-==4197== All heap blocks were freed -- no leaks are possible
-==4197== 
-==4197== For counts of detected and suppressed errors, rerun with: -v
-==4197== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
-julien@ubuntu:~/Doubly linked lists$ 
-```
-- [x] [5-flip_bits.c](./5-flip_bits.c)
-	- Write a function that returns the number of bits you would need to flip to get from one number to another.
-		- Prototype: ``unsigned int flip_bits(unsigned long int n, unsigned long int m)``;
-		- You are not allowed to use the ``%`` or ``/`` operators
-```
-julien@ubuntu:~/Binary$ cat 5-main.c
-#include <stdio.h>
 #include "main.h"
 
 /**
@@ -249,25 +80,175 @@ julien@ubuntu:~/Binary$ cat 5-main.c
  *
  * Return: Always 0.
  */
-int main(void)
+int main(int ac, char **av)
 {
-    unsigned int n;
+    ssize_t n;
 
-    n = flip_bits(1024, 1);
-    printf("%u\n", n);
-    n = flip_bits(402, 98);
-    printf("%u\n", n);
-    n = flip_bits(1024, 3);
-    printf("%u\n", n);
-    n = flip_bits(1024, 1025);
-    printf("%u\n", n);
+    if (ac != 2)
+    {
+        dprintf(2, "Usage: %s filename\n", av[0]);
+        exit(1);
+    }
+    n = read_textfile(av[1], 114);
+    printf("\n(printed chars: %li)\n", n);
+    n = read_textfile(av[1], 1024);
+    printf("\n(printed chars: %li)\n", n);
     return (0);
 }
-julien@ubuntu:~/Binary$ gcc -Wall -pedantic -Werror -Wextra -std=gnu89 5-main.c 5-flip_bits.c -o f
-julien@ubuntu:~/Binary$ ./f
-2
-5
-3
-1
-julien@ubuntu:~/Binary$ 
+julien@ubuntu:~/File descriptors and permissions$ gcc -Wall -pedantic -Werror -Wextra -std=gnu89 0-main.c 0-read_textfile.c -o a
+julien@ubuntu:~/File descriptors and permissions$ ./a Requiescat 
+Requiescat
+by Oscar Wilde
+
+Tread lightly, she is near
+Under the snow,
+Speak gently, she can hear
+The daisies grow.
+(printed chars: 114)
+Requiescat
+by Oscar Wilde
+
+Tread lightly, she is near
+Under the snow,
+Speak gently, she can hear
+The daisies grow.
+
+All her bright golden hair
+Tarnished with rust,
+She that was young and fair
+Fallen to dust.
+
+Lily-like, white as snow,
+She hardly knew
+She was a woman, so
+Sweetly she grew.
+
+Coffin-board, heavy stone,
+Lie on her breast,
+I vex my heart alone,
+She is at rest.
+
+Peace, Peace, she cannot hear
+Lyre or sonnet,
+All my life's buried here,
+Heap earth upon it.
+
+(printed chars: 468)
+julien@ubuntu:~/File descriptors and permissions$ 
+```
+- [x] [1-create_file.c](./1-create_file.c)
+	- Create a function that creates a file.
+		- Prototype: ``int create_file(const char *filename, char *text_content);``
+		- where ``filename`` is the name of the file to create and ``text_content`` is a ``NULL`` terminated string to write to the file
+		- Returns: ``1`` on success, ``-1`` on failure (file can not be created, file can not be written, ``write`` “fails”, etc…)
+		- The created file must have those permissions: ``rw-------``. If the file already exists, do not change the permissions.
+		- if the file already exists, truncate it
+		- if ``filename`` is ``NULL`` return ``-1``
+		- if ``text_content`` is ``NULL`` create an empty file
+```
+julien@ubuntu:~/File descriptors and permissions$ cat 1-main.c
+#include <stdio.h>
+#include <stdlib.h>
+#include "main.h"
+
+/**
+ * main - check the code
+ *
+ * Return: Always 0.
+ */
+int main(int ac, char **av)
+{
+    int res;
+
+    if (ac != 3)
+    {
+        dprintf(2, "Usage: %s filename text\n", av[0]);
+        exit(1);
+    }
+    res = create_file(av[1], av[2]);
+    printf("-> %i)\n", res);
+    return (0);
+}
+julien@ubuntu:~/File descriptors and permissions$ gcc -Wall -pedantic -Werror -Wextra -std=gnu89 1-main.c 1-create_file.c -o b
+julien@ubuntu:~/File descriptors and permissions$ ./b hello world
+-> 1)
+julien@ubuntu:~/File descriptors and permissions$ ls -l hello
+-rw------- 1 julien julien 5 Dec  3 14:28 hello
+julien@ubuntu:~/File descriptors and permissions$ cat hello 
+worldjulien@ubuntu:~/File descriptors and permis$ 
+```
+- [x] [2-append_text_to_file.c](./2-append_text_to_file.c)
+	- Write a function that appends text at the end of a file.
+		- Prototype: ``int append_text_to_file(const char *filename, char *text_content);``
+		- where ``filename`` is the name of the file and ``text_content`` is the ``NULL`` terminated string to add at the end of the file
+		- Return: ``1`` on success and ``-1`` on failure
+		- Do not create the file if it does not exist
+		- If ``filename`` is ``NULL`` return ``-1``
+		- If ``text_content`` is ``NULL``, do not add anything to the file. 
+		- Return ``1`` if the file exists and ``-1`` if the file does not exist or if you do not have the required permissions to write the file
+```
+julien@ubuntu:~/File descriptors and permissions$ cat 2-main.c
+#include <stdio.h>
+#include <stdlib.h>
+#include "main.h"
+
+/**
+ * main - check the code
+ *
+ * Return: Always 0.
+ */
+int main(int ac, char **av)
+{
+    int res;
+
+    if (ac != 3)
+    {
+        dprintf(2, "Usage: %s filename text\n", av[0]);
+        exit(1);
+    }
+    res = append_text_to_file(av[1], av[2]);
+    printf("-> %i)\n", res);
+    return (0);
+}
+julien@ubuntu:~/File descriptors and permissions$ echo -n Hello > hello
+julien@ubuntu:~/File descriptors and permissions$ ls -l hello
+-rw-rw-r-- 1 julien julien 5 Dec  3 14:48 hello
+julien@ubuntu:~/File descriptors and permissions$ gcc -Wall -pedantic -Werror -Wextra -std=gnu89 2-main.c 2-append_text_to_file.c -o c
+julien@ubuntu:~/File descriptors and permissions$ ./c hello " World!
+> "
+-> 1)
+julien@ubuntu:~/File descriptors and permissions$ cat hello 
+Hello World!
+julien@ubuntu:~/File descriptors and permissions$
+```
+- [x] [3-cp.c](./3-cp.c)
+	- Write a program that copies the content of a file to another file.
+		- Usage: ``cp file_from file_to``
+		- if the number of argument is not the correct one, exit with code ``97`` and print ``Usage: cp file_from file_to``, followed by a new line, on the ``POSIX`` standard error
+		- if ``file_to`` already exists, truncate it
+		- if ``file_from`` does not exist, or if you can not ``read`` it, exit with code ``98`` and print ``Error: Can't read from file NAME_OF_THE_FILE``, followed by a new line, on the ``POSIX`` standard error
+			- where ``NAME_OF_THE_FILE`` is the first argument passed to your program
+		- if you can not ``create`` or if ``write`` to ``file_to`` fails, exit with code ``99`` and print ``Error: Can't write to NAME_OF_THE_FILE``, followed by a new line, on the ``POSIX`` standard error
+			- where ``NAME_OF_THE_FILE`` is the second argument passed to your program
+		- if you can not ``close`` a file descriptor , exit with code ``100`` and print ``Error: Can't close fd FD_VALUE``, followed by a new line, on the ``POSIX`` standard error
+			- where ``FD_VALUE`` is the value of the file descriptor
+		- Permissions of the created file: ``rw-rw-r--``. If the file already exists, do not change the permissions
+		- You must read ``1,024`` bytes at a time from the ``file_from`` to make less system calls. Use a buffer
+		- You are allowed to use ``dprintf``
+```
+julien@ubuntu:~/File descriptors and permissions$ gcc -Wall -pedantic -Werror -Wextra -std=gnu89 3-cp.c -o cp
+julien@ubuntu:~/File descriptors and permissions$ cat incitatous 
+Why you should think twice before putting pictures on social media.
+(What you always wanted to know about @Incitatous)
+#PrivacyAware
+http://imgur.com/a/Mq1tc
+julien@ubuntu:~/File descriptors and permissions$ ./cp incitatous Incitatous
+julien@ubuntu:~/File descriptors and permissions$ ls -l Incitatous 
+-rw-rw-r-- 1 julien julien 158 Dec  3 15:39 Incitatous
+julien@ubuntu:~/File descriptors and permissions$ cat Incitatous 
+Why you should think twice before putting pictures on social media.
+(What you always wanted to know about @Incitatous)
+#PrivacyAware
+http://imgur.com/a/Mq1tc
+julien@ubuntu:~/File descriptors and permissions$ 
 ```
