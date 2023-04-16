@@ -1,190 +1,143 @@
 # C - Hash Tables
+## Resources
+* [Hash Function](https://en.wikipedia.org/wiki/Hash_function)
+* [Hash Table](https://en.wikipedia.org/wiki/Hash_table)
+* [What is a HashTable Data Structure](https://www.youtube.com/watch?v=MfhjkfocRR0)
 ## Learned Topics
 ### General
-* Look for the right source of information without too much help
-* How to manipulate bits and use bitwise operators
+* What is a hash function
+* What makes a good hash function
+* What is a hash table, how do they work and how to use them
+* What is a collision and what are the main ways of dealing with collisions in the context of a hash table
+* What are the advantages and drawbacks of using hash tables
+* What are the most common use cases of hash tables
 ## Requirements
 ### General
 * Allowed editors: ``vi``, ``vim``, ``emacs``
 * All your files will be compiled on Ubuntu 20.04 LTS using gcc, using the options ``-Wall -Werror -Wextra -pedantic -std=gnu89``
 * All your files should end with a new line
 * A ``README.md`` file, at the root of the folder of the project
-* There should be no errors and no warnings during compilation
 * Your code should use the ``Betty`` style. It will be checked using [betty-style.pl](https://github.com/hs-hq/Betty/blob/main/betty-style.pl) and [betty-doc.pl](https://github.com/hs-hq/Betty/blob/main/betty-doc.pl)
 * You are not allowed to use global variables
 * No more than 5 functions per file
-* The only C standard library functions allowed are ``malloc``, ``free`` and ``exit``. Any use of functions like ``printf``, ``puts``, ``calloc``, ``realloc`` etc… is forbidden
-* You are allowed to use [_putchar](https://github.com/hs-hq/_putchar.c/blob/main/_putchar.c)
-* You don’t have to push ``_putchar.c``, we will use our file. If you do it won’t be taken into account
-* In the following examples, the ``main.c`` files are shown as examples. You can use them to test your functions, but you don’t have to push them to your repo (if you do we won’t take them into account). We will use our own main.c files at compilation. Our main.c files might be different from the one shown in the examples
-* The prototypes of all your functions and the prototype of the function ``_putchar`` should be included in your header file called ``main.h``
+* You are allowed to use the C standard library.
+* The prototypes of all your functions should be included in your header file called ``hash_tables.h``
 * Don’t forget to push your header file
 * All your header files should be include guarded
+### More Info- Data Structures
+Please use these data structures for this project:
+```
+/**
+ * struct hash_node_s - Node of a hash table
+ *
+ * @key: The key, string
+ * The key is unique in the HashTable
+ * @value: The value corresponding to a key
+ * @next: A pointer to the next node of the List
+ */
+typedef struct hash_node_s
+{
+     char *key;
+     char *value;
+     struct hash_node_s *next;
+} hash_node_t;
+
+/**
+ * struct hash_table_s - Hash table data structure
+ *
+ * @size: The size of the array
+ * @array: An array of size @size
+ * Each cell of this array is a pointer to the first node of a linked list,
+ * because we want our HashTable to use a Chaining collision handling
+ */
+typedef struct hash_table_s
+{
+     unsigned long int size;
+     hash_node_t **array;
+} hash_table_t;
+```
+### Python Dictionaries
+Python dictionaries are implemented using hash tables. When you will be done with this project, you will be able to better understand the power and simplicity of Python dictionaries. So much is actually happening when you type d = {'a': 1, 'b': 2}, but everything looks so simple for the user. Python doesn’t use the exact same implementation than the one you will work on today though. If you are curious on how it works under the hood, here is a good blog post about [how dictionaries are implemented in Python 2.7](http://www.laurentluce.com/posts/python-dictionary-implementation/) (not mandatory).
+
+Note that all dictionaries are not implemented using hash tables and there is a difference between a dictionary and a hash table. [Read more here](https://stackoverflow.com/questions/2061222/what-is-the-true-difference-between-a-dictionary-and-a-hash-table) (not mandatory).
 ## Tasks completed
-- [x] [0-binary_to_uint.c](./0-binary_to_uint.c)
-	- Write a function that converts a binary number to an unsigned int.
-		- Prototype: ``unsigned int binary_to_uint(const char *b)``;
-		- where ``b`` is pointing to a string of 0 and 1 chars
-		- Return: the converted number, or ``0`` if
-			- there is one or more chars in the string ``b`` that is not ``0`` or ``1``
-			- ``b`` is ``NULL``
+- [x] [0-hash_table_create.c](.0-hash_table_create.c)
+* Write a function that creates a hash table.
+		- Prototype: ``hash_table_t *hash_table_create(unsigned long int size)``;
+			- where ``size`` is the size of the array
+		- Returns a pointer to the newly created hash table
+		- If something went wrong, your function should return ``NULL``
 ```
-julien@ubuntu:~/Binary$ cat 0-main.c
-#include <stdio.h>
-#include "main.h"
-
-/**
- * main - check the code
- *
- * Return: Always 0.
- */
-int main(void)
-{
-    unsigned int n;
-
-    n = binary_to_uint("1");
-    printf("%u\n", n);
-    n = binary_to_uint("101");
-    printf("%u\n", n);
-    n = binary_to_uint("1e01");
-    printf("%u\n", n);
-    n = binary_to_uint("1100010");
-    printf("%u\n", n);
-    n = binary_to_uint("0000000000000000000110010010");
-    printf("%u\n", n);
-    return (0);
-}
-julien@ubuntu:~/Binary$ gcc -Wall -pedantic -Werror -Wextra -std=gnu89 0-main.c 0-binary_to_uint.c -o a
-julien@ubuntu:~/Binary$ ./a 
-1
-5
-0
-98
-402
-julien@ubuntu:~/Binary$ 
-```
-- [x] [1-print_binary.c](./1-print_binary.c)
-	- Write a function that prints the binary representation of a number.
-		- Prototype: ``void print_binary(unsigned long int n)``;
-		- Format: see example
-		- You are not allowed to use arrays
-		- You are not allowed to use malloc
-		- You are not allowed to use the ``%`` or ``/`` operators
-```
-julien@ubuntu:~/Binary$ cat 1-main.c 
-#include <stdio.h>
-#include "main.h"
-
-/**
- * main - check the code
- *
- * Return: Always 0.
- */
-int main(void)
-{
-    print_binary(0);
-    printf("\n");
-    print_binary(1);
-    printf("\n");
-    print_binary(98);
-    printf("\n");
-    print_binary(1024);
-    printf("\n");
-    print_binary((1 << 10) + 1);
-    printf("\n");
-    return (0);
-}
-julien@ubuntu:~/Binary$ gcc -Wall -pedantic -Werror -Wextra -std=gnu89 1-main.c 1-print_binary.c _putchar.c -o b
-julien@ubuntu:~/Binary$ ./b 
-0
-1
-1100010
-10000000000
-10000000001
-julien@ubuntu:~/Binary$ 
-```
-- [x] [2-get_bit.c](./2-get_bit.c)
-	- Write a function that returns the value of a bit at a given index.
-		- Prototype: ``int get_bit(unsigned long int n, unsigned int index)``;
-		- where index is the ``index``, starting from ``0`` of the bit you want to get
-		- Returns: the value of the bit at ``index`` or ``-1`` if an error occured
-```
-julien@ubuntu:~/Binary$ cat 2-main.c
-#include <stdio.h>
-#include "main.h"
-
-/**
- * main - check the code
- *
- * Return: Always 0.
- */
-int main(void)
-{
-    int n;
-
-    n = get_bit(1024, 10);
-    printf("%d\n", n);
-    n = get_bit(98, 1);
-    printf("%d\n", n);
-    n = get_bit(1024, 0);
-    printf("%d\n", n);
-    return (0);
-}
-julien@ubuntu:~/Binary$ gcc -Wall -pedantic -Werror -Wextra -std=gnu89 2-main.c 2-get_bit.c -o c    
-julien@ubuntu:~/Binary$ ./c
-1
-1
-0
-julien@ubuntu:~/Binary$ 
-```
-- [x] [3-set_bit.c](./3-set_bit.c)
-	- Write a function that sets the value of a bit to ``1`` at a given index.
-		- Prototype: ``int set_bit(unsigned long int *n, unsigned int index)``;
-		- where ``index`` is the index, starting from ``0`` of the bit you want to set
-		- Returns: ``1`` if it worked, or ``-1`` if an error occurred
-```
-julien@ubuntu:~/Binary$ cat 3-main.c
-#include <stdio.h>
-#include "main.h"
-
-/**
- * main - check the code
- *
- * Return: Always 0.
- */
-int main(void)
-{
-    unsigned long int n;
-
-    n = 1024;
-    set_bit(&n, 5);
-    printf("%lu\n", n);
-    n = 0;
-    set_bit(&n, 10);
-    printf("%lu\n", n);
-    n = 98;
-    set_bit(&n, 0);
-    printf("%lu\n", n);
-    return (0);
-}
-julien@ubuntu:~/Binary$ gcc -Wall -pedantic -Werror -Wextra -std=gnu89 3-main.c 3-set_bit.c -o d
-julien@ubuntu:~/Binary$ ./d
-1056
-1024
-99
-julien@ubuntu:~/Binary$ 
-```
-- [x] [4-clear_bit.c](./4-clear_bit.c)
-	- Write a function that sets the value of a bit to ``0`` at a given index.
-		- Prototype: ``int clear_bit(unsigned long int *n, unsigned int index)``;
-		- where ``index`` is the index, starting from ``0`` of the bit you want to set
-		- Returns: ``1`` if it worked, or ``-1`` if an error occurred
-```
-julien@ubuntu:~/Doubly linked lists$ cat 4-main.c
+julien@ubuntu:~/Hash tables$ cat 0-main.c 
 #include <stdlib.h>
 #include <string.h>
 #include <stdio.h>
-#include "lists.h"
+#include "hash_tables.h"
+
+/**
+ * main - check the code for
+ *
+ * Return: Always EXIT_SUCCESS.
+ */
+int main(void)
+{
+    hash_table_t *ht;
+
+    ht = hash_table_create(1024);
+    printf("%p\n", (void *)ht);
+    return (EXIT_SUCCESS);
+}
+julien@ubuntu:~/Hash tables$ gcc -Wall -pedantic -Werror -Wextra -std=gnu89 0-main.c 0-hash_table_create.c -o a
+julien@ubuntu:~/Hash tables$ ./a 
+0x238a010
+julien@ubuntu:~/Hash tables$ valgrind ./a
+==7602== Memcheck, a memory error detector
+==7602== Copyright (C) 2002-2013, and GNU GPL'd, by Julian Seward et al.
+==7602== Using Valgrind-3.10.1 and LibVEX; rerun with -h for copyright info
+==7602== Command: ./a
+==7602== 
+0x51fc040
+==7602== 
+==7602== HEAP SUMMARY:
+==7602==     in use at exit: 8,208 bytes in 2 blocks
+==7602==   total heap usage: 2 allocs, 0 frees, 8,208 bytes allocated
+==7602== 
+==7602== LEAK SUMMARY:
+==7602==    definitely lost: 16 bytes in 1 blocks
+==7602==    indirectly lost: 8,192 bytes in 1 blocks
+==7602==      possibly lost: 0 bytes in 0 blocks
+==7602==    still reachable: 0 bytes in 0 blocks
+==7602==         suppressed: 0 bytes in 0 blocks
+==7602== Rerun with --leak-check=full to see details of leaked memory
+==7602== 
+==7602== For counts of detected and suppressed errors, rerun with: -v
+==7602== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+julien@ubuntu:~/Hash tables$
+```
+- [x] [1-djb2.c](./1-djb2.c)
+* Write a hash function implementing the djb2 algorithm.
+		- Prototype: ``unsigned long int hash_djb2(const unsigned char *str);``
+		- You are allowed to copy and paste the function from [this page](https://gist.github.com/papamuziko/7bb52dfbb859fdffc4bd0f95b76f71e8)
+```
+julien@ubuntu:~/Hash tables$ cat 1-djb2.c 
+unsigned long int hash_djb2(const unsigned char *str)
+{
+    unsigned long int hash;
+    int c;
+
+    hash = 5381;
+    while ((c = *str++))
+    {
+        hash = ((hash << 5) + hash) + c; /* hash * 33 + c */
+    }
+    return (hash);
+}
+julien@ubuntu:~/Hash tables$ 
+julien@ubuntu:~/Hash tables$ cat 1-main.c 
+#include <stdlib.h>
+#include <string.h>
+#include <stdio.h>
+#include "hash_tables.h"
 
 /**
  * main - check the code
@@ -193,81 +146,276 @@ julien@ubuntu:~/Doubly linked lists$ cat 4-main.c
  */
 int main(void)
 {
-    dlistint_t *head;
+    char *s;
 
-    head = NULL;
-    add_dnodeint_end(&head, 0);
-    add_dnodeint_end(&head, 1);
-    add_dnodeint_end(&head, 2);
-    add_dnodeint_end(&head, 3);
-    add_dnodeint_end(&head, 4);
-    add_dnodeint_end(&head, 98);
-    add_dnodeint_end(&head, 402);
-    add_dnodeint_end(&head, 1024);
-    print_dlistint(head);
-    free_dlistint(head);
-    head = NULL;
+    s = "cisfun";
+    printf("%lu\n", hash_djb2((unsigned char *)s));
+    s = "Don't forget to tweet today";
+    printf("%lu\n", hash_djb2((unsigned char *)s));
+    s = "98";
+    printf("%lu\n", hash_djb2((unsigned char *)s));
     return (EXIT_SUCCESS);
 }
-julien@ubuntu:~/Doubly linked lists$ gcc -Wall -pedantic -Werror -Wextra -std=gnu89 4-main.c 3-add_dnodeint_end.c 0-print_dlistint.c 4-free_dlistint.c -o e
-julien@ubuntu:~/Doubly linked lists$ valgrind ./e 
-==4197== Memcheck, a memory error detector
-==4197== Copyright (C) 2002-2015, and GNU GPL'd, by Julian Seward et al.
-==4197== Using Valgrind-3.11.0 and LibVEX; rerun with -h for copyright info
-==4197== Command: ./e
-==4197== 
-0
-1
-2
-3
-4
-98
-402
-1024
-==4197== 
-==4197== HEAP SUMMARY:
-==4197==     in use at exit: 0 bytes in 0 blocks
-==4197==   total heap usage: 9 allocs, 9 frees, 1,216 bytes allocated
-==4197== 
-==4197== All heap blocks were freed -- no leaks are possible
-==4197== 
-==4197== For counts of detected and suppressed errors, rerun with: -v
-==4197== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
-julien@ubuntu:~/Doubly linked lists$ 
+julien@ubuntu:~/Hash tables$ gcc -Wall -pedantic -Werror -Wextra -std=gnu89 1-main.c 1-djb2.c -o b
+julien@ubuntu:~/Hash tables$ ./b 
+6953392314605
+3749890792216096085
+5861846
+julien@ubuntu:~/Hash tables$ 
 ```
-- [x] [5-flip_bits.c](./5-flip_bits.c)
-	- Write a function that returns the number of bits you would need to flip to get from one number to another.
-		- Prototype: ``unsigned int flip_bits(unsigned long int n, unsigned long int m)``;
-		- You are not allowed to use the ``%`` or ``/`` operators
+- [x] [2-key_index.c](./2-key_index.c)
+* Write a function that gives you the index of a key.
+		- Prototype: ``unsigned long int key_index(const unsigned char *key, unsigned long int size);``
+			- where ``key`` is the key
+			- and ``size`` is the size of the array of the hash table
+		- This function should use the ``hash_djb2`` function that you wrote earlier
+		- Returns the index at which the key/value pair should be stored in the array of the hash table
+		- You will have to use this hash function for all the next tasks
 ```
-julien@ubuntu:~/Binary$ cat 5-main.c
+julien@ubuntu:~/Hash tables$ cat 2-main.c 
+#include <stdlib.h>
+#include <string.h>
 #include <stdio.h>
-#include "main.h"
+#include "hash_tables.h"
 
 /**
  * main - check the code
  *
- * Return: Always 0.
+ * Return: Always EXIT_SUCCESS.
  */
 int main(void)
 {
-    unsigned int n;
+    char *s;
+    unsigned long int hash_table_array_size;
 
-    n = flip_bits(1024, 1);
-    printf("%u\n", n);
-    n = flip_bits(402, 98);
-    printf("%u\n", n);
-    n = flip_bits(1024, 3);
-    printf("%u\n", n);
-    n = flip_bits(1024, 1025);
-    printf("%u\n", n);
-    return (0);
+    hash_table_array_size = 1024;
+    s = "cisfun";
+    printf("%lu\n", hash_djb2((unsigned char *)s));
+    printf("%lu\n", key_index((unsigned char *)s, hash_table_array_size));
+    s = "Don't forget to tweet today";
+    printf("%lu\n", hash_djb2((unsigned char *)s));
+    printf("%lu\n", key_index((unsigned char *)s, hash_table_array_size));
+    s = "98";
+    printf("%lu\n", hash_djb2((unsigned char *)s));
+    printf("%lu\n", key_index((unsigned char *)s, hash_table_array_size));  
+    return (EXIT_SUCCESS);
 }
-julien@ubuntu:~/Binary$ gcc -Wall -pedantic -Werror -Wextra -std=gnu89 5-main.c 5-flip_bits.c -o f
-julien@ubuntu:~/Binary$ ./f
-2
-5
-3
-1
-julien@ubuntu:~/Binary$ 
+julien@ubuntu:~/Hash tables$ gcc -Wall -pedantic -Werror -Wextra -std=gnu89 2-main.c 1-djb2.c 2-key_index.c -o c
+julien@ubuntu:~/Hash tables$ ./c 
+6953392314605
+237
+3749890792216096085
+341
+5861846
+470
+julien@ubuntu:~/Hash tables$ 
+```
+- [x] [3-hash_table_set.c](./3-hash_table_set.c)
+ - Write a function that adds an element to the hash table.
+		- Prototype: ``int hash_table_set(hash_table_t *ht, const char *key, const char *value);``
+			- Where ``ht`` is the hash table you want to add or update the key/value to
+			- ``key`` is the ``key``. key can not be an empty string
+			- and ``value`` is the value associated with the key. value must be duplicated. value can be an empty string
+		- Returns: ``1`` if it succeeded, ``0`` otherwise
+		- In case of collision, add the new node at the beginning of the list
+```
+julien@ubuntu:~/Hash tables$ cat 3-main.c 
+#include <stdlib.h>
+#include <string.h>
+#include <stdio.h>
+#include "hash_tables.h"
+
+/**
+ * main - check the code
+ *
+ * Return: Always EXIT_SUCCESS.
+ */
+int main(void)
+{
+    hash_table_t *ht;
+
+    ht = hash_table_create(1024);
+    hash_table_set(ht, "betty", "cool");
+    return (EXIT_SUCCESS);
+}
+julien@ubuntu:~/Hash tables$ gcc -Wall -pedantic -Werror -Wextra -std=gnu89 3-main.c 0-hash_table_create.c 1-djb2.c 2-key_index.c 3-hash_table_set.c -o d
+julien@ubuntu:~/Hash tables$
+```
+* If you want to test for collisions, here are some strings that collide using the djb2 algorithm:
+		- ``hetairas`` collides with ``mentioner``
+		- ``heliotropes`` collides with ``neurospora``
+		- ``depravement`` collides with ``serafins``
+		- ``stylist`` collides with ``subgenera``
+		- ``joyful`` collides with ``synaphea``
+		- ``redescribed`` collides with ``urites``
+		- ``dram`` collides with ``vivency``
+- [x] [4-hash_table_get.c](./4-hash_table_get.c)
+- Write a function that retrieves a value associated with a key.
+		- Prototype: ``char *hash_table_get(const hash_table_t *ht, const char *key);``
+			- where ``ht`` is the hash table you want to look into
+			- and ``key`` is the key you are looking for
+		- Returns the value associated with the element, or ``NULL`` if ``key`` couldn’t be found
+```
+julien@ubuntu:~/Hash tables$ cat 4-main.c 
+#include <stdlib.h>
+#include <string.h>
+#include <stdio.h>
+#include "hash_tables.h"
+
+/**
+ * main - check the code
+ *
+ * Return: Always EXIT_SUCCESS.
+ */
+int main(void)
+{
+    hash_table_t *ht;
+    char *value;
+
+    ht = hash_table_create(1024);
+    hash_table_set(ht, "c", "fun");
+    hash_table_set(ht, "python", "awesome");
+    hash_table_set(ht, "Bob", "and Kris love asm");
+    hash_table_set(ht, "N", "queens");
+    hash_table_set(ht, "Asterix", "Obelix");
+    hash_table_set(ht, "Betty", "Cool");
+    hash_table_set(ht, "98", "Battery Street");
+    hash_table_set(ht, "c", "isfun");
+
+    value = hash_table_get(ht, "python");
+    printf("%s:%s\n", "python", value);
+    value = hash_table_get(ht, "Bob");
+    printf("%s:%s\n", "Bob", value);
+    value = hash_table_get(ht, "N");
+    printf("%s:%s\n", "N", value);
+    value = hash_table_get(ht, "Asterix");
+    printf("%s:%s\n", "Asterix", value);
+    value = hash_table_get(ht, "Betty");
+    printf("%s:%s\n", "Betty", value);
+    value = hash_table_get(ht, "98");
+    printf("%s:%s\n", "98", value);
+    value = hash_table_get(ht, "c");
+    printf("%s:%s\n", "c", value);
+    value = hash_table_get(ht, "javascript");
+    printf("%s:%s\n", "javascript", value);
+    return (EXIT_SUCCESS);
+}
+julien@ubuntu:~/Hash tables$ gcc -Wall -pedantic -Werror -Wextra -std=gnu89 4-main.c 0-hash_table_create.c 1-djb2.c 2-key_index.c 3-hash_table_set.c 4-hash_table_get.c -o e
+julien@ubuntu:~/Hash tables$ ./e 
+python:awesome
+Bob:and Kris love asm
+N:queens
+Asterix:Obelix
+Betty:Cool
+98:Battery Street
+c:isfun
+javascript:(null)
+julien@ubuntu:~/Hash tables$ 
+```
+- [x] [5-hash_table_print.c](./5-hash_table_print.c)
+- Write a function that prints a hash table.
+		- Prototype: ``void hash_table_print(const hash_table_t *ht);``
+			- where ``ht`` is the hash table
+		- You should print the key/value in the order that they appear in the array of hash table
+			- Order: array, list
+		- Format: see example
+		- If ``ht`` is NULL, don’t print anything
+```
+julien@ubuntu:~/Hash tables$ cat 5-main.c 
+#include <stdlib.h>
+#include <string.h>
+#include <stdio.h>
+#include "hash_tables.h"
+
+/**
+ * main - check the code
+ *
+ * Return: Always EXIT_SUCCESS.
+ */
+int main(void)
+{
+    hash_table_t *ht;
+
+    ht = hash_table_create(1024);
+    hash_table_print(ht);
+    hash_table_set(ht, "c", "fun");
+    hash_table_set(ht, "python", "awesome");
+    hash_table_set(ht, "Bob", "and Kris love asm");
+    hash_table_set(ht, "N", "queens");
+    hash_table_set(ht, "Asterix", "Obelix");
+    hash_table_set(ht, "Betty", "Cool");
+    hash_table_set(ht, "98", "Battery Street");
+    hash_table_print(ht);
+    return (EXIT_SUCCESS);
+}
+julien@ubuntu:~/Hash tables$ gcc -Wall -pedantic -Werror -Wextra -std=gnu89 5-main.c 0-hash_table_create.c 1-djb2.c 2-key_index.c 3-hash_table_set.c 4-hash_table_get.c 5-hash_table_print.c -o f
+julien@ubuntu:~/Hash tables$ ./f 
+{}
+{'Betty': 'Cool', 'python': 'awesome', 'Bob': 'and Kris love asm', '98': 'Battery Street', 'N': 'queens', 'c': 'fun', 'Asterix': 'Obelix'}
+julien@ubuntu:~/Hash tables$ 
+```
+- [x] [6-hash_table_delete.c](./6-hash_table_delete.c)
+- Write a function that deletes a hash table.
+		- Prototype: void hash_table_delete(hash_table_t *ht);
+			- where ht is the hash table
+```
+julien@ubuntu:~/Hash tables$ cat 6-main.c 
+#include <stdlib.h>
+#include <string.h>
+#include <stdio.h>
+#include "hash_tables.h"
+
+/**
+ * main - check the code
+ *
+ * Return: Always EXIT_SUCCESS.
+ */
+int main(void)
+{
+    hash_table_t *ht;
+    char *key;
+    char *value;
+
+    ht = hash_table_create(1024);
+    hash_table_set(ht, "c", "fun");
+    hash_table_set(ht, "python", "awesome");
+    hash_table_set(ht, "Bob", "and Kris love asm");
+    hash_table_set(ht, "N", "queens");
+    hash_table_set(ht, "Asterix", "Obelix");
+    hash_table_set(ht, "Betty", "Cool");
+    hash_table_set(ht, "98", "Battery Streetz");
+    key = strdup("Tim");
+    value = strdup("Britton");
+    hash_table_set(ht, key, value);
+    key[0] = '\0';
+    value[0] = '\0';
+    free(key);
+    free(value);
+    hash_table_set(ht, "98", "Battery Street"); 
+    hash_table_set(ht, "hetairas", "Bob");
+    hash_table_set(ht, "hetairas", "Bob Z");
+    hash_table_set(ht, "mentioner", "Bob");
+    hash_table_set(ht, "hetairas", "Bob Z Chu");
+    hash_table_print(ht);
+    hash_table_delete(ht);
+    return (EXIT_SUCCESS);
+}
+julien@ubuntu:~/Hash tables$ gcc -Wall -pedantic -Werror -Wextra 6-main.c 0-hash_table_create.c 1-djb2.c 2-key_index.c 3-hash_table_set.c 4-hash_table_get.c 5-hash_table_print.c 6-hash_table_delete.c -o g
+julien@ubuntu:~/Hash tables$ valgrind ./g
+==6621== Memcheck, a memory error detector
+==6621== Copyright (C) 2002-2013, and GNU GPL'd, by Julian Seward et al.
+==6621== Using Valgrind-3.10.1 and LibVEX; rerun with -h for copyright info
+==6621== Command: ./g
+==6621== 
+{'Betty': 'Cool', 'mentioner': 'Bob', 'hetairas': 'Bob Z Chu', 'python': 'awesome', 'Bob': 'and Kris love asm', '98': 'Battery Street', 'N': 'queens', 'c': 'fun', 'Tim': 'Britton', 'Asterix': 'Obelix'}
+==6621== 
+==6621== HEAP SUMMARY:
+==6621==     in use at exit: 0 bytes in 0 blocks
+==6621==   total heap usage: 37 allocs, 37 frees, 8,646 bytes allocated
+==6621== 
+==6621== All heap blocks were freed -- no leaks are possible
+==6621== 
+==6621== For counts of detected and suppressed errors, rerun with: -v
+==6621== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+julien@ubuntu:~/Hash tables$ 
 ```
