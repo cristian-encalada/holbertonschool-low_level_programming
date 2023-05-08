@@ -1,31 +1,38 @@
-# C Projects
->Repository created to work on projects related to C programming Language <br> 
-Holberton Dev Bootcamp - Montevideo 2023
-## Projects Completed
-- [x] [C - Hello, World](https://github.com/cristian-encalada/holbertonschool-low_level_programming/tree/master/hello_world)
-	- Introudciton to C programming language, basic tasks about gcc.
-- [x] [C - Variables, if, else, while](https://github.com/cristian-encalada/holbertonschool-low_level_programming/tree/master/variables_if_else_while)
-	- Tasks related to arithmetic, logical and relational operators and basics tasks with variables.
-- [x] [C - Functions, nested loops](https://github.com/cristian-encalada/holbertonschool-low_level_programming/tree/master/functions_nested_loops)
-	- Tasks about nested loops, functions, header files, prototypes, and scope of variables
-- [x] [C - Makefiles](https://github.com/cristian-encalada/holbertonschool-low_level_programming/tree/master/makefiles)
-	- Tasks about C Makefiles, how to use them and how to set and use different rules for makefiles.
-- [x] [C - More functions, more nested loops](https://github.com/cristian-encalada/holbertonschool-low_level_programming/tree/master/more_functions_nested_loops)
-	- Project about C prototypes, nested loops and scope of variables
-- [x] [C - Pointers, arrays and strings](https://github.com/cristian-encalada/holbertonschool-low_level_programming/tree/master/pointers_arrays_strings/pointers_arrays_strings)
-- [x] [C - More pointers, arrays and strings](https://github.com/cristian-encalada/holbertonschool-low_level_programming/tree/master/pointers_arrays_strings/more_pointers_arrays_strings)
-- [x] [C - Even more pointers, arrays and strings](https://github.com/cristian-encalada/holbertonschool-low_level_programming/tree/master/pointers_arrays_strings/even_more_pointers_arrays_strings)
-- [x] [C - Recursion](https://github.com/cristian-encalada/holbertonschool-low_level_programming/tree/master/recursion)
-	- Project about recursive tasks, when and how implement it.
-- [x] [C - Static libraries](https://github.com/cristian-encalada/holbertonschool-low_level_programming/tree/master/static_libraries)
-	- How to create, use and how a C static library works.
-- [x] [C - argc, argv](https://github.com/cristian-encalada/holbertonschool-low_level_programming/tree/master/argc_argv)
-	- Tasks about C arguments passed to the program (argc and argv)
-- [x] [C - malloc, free](https://github.com/cristian-encalada/holbertonschool-low_level_programming/tree/master/malloc_free)
-	- Tasks about dynamic memory allocation (malloc and free)
-- [x] [C - More malloc, free](https://github.com/cristian-encalada/holbertonschool-low_level_programming/tree/master/more_malloc_free)
-- [x] [C - Preprocessor](https://github.com/cristian-encalada/holbertonschool-low_level_programming/tree/master/preprocessor)
-	- Tasks related to macros and how to include guards to the header files
-- [x] [C - Structures, Tyoedef](https://github.com/cristian-encalada/holbertonschool-low_level_programming/tree/master/structures_typedef)
-- [x] [C - Function pointers](https://github.com/cristian-encalada/holbertonschool-low_level_programming/tree/master/function_pointers)
-- [x] [C - Variadic functions](https://github.com/cristian-encalada/holbertonschool-low_level_programming/tree/master/variadic_functions)
+# C Projects - Holberton School
+
+<div align="center">
+
+`Solftware Development Bootcamp 2023 `
+
+[Holberton School Uruguay](https://holbertonschool.uy/)
+
+</div>
+
+-------------------------------------
+
+## Projects completed
+
+- [0. C - Hello, World](/hello_world/)
+- [1. C - Variables, if, else, while](/variables_if_else_while/)
+- [2. C - Functions, nested loops](/functions_nested_loops/)
+- [3. C - Makefiles](/makefiles/)
+- [4. C - More functions, more nested loops](/more_functions_nested_loops/)
+- [5. C - Pointers, arrays and strings](/pointers_arrays_strings/pointers_arrays_strings/)
+- [6. C - More pointers, arrays and strings](/pointers_arrays_strings/more_pointers_arrays_strings/)
+- [7. C - Even more pointers, arrays and strings](/pointers_arrays_strings/even_more_pointers_arrays_strings)
+- [8. C - Recursion](/recursion/)
+- [9. C - Static libraries](/static_libraries/)
+- [10. C - Argc, argv](/argc_argv/)
+- [11. C - Malloc, free](/malloc_free/)
+- [12. C - More malloc, free](/more_malloc_free/)
+- [13. C - Preprocessor](/preprocessor/)
+- [14. C - Structures, typedef](/structures_typedef/)
+- [15. C - Function pointers](/function_pointers/)
+- [16. C - Variadic functions](/variadic_functions/)
+- [17. C Project - Printf](https://github.com/cristian-encalada/holbertonschool-printf)
+- [18. C - Singly linked lists](/singly_linked_lists/)
+- [19. C - Doubly linked lists](/doubly_linked_lists/)
+- [20. C - Bit Manipulation](/bit_manipulation/)
+- [21. C - File Input/Output](/hash_tables/)
+- [22. C - Hash Tables](/file_io/)
+- [23. C Project - Simple Shell](https://github.com/Hiojam/holbertonschool-simple_shell)
