@@ -24,7 +24,14 @@ int linear_search(int *array, size_t size, int value)
 	return (-1);
 }
 
+/**
+ * print_current_value - Print the current value in the search
+ * @index: current index
+ * @value: Value to search for
+ *
+ * Return: Void
+ */
 void print_current_value(size_t index, size_t value)
 {
-	printf("Value checked  array[%ld] = [%ld]\n", index, value);
+	printf("Value checked array[%ld] = [%ld]\n", index, value);
 }
