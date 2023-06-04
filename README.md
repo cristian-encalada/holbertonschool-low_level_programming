@@ -29,10 +29,19 @@
 - [14. C - Structures, typedef](/structures_typedef/)
 - [15. C - Function pointers](/function_pointers/)
 - [16. C - Variadic functions](/variadic_functions/)
-- [17. C Project - Printf](https://github.com/cristian-encalada/holbertonschool-printf)
+- [17. [C - Team Project] - Printf](https://github.com/cristian-encalada/holbertonschool-printf)
 - [18. C - Singly linked lists](/singly_linked_lists/)
 - [19. C - Doubly linked lists](/doubly_linked_lists/)
 - [20. C - Bit Manipulation](/bit_manipulation/)
 - [21. C - File Input/Output](/hash_tables/)
 - [22. C - Hash Tables](/file_io/)
-- [23. C Project - Simple Shell](https://github.com/Hiojam/holbertonschool-simple_shell)
+- [23. [C - Team Project] - Simple Shell](https://github.com/Hiojam/holbertonschool-simple_shell)
+- [24. [C - Team Project] - Stacks, Queues - LIFO, FIFO](../holbertonschool-monty/)
+- [25. [C - Team Project] - Binary Trees](../holbertonschool-binary_trees/)
+- [25. [C - Team Project] - Sorting algorithms & Big O](../holbertonschool-sorting_algorithms/)
+- [25. C - Search Algorithms](/search_algorithms/)
+
+## Author
+
+* __Cristian Encalada__ - *Holberton Student* 
+    - Github: [Cristian Encalada](https://github.com/cristian-encalada/)
