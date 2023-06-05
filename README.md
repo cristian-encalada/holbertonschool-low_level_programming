@@ -38,8 +38,8 @@
 - [23. [C - Team Project] - Simple Shell](https://github.com/Hiojam/holbertonschool-simple_shell)
 - [24. [C - Team Project] - Stacks, Queues - LIFO, FIFO](../holbertonschool-monty/)
 - [25. [C - Team Project] - Binary Trees](../holbertonschool-binary_trees/)
-- [25. [C - Team Project] - Sorting algorithms & Big O](../holbertonschool-sorting_algorithms/)
-- [25. C - Search Algorithms](/search_algorithms/)
+- [26. [C - Team Project] - Sorting algorithms & Big O](../holbertonschool-sorting_algorithms/)
+- [27. C - Search Algorithms](/search_algorithms/)
 
 ## Author
 
